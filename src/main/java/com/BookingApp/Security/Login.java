@@ -1,4 +1,4 @@
-package com.BookingApp;
+package com.BookingApp.Security;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;

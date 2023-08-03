@@ -1,4 +1,4 @@
-package com.BookingApp.SecurityConfig;
+package com.BookingApp.Security;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinServletRequest;

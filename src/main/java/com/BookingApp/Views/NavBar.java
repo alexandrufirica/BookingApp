@@ -1,6 +1,8 @@
-package com.BookingApp;
+package com.BookingApp.Views;
 
-import com.BookingApp.SecurityConfig.SecurityService;
+import com.BookingApp.BookingAppController;
+import com.BookingApp.Security.SecurityService;
+import com.BookingApp.Views.Manager.AddRoom;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -22,17 +24,17 @@ public class NavBar extends AppLayout {
         Tabs tabs = getTabs();
 
         Button logout = new Button("Log out");
+
         logout.addClickListener( e -> securityService.logout());
 
         addToNavbar(title, tabs , logout);
-
     }
 
     private Tabs getTabs() {
         Tabs tabs = new Tabs();
         tabs.getStyle().set("margin", "auto");
         tabs.add(createTab("Add Room", AddRoom.class),
-                createTab("Reserved", BookingAppController.class),
+                createTab("Reservations", BookingAppController.class),
                 createTab("Room List", BookingAppController.class));
         return tabs;
     }
@@ -41,7 +43,6 @@ public class NavBar extends AppLayout {
         RouterLink link = new RouterLink();
         link.add(viewName);
         link.setRoute(cls);
-
         link.setTabIndex(-1);
 
         return new Tab(link);

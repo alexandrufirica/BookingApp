@@ -1,17 +1,17 @@
 package com.BookingApp;
 
 
-import com.BookingApp.SecurityConfig.SecurityService;
+import com.BookingApp.Security.SecurityService;
+import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.annotation.security.PermitAll;
 
 @PageTitle("MY App")
 @Route(value = "/myapp")
+@PermitAll
 public class BookingAppController extends VerticalLayout {
 
     private SecurityService securityService = new SecurityService();

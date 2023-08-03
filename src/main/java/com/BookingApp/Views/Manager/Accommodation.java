@@ -1,4 +1,4 @@
-package com.BookingApp;
+package com.BookingApp.Views.Manager;
 
 public class Accommodation {
 
