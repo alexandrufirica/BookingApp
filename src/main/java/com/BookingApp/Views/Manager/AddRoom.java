@@ -1,7 +1,6 @@
 package com.BookingApp.Views.Manager;
 
-import com.BookingApp.BookingAppController;
-import com.BookingApp.Data.RoomRepository;
+import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
 import com.BookingApp.Security.SecurityService;
 import com.vaadin.flow.component.Key;
@@ -17,12 +16,8 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLink;
 import jakarta.annotation.security.RolesAllowed;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("Booking App")
 @Route (value = "/main")
@@ -33,15 +28,12 @@ public class AddRoom extends VerticalLayout {
     Select<Integer> roomCapacity;
     private IntegerField numberOfRooms;
     private Checkbox available;
-
     private TextArea roomDescription;
-
     private NumberField pricePerNight;
     private final SecurityService securityService;
-
-    private final RoomRepository roomRepository;
-    public AddRoom(RoomRepository roomRepository, SecurityService securityService){
-        this.roomRepository = roomRepository;
+    private final RoomService roomService;
+    public AddRoom(RoomService roomService, SecurityService securityService){
+        this.roomService = roomService;
         this.securityService = securityService;
 
         NavBar navBar = new NavBar(securityService);
@@ -76,12 +68,13 @@ public class AddRoom extends VerticalLayout {
             room.setCapacity(roomCapacity.getValue());
             room.setNumberOfRooms(numberOfRooms.getValue());
             room.setAvailablility(available.isEnabled());
+            room.setRoomDescription((roomDescription.getValue()));
+            room.setPricePerNight(pricePerNight.getValue());
+            createRoom(room);
         });
 
-        button.addClickListener(e -> {
-            RouterLink routerLink = new RouterLink();
-            routerLink.setRoute(BookingAppController.class);
-        });
+
+
         button.addClickShortcut(Key.ENTER);
 
         setMargin(true);
@@ -103,9 +96,9 @@ public class AddRoom extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 
-    @GetMapping
-    public List<Room> getRoom(){
-        return roomRepository.findAll();
-    }
+    @PostMapping
+    public void createRoom(Room room){
+        roomService.createRoom(room);
 
+    }
 }
