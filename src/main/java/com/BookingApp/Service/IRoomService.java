@@ -1,11 +1,11 @@
 package com.BookingApp.Service;
 
-import com.BookingApp.Views.Manager.Room;
+import com.BookingApp.Data.Room;
 
 import java.util.List;
 
 public interface IRoomService {
-     List<Room> getRoom();
+     List<Room> getAllRoom();
 
      void createRoom(Room room);
 }

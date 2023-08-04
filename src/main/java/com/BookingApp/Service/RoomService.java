@@ -1,7 +1,7 @@
 package com.BookingApp.Service;
 
 import com.BookingApp.Data.RoomRepository;
-import com.BookingApp.Views.Manager.Room;
+import com.BookingApp.Data.Room;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class RoomService implements  IRoomService{
 
 
     @Override
-    public List<Room> getRoom(){
+    public List<Room> getAllRoom(){
         return roomRepository.findAll();
     }
 

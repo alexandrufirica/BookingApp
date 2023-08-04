@@ -1,4 +1,4 @@
-package com.BookingApp.Views.Manager;
+package com.BookingApp.Data;
 
 import jakarta.persistence.*;
 

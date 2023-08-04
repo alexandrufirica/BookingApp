@@ -1,5 +1,6 @@
 package com.BookingApp.Views.Manager;
 
+import com.BookingApp.Data.Room;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
 import com.BookingApp.Security.SecurityService;
@@ -62,7 +63,6 @@ public class AddRoom extends VerticalLayout {
         available = new Checkbox("Available");
 
         button = new Button("Post Room");
-
         button.addClickListener(e -> {
             room.setRoomType(roomType.getValue());
             room.setCapacity(roomCapacity.getValue());
@@ -72,8 +72,6 @@ public class AddRoom extends VerticalLayout {
             room.setPricePerNight(pricePerNight.getValue());
             createRoom(room);
         });
-
-
 
         button.addClickShortcut(Key.ENTER);
 
