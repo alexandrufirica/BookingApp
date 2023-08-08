@@ -14,12 +14,13 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("BookingApp - Create Accommodation")
 @Route(value = "/newaccommodation")
-@PermitAll
+@AnonymousAllowed
 public class CreateAccomodation extends VerticalLayout {
 
     private TextField name;
