@@ -28,6 +28,23 @@ public class User {
     private String password;
     private String role;
 
+    public User(){
+
+    }
+
+    public User(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password, String role){
+        this.givenName = givenName;
+        this.surName = surName;
+        this.email = email;
+        this.country = country;
+        this.city = city;
+        this.adress = adress;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.password = password;
+
+    }
+
     public String getEmail() {
         return email;
     }

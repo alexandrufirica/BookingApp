@@ -1,4 +1,6 @@
 package com.BookingApp.Views.Manager;
 
-public class CreateUser {
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
+public class CreateUser extends VerticalLayout {
 }

@@ -30,13 +30,14 @@ public class Accommodation {
 
     }
 
-    public Accommodation(String name, String city, String country,String adress,String email, String phoneNumber){
+    public Accommodation(String name, String city, String country,String adress,String email, String phoneNumber, String password){
         this.name = name;
         this.city = city;
         this.country = country;
         this.adress = adress;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.password = password;
     }
     public String getRole() {
         return role;
