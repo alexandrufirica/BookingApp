@@ -1,7 +1,6 @@
 package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Accommodation;
-import com.BookingApp.Data.Room;
 import com.BookingApp.Service.AccommodationService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -9,13 +8,11 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import jakarta.annotation.security.PermitAll;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("BookingApp - Create Accommodation")

@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "rooms")
 public class Room {
-
-
-
     @Id
     @SequenceGenerator(
             name = "room_sequence",
