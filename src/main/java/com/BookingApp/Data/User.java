@@ -24,7 +24,7 @@ public class User {
     private String city;
     private String adress;
     private String postalCode;
-    private String phone;
+    private String phoneNumber;
     private String password;
     private String role;
 
@@ -32,7 +32,7 @@ public class User {
 
     }
 
-    public User(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password, String role){
+    public User(String givenName, String surName, String email, String country, String city, String adress, String postalCode, String phoneNumber, String password, String role){
         this.givenName = givenName;
         this.surName = surName;
         this.email = email;
@@ -40,7 +40,7 @@ public class User {
         this.city = city;
         this.adress = adress;
         this.postalCode = postalCode;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
         this.password = password;
 
     }
@@ -101,12 +101,12 @@ public class User {
         this.postalCode = postalCode;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {

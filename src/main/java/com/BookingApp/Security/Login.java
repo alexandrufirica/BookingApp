@@ -1,6 +1,7 @@
 package com.BookingApp.Security;
 
 import com.BookingApp.Views.Manager.CreateAccomodation;
+import com.BookingApp.Views.Manager.CreateUser;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
@@ -32,7 +33,7 @@ public class Login extends VerticalLayout implements BeforeEnterListener {
 
         loginForm.getElement().setAttribute("no-autofocus", "");
 //        add(createUsers,createAccomodation);
-        add( createButton("Create User Account", CreateAccomodation.class),
+        add( createButton("Create User Account", CreateUser.class),
                 createButton("Create Accommodation Account", CreateAccomodation.class));
 
     }
