@@ -31,11 +31,13 @@ public class CreateAccomodation extends VerticalLayout {
     private PasswordField reTypePassowrd;
     private Button createButton;
     private AccommodationService accommodationService;
+    private Accommodation accommodation;
 
-    public CreateAccomodation(AccommodationService accommodationService){
+    public CreateAccomodation(AccommodationService accommodationService, Accommodation accommodation){
         this.accommodationService = accommodationService;
+        this.accommodation = accommodation;
 
-        Accommodation accommodation = new Accommodation();
+        //Accommodation accommodation = new Accommodation();
 
         H1 label = new H1("BookingApp");
         H1 label2 = new H1("Create your accommodation profile");

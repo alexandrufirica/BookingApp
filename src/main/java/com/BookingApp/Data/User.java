@@ -1,10 +1,13 @@
 package com.BookingApp.Data;
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 
 @Entity
+@Component
 @Table(name = "users")
 public class User {
+
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -15,7 +18,6 @@ public class User {
             strategy = GenerationType.SEQUENCE
     )
     private Long id;
-
     private String email;
     private String givenName;
     private String surName;
@@ -43,7 +45,9 @@ public class User {
         this.password = password;
 
     }
-
+    public Long getId() {
+        return id;
+    }
     public String getEmail() {
         return email;
     }

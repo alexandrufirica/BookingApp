@@ -13,6 +13,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("BookingApp - Create User Account")
@@ -32,11 +33,12 @@ public class CreateUser extends VerticalLayout {
     private PasswordField reTypePassowrd;
     private Button createButton;
     private UserService userService;
+    private final User user;
     
-    public CreateUser (UserService userService){
+    public CreateUser (UserService userService, User user){
         this.userService = userService;
+        this.user = user;
 
-        User user = new User();
 
         H1 label = new H1("BookingApp");
         H1 label2 = new H1("Create your user profile");

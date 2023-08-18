@@ -1,8 +1,11 @@
 package com.BookingApp.Data;
 
 import jakarta.persistence.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 @Entity
+@Component
 @Table(name = "accomodation")
 public class Accommodation {
 
