@@ -1,6 +1,6 @@
 package com.BookingApp.Views.Manager;
 
-import com.BookingApp.Data.Accommodation;
+import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Service.AccommodationService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;

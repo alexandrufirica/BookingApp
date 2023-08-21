@@ -1,4 +1,4 @@
-package com.BookingApp.Data;
+package com.BookingApp.Data.Entity;
 
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;

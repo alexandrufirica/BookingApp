@@ -1,6 +1,6 @@
 package com.BookingApp.Service;
 
-import com.BookingApp.Data.User;
+import com.BookingApp.Data.Entity.User;
 
 import java.util.List;
 

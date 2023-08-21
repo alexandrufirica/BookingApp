@@ -1,7 +1,7 @@
 package com.BookingApp.Service;
 
-import com.BookingApp.Data.RoomRepository;
-import com.BookingApp.Data.Room;
+import com.BookingApp.Data.Repository.RoomRepository;
+import com.BookingApp.Data.Entity.Room;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

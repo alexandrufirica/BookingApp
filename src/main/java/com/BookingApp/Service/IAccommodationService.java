@@ -1,6 +1,6 @@
 package com.BookingApp.Service;
 
-import com.BookingApp.Data.Accommodation;
+import com.BookingApp.Data.Entity.Accommodation;
 
 import java.util.List;
 

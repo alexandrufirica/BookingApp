@@ -1,8 +1,7 @@
 package com.BookingApp.Service;
 
-import com.BookingApp.Data.User;
-import com.BookingApp.Data.UserRepository;
-import org.springframework.stereotype.Component;
+import com.BookingApp.Data.Entity.User;
+import com.BookingApp.Data.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

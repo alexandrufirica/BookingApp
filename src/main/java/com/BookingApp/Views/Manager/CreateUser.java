@@ -1,6 +1,6 @@
 package com.BookingApp.Views.Manager;
 
-import com.BookingApp.Data.User;
+import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -13,7 +13,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("BookingApp - Create User Account")
