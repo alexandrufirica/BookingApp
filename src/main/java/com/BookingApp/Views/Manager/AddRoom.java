@@ -37,7 +37,7 @@ public class AddRoom extends VerticalLayout {
         this.roomService = roomService;
         this.securityService = securityService;
 
-        NavBar navBar = new NavBar(securityService);
+        NavBar navBar = new NavBar();
 
         Room room = new Room();
 

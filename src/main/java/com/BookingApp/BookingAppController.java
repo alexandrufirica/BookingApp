@@ -16,7 +16,7 @@ public class BookingAppController extends VerticalLayout {
 
     private SecurityService securityService = new SecurityService();
     public  BookingAppController(){
-        NavBar navBar = new NavBar(securityService);
+        NavBar navBar = new NavBar();
 
         add(navBar);
         hello();

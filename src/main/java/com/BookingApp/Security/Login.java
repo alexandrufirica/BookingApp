@@ -32,7 +32,7 @@ public class Login extends VerticalLayout implements BeforeEnterListener {
                 loginForm);
 
         loginForm.getElement().setAttribute("no-autofocus", "");
-//        add(createUsers,createAccomodation);
+
         add( createButton("Create User Account", CreateUser.class),
                 createButton("Create Accommodation Account", CreateAccomodation.class));
 

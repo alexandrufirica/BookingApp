@@ -3,6 +3,7 @@ package com.BookingApp.Views;
 import com.BookingApp.BookingAppController;
 import com.BookingApp.Security.SecurityService;
 import com.BookingApp.Views.Manager.AddRoom;
+import com.BookingApp.Views.Manager.RoomList;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -14,8 +15,8 @@ import com.vaadin.flow.router.RouterLink;
 public class NavBar extends AppLayout {
 
     private SecurityService securityService;
-    public NavBar(SecurityService securityService) {
-        this.securityService = securityService;
+    public NavBar() {
+        securityService = new SecurityService();
         H1 title = new H1("BookingApp");
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("left", "var(--lumo-space-l)").set("margin", "0")
@@ -26,7 +27,6 @@ public class NavBar extends AppLayout {
         Button logout = new Button("Log out");
 
         logout.addClickListener( e -> securityService.logout());
-
         addToNavbar(title, tabs , logout);
     }
 
@@ -35,7 +35,7 @@ public class NavBar extends AppLayout {
         tabs.getStyle().set("margin", "auto");
         tabs.add(createTab("Add Room", AddRoom.class),
                 createTab("Reservations", BookingAppController.class),
-                createTab("Room List", BookingAppController.class));
+                createTab("Room List", RoomList.class));
         return tabs;
     }
 
