@@ -1,6 +1,7 @@
 package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Room;
+import com.BookingApp.Data.Entity.Status;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
 import com.BookingApp.Security.SecurityService;
@@ -33,6 +34,7 @@ public class AddRoom extends VerticalLayout {
     private NumberField pricePerNight;
     private final SecurityService securityService;
     private final RoomService roomService;
+    private Status roomStatus;
     public AddRoom(RoomService roomService, SecurityService securityService){
         this.roomService = roomService;
         this.securityService = securityService;
@@ -61,13 +63,16 @@ public class AddRoom extends VerticalLayout {
         pricePerNight = new NumberField("Price Per Night");
 
         available = new Checkbox("Available");
+        if(available.isEnabled()){
+            roomStatus.setName("Available");
+        }
 
         button = new Button("Post Room");
         button.addClickListener(e -> {
             room.setRoomType(roomType.getValue());
             room.setCapacity(roomCapacity.getValue());
             room.setNumberOfRooms(numberOfRooms.getValue());
-            room.setAvailablility(available.isEnabled());
+            room.setAvailablility(roomStatus);
             room.setRoomDescription((roomDescription.getValue()));
             room.setPricePerNight(pricePerNight.getValue());
             createRoom(room);
