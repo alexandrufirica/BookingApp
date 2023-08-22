@@ -34,7 +34,6 @@ public class AddRoom extends VerticalLayout {
     private NumberField pricePerNight;
     private final SecurityService securityService;
     private final RoomService roomService;
-    private Status roomStatus;
     public AddRoom(RoomService roomService, SecurityService securityService){
         this.roomService = roomService;
         this.securityService = securityService;
@@ -63,16 +62,13 @@ public class AddRoom extends VerticalLayout {
         pricePerNight = new NumberField("Price Per Night");
 
         available = new Checkbox("Available");
-        if(available.isEnabled()){
-            roomStatus.setName("Available");
-        }
 
         button = new Button("Post Room");
         button.addClickListener(e -> {
             room.setRoomType(roomType.getValue());
             room.setCapacity(roomCapacity.getValue());
             room.setNumberOfRooms(numberOfRooms.getValue());
-            room.setAvailablility(roomStatus);
+            room.setAvailablility(getAvailability());
             room.setRoomDescription((roomDescription.getValue()));
             room.setPricePerNight(pricePerNight.getValue());
             createRoom(room);
@@ -99,6 +95,12 @@ public class AddRoom extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 
+    public boolean getAvailability(){
+        if(available.isEnabled()){
+            return true;
+        }
+        return false;
+    }
     @PostMapping
     public void createRoom(Room room){
         roomService.createRoom(room);

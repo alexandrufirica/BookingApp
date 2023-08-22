@@ -1,11 +1,11 @@
 package com.BookingApp.Data.Entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Component
 public class Status extends AbstractEntity {
+
     private String name;
 
     public Status(){

@@ -20,13 +20,13 @@ public class Room {
     private  String roomDescription;
     private int capacity;
     private double pricePerNight;
-    private Status availablility;
+    private boolean availablility;
 
     public Room(){
 
     }
 
-    public Room (String roomType, int numberOfRooms, String roomDescription, int capacity, double pricePerNight,Status availablility){
+    public Room (String roomType, int numberOfRooms, String roomDescription, int capacity, double pricePerNight,boolean availablility){
         this.roomType = roomType;
         this.numberOfRooms = numberOfRooms;
         this.roomDescription = roomDescription;
@@ -77,11 +77,11 @@ public class Room {
         this.capacity = capacity;
     }
 
-    public Status isAvailablility() {
+    public boolean isAvailablility() {
         return availablility;
     }
 
-    public void setAvailablility(Status availablility) {
+    public void setAvailablility(boolean availablility) {
         this.availablility = availablility;
     }
 
