@@ -1,25 +1,42 @@
 package com.BookingApp.Data.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "rooms")
-public class Room {
-    @Id
-    @SequenceGenerator(
-            name = "room_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "room_sequence",
-            strategy = GenerationType.SEQUENCE
-    )
-    private Long id;
+//@Table(name = "rooms")
+public class Room extends AbstractEntity{
+//    @Id
+//    @SequenceGenerator(
+//            name = "room_sequence",
+//            allocationSize = 1
+//    )
+//    @GeneratedValue(
+//            generator = "room_sequence",
+//            strategy = GenerationType.SEQUENCE
+//    )
+//    private Long id;
+    @ManyToOne
+    @JoinColumn(name= "accommodation_id")
+    @NotNull
+    @JsonIgnoreProperties({"rooms"})
+    private Accommodation accommodation;
+    @NotNull
+    @ManyToOne
+    private Status status;
+    @NotEmpty
     private String roomType;
+    @NotEmpty
     private int numberOfRooms;
+    @NotEmpty
     private  String roomDescription;
+    @NotEmpty
     private int capacity;
+    @NotEmpty
     private double pricePerNight;
+    @NotEmpty
     private boolean availablility;
 
     public Room(){
@@ -34,9 +51,26 @@ public class Room {
         this.pricePerNight = pricePerNight;
         this.availablility = availablility;
     }
-    public Long getId() {
-        return id;
+//    public Long getId() {
+//        return id;
+//    }
+
+    public Accommodation getAccommodation() {
+        return accommodation;
     }
+
+    public void setAccommodation(Accommodation accommodation) {
+        this.accommodation = accommodation;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public String getRoomDescription() {
         return roomDescription;
     }

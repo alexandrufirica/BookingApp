@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    @Query("select r from Rooms r " +
-            "where lower(r.roomType) like lower(concat('%', :searchTerm, '%')) " )
+    @Query("select c from Room c " +
+            "where lower(c.roomType) like lower(concat('%', :searchTerm, '%')) ")
     List<Room> search(@Param("searchTerm") String searchTerm);
 }
