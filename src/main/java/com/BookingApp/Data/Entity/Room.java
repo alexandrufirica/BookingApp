@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 public class Room extends AbstractEntity{
 
     @ManyToOne
-//    @JoinColumn(name= "accommodation_id")
+    @JoinColumn(name= "accommodation_id")
     @NotNull
     @JsonIgnoreProperties({"rooms"})
     private Accommodation accommodation;
@@ -41,9 +41,6 @@ public class Room extends AbstractEntity{
         this.pricePerNight = pricePerNight;
         this.availablility = availablility;
     }
-//    public Long getId() {
-//        return id;
-//    }
 
     public Accommodation getAccommodation() {
         return accommodation;

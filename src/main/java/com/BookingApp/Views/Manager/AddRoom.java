@@ -1,7 +1,6 @@
 package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Room;
-import com.BookingApp.Data.Entity.Status;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
 import com.BookingApp.Security.SecurityService;
@@ -22,7 +21,7 @@ import jakarta.annotation.security.RolesAllowed;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("Booking App")
-@Route (value = "/main")
+@Route (value = "/addRoom")
 @RolesAllowed("ADMIN")
 public class AddRoom extends VerticalLayout {
     private Button button;
@@ -32,11 +31,11 @@ public class AddRoom extends VerticalLayout {
     private Checkbox available;
     private TextArea roomDescription;
     private NumberField pricePerNight;
-    private final SecurityService securityService;
+//    private final SecurityService securityService;
     private final RoomService roomService;
-    public AddRoom(RoomService roomService, SecurityService securityService){
+    public AddRoom(RoomService roomService){
         this.roomService = roomService;
-        this.securityService = securityService;
+//        this.securityService = securityService;
 
         NavBar navBar = new NavBar();
 
