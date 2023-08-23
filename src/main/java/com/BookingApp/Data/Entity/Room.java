@@ -6,20 +6,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-//@Table(name = "rooms")
 public class Room extends AbstractEntity{
-//    @Id
-//    @SequenceGenerator(
-//            name = "room_sequence",
-//            allocationSize = 1
-//    )
-//    @GeneratedValue(
-//            generator = "room_sequence",
-//            strategy = GenerationType.SEQUENCE
-//    )
-//    private Long id;
+
     @ManyToOne
-    @JoinColumn(name= "accommodation_id")
+//    @JoinColumn(name= "accommodation_id")
     @NotNull
     @JsonIgnoreProperties({"rooms"})
     private Accommodation accommodation;

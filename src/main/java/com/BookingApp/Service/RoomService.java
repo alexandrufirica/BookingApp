@@ -15,7 +15,6 @@ public class RoomService implements  IRoomService{
     private final StatusRepository statusRepository;
 
     public RoomService (RoomRepository roomRepository, StatusRepository statusRepository){
-
         this.roomRepository =roomRepository;
         this.statusRepository = statusRepository;
     }

@@ -10,20 +10,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-//@Component
-//@Table(name = "accomodation")
+@Component
 public class Accommodation extends AbstractEntity {
 
-//    @Id
-//    @SequenceGenerator(
-//            name = "accomodation_sequence",
-//            allocationSize = 1
-//    )
-//    @GeneratedValue(
-//            generator = "accomodation_sequence",
-//            strategy = GenerationType.SEQUENCE
-//    )
-    private Long id;
+
     @NotBlank
     private String name;
     @NotBlank
@@ -81,9 +71,6 @@ public class Accommodation extends AbstractEntity {
     }
     public void setRole(String role) {
         this.role = role;
-    }
-    public Long getId() {
-        return id;
     }
     public String getPostalCode() {
         return postalCode;

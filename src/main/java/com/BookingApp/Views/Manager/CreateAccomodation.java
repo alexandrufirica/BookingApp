@@ -13,10 +13,12 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("BookingApp - Create Accommodation")
 @Route(value = "/newaccommodation")
+@Component
 @AnonymousAllowed
 public class CreateAccomodation extends VerticalLayout {
 
@@ -36,8 +38,6 @@ public class CreateAccomodation extends VerticalLayout {
     public CreateAccomodation(AccommodationService accommodationService, Accommodation accommodation){
         this.accommodationService = accommodationService;
         this.accommodation = accommodation;
-
-        //Accommodation accommodation = new Accommodation();
 
         H1 label = new H1("BookingApp");
         H1 label2 = new H1("Create your accommodation profile");
