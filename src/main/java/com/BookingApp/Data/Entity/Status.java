@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 @Entity
+@Component
 public class Status extends AbstractEntity {
 
     private String name;

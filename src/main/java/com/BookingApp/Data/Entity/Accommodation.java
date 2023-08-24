@@ -13,7 +13,6 @@ import java.util.List;
 @Component
 public class Accommodation extends AbstractEntity {
 
-
     @NotBlank
     private String name;
     @NotBlank

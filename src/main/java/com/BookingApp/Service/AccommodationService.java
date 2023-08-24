@@ -26,4 +26,7 @@ public class AccommodationService implements  IAccommodationService{
 
         accommodationRepository.save(accommodation);
     }
+    public void getAccommodation(long id){
+        accommodationRepository.getReferenceById(id);
+    }
 }

@@ -1,9 +1,13 @@
 package com.BookingApp.Views.Manager;
 
+import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
+import com.BookingApp.Data.Entity.Status;
+import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
 import com.BookingApp.Security.SecurityService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -17,7 +21,14 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.Nullable;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("Booking App")
@@ -31,15 +42,24 @@ public class AddRoom extends VerticalLayout {
     private Checkbox available;
     private TextArea roomDescription;
     private NumberField pricePerNight;
-//    private final SecurityService securityService;
     private final RoomService roomService;
-    public AddRoom(RoomService roomService){
+    private final Room room;
+    @ManyToOne
+    @JoinColumn(name= "accommodation_id")
+    @NotNull
+    @JsonIgnoreProperties({"rooms"})
+    private Accommodation accommodation;
+    @NotNull
+    @ManyToOne
+    private Status status;
+
+    public AddRoom(RoomService roomService,Accommodation accommodation,Status status, Room room){
         this.roomService = roomService;
-//        this.securityService = securityService;
+        this.accommodation = accommodation;
+        this.status = status;
+        this.room= room;
 
         NavBar navBar = new NavBar();
-
-        Room room = new Room();
 
         H1 name = new H1("Your accomodation");
 
@@ -54,7 +74,7 @@ public class AddRoom extends VerticalLayout {
         roomCapacity = new Select<>();
         roomCapacity.setLabel("Capacity");
         roomCapacity.setItems(1,2,3,4,5,6,7,8,9,10);
-        roomCapacity.setPlaceholder("Select no of Persons");
+        roomCapacity.setPlaceholder("Select No of Persons");
 
         numberOfRooms = new IntegerField("Number of Rooms");
 
@@ -70,6 +90,8 @@ public class AddRoom extends VerticalLayout {
             room.setAvailablility(getAvailability());
             room.setRoomDescription((roomDescription.getValue()));
             room.setPricePerNight(pricePerNight.getValue());
+            room.setAccommodation(accommodation);
+            room.setStatus(status);
             createRoom(room);
         });
 

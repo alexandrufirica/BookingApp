@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.stereotype.Component;
 
 @Entity
+@Component
 public class Room extends AbstractEntity{
 
     @ManyToOne
@@ -29,10 +31,10 @@ public class Room extends AbstractEntity{
     @NotEmpty
     private boolean availablility;
 
+
     public Room(){
 
     }
-
     public Room (String roomType, int numberOfRooms, String roomDescription, int capacity, double pricePerNight,boolean availablility){
         this.roomType = roomType;
         this.numberOfRooms = numberOfRooms;

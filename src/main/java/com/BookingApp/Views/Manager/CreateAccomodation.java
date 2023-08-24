@@ -32,8 +32,8 @@ public class CreateAccomodation extends VerticalLayout {
     private PasswordField password;
     private PasswordField reTypePassowrd;
     private Button createButton;
-    private AccommodationService accommodationService;
-    private Accommodation accommodation;
+    private final AccommodationService accommodationService;
+    private final Accommodation accommodation;
 
     public CreateAccomodation(AccommodationService accommodationService, Accommodation accommodation){
         this.accommodationService = accommodationService;
