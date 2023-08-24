@@ -54,7 +54,7 @@ public class RoomList extends VerticalLayout {
         return content;
     }
     private void configureForm() {
-        form = new RoomForm(Collections.emptyList());
+        form = new RoomForm(service.findAllStatuses());
         form.setWidth("5em");
     }
 

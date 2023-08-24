@@ -44,13 +44,7 @@ public class AddRoom extends VerticalLayout {
     private NumberField pricePerNight;
     private final RoomService roomService;
     private final Room room;
-    @ManyToOne
-    @JoinColumn(name= "accommodation_id")
-    @NotNull
-    @JsonIgnoreProperties({"rooms"})
     private Accommodation accommodation;
-    @NotNull
-    @ManyToOne
     private Status status;
 
     public AddRoom(RoomService roomService,Accommodation accommodation,Status status, Room room){
@@ -58,6 +52,9 @@ public class AddRoom extends VerticalLayout {
         this.accommodation = accommodation;
         this.status = status;
         this.room= room;
+
+        accommodation.setId(3L);
+        status.setId(1L);
 
         NavBar navBar = new NavBar();
 
