@@ -38,7 +38,7 @@ public class RoomService implements  IRoomService{
 
     public void saveRoom(Room room){
         if(room == null){
-            System.err.println("Contact is null");
+            System.err.println("Room is null");
             return;
         }
 
