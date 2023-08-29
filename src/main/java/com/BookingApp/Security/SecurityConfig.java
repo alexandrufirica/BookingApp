@@ -1,5 +1,6 @@
 package com.BookingApp.Security;
 
+import com.BookingApp.Views.Manager.AddRoom;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

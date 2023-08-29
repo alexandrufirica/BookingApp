@@ -12,12 +12,14 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 import jakarta.annotation.security.RolesAllowed;
 
 import java.util.Collections;
 
 @PageTitle(value = "Booking App - Room List")
 @Route(value = "/roomlist")
+@RouteAlias("")
 @RolesAllowed(value = "ADMIN")
 public class RoomList extends VerticalLayout {
     Grid<Room> grid = new Grid<>(Room.class);

@@ -2,19 +2,24 @@ package com.BookingApp.Security;
 
 import com.BookingApp.Views.Manager.CreateAccomodation;
 import com.BookingApp.Views.Manager.CreateUser;
-import com.BookingApp.Views.Manager.RoomList;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.login.AbstractLogin;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 
 @PageTitle(value = "Booking Login")
 @Route (value = "/login")
-public class Login extends VerticalLayout implements BeforeEnterListener {
+@AnonymousAllowed
+public class Login extends VerticalLayout implements BeforeEnterListener, ComponentEventListener<AbstractLogin.LoginEvent> {
 
+    public static final String LOGIN_SUCCESS_URL ="/addRoom";
     LoginForm loginForm = new LoginForm();
     public Login(){
         getStyle().set("background-color", "var(--lumo-contrast-5pct)")
@@ -59,5 +64,15 @@ public class Login extends VerticalLayout implements BeforeEnterListener {
         );
 
         return button;
+    }
+
+    public void onComponentEvent(AbstractLogin.LoginEvent loginEvent) {
+        boolean authenticated = SecurityUtils.authenticate(
+                loginEvent.getUsername(), loginEvent.getPassword());
+        if (authenticated) {
+            UI.getCurrent().getPage().setLocation(LOGIN_SUCCESS_URL);
+        } else {
+            loginForm.setError(true);
+        }
     }
 }

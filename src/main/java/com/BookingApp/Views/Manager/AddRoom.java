@@ -57,16 +57,18 @@ public class AddRoom extends VerticalLayout {
         this.status = status;
         this.room= room;
 
-
         accommodation.setId(3L);
         status.setId(1L);
+
+
+
         room.setAccommodation(accommodation);
         room.setStatus(status);
 
 
         NavBar navBar = new NavBar();
 
-        H1 name = new H1("Your accomodation");
+        H1 name = new H1(" Welcome " + accommodation.getName());
 
         roomType = new TextField("Room Type");
 
