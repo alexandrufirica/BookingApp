@@ -20,28 +20,30 @@ public class Room extends AbstractEntity{
     private Status status;
     @NotEmpty
     private String roomType;
-    @NotEmpty
+    @NotNull
     private int numberOfRooms;
-    @NotEmpty
+
     private  String roomDescription;
-    @NotEmpty
+
     private int capacity;
-    @NotEmpty
+
     private double pricePerNight;
-    @NotEmpty
+
     private boolean availablility;
 
 
     public Room(){
 
     }
-    public Room (String roomType, int numberOfRooms, String roomDescription, int capacity, double pricePerNight,boolean availablility){
+    public Room (String roomType, int numberOfRooms, String roomDescription, int capacity, double pricePerNight,boolean availablility, Accommodation accommodation, Status status){
         this.roomType = roomType;
         this.numberOfRooms = numberOfRooms;
         this.roomDescription = roomDescription;
         this.capacity = capacity;
         this.pricePerNight = pricePerNight;
         this.availablility = availablility;
+        this.accommodation = accommodation;
+        this.status = status;
     }
 
     public Accommodation getAccommodation() {

@@ -23,14 +23,11 @@ public class RoomList extends VerticalLayout {
     Grid<Room> grid = new Grid<>(Room.class);
     TextField filterText = new TextField();
     NavBar navBar = new NavBar();
-    RoomForm form;
     private RoomService service;
     public RoomList(RoomService service) {
         this.service = service;
         addClassName("roomList-view");
         configureGrid();
-        configureForm();
-
         add(
                 navBar,
                 getToolbar(),
@@ -45,17 +42,12 @@ public class RoomList extends VerticalLayout {
     }
 
     private Component getContent(){
-        HorizontalLayout content = new HorizontalLayout(grid, form);
+        HorizontalLayout content = new HorizontalLayout(grid);
         content.setFlexGrow(2,grid);
-        content.setFlexGrow(1,form);
         content.addClassName("content");
         content.setSizeFull();
 
         return content;
-    }
-    private void configureForm() {
-        form = new RoomForm(service.findAllStatuses());
-        form.setWidth("5em");
     }
 
     private Component getToolbar() {

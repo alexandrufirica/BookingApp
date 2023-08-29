@@ -53,8 +53,12 @@ public class AddRoom extends VerticalLayout {
         this.status = status;
         this.room= room;
 
+
         accommodation.setId(3L);
         status.setId(1L);
+        room.setAccommodation(accommodation);
+        room.setStatus(status);
+
 
         NavBar navBar = new NavBar();
 
@@ -87,8 +91,6 @@ public class AddRoom extends VerticalLayout {
             room.setAvailablility(getAvailability());
             room.setRoomDescription((roomDescription.getValue()));
             room.setPricePerNight(pricePerNight.getValue());
-            room.setAccommodation(accommodation);
-            room.setStatus(status);
             createRoom(room);
         });
 
