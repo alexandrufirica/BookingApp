@@ -21,6 +21,9 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.Router;
+import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.RouteRegistry;
 import jakarta.annotation.Nullable;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.persistence.JoinColumn;
@@ -29,6 +32,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.RouteMatcher;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("Booking App")
@@ -88,10 +92,11 @@ public class AddRoom extends VerticalLayout {
             room.setRoomType(roomType.getValue());
             room.setCapacity(roomCapacity.getValue());
             room.setNumberOfRooms(numberOfRooms.getValue());
-            room.setAvailablility(getAvailability());
+            room.setAvailablility(available.getValue());
             room.setRoomDescription((roomDescription.getValue()));
             room.setPricePerNight(pricePerNight.getValue());
             createRoom(room);
+            button.getUI().ifPresent(ui -> ui.navigate(RoomList.class));
         });
 
         button.addClickShortcut(Key.ENTER);
@@ -126,4 +131,5 @@ public class AddRoom extends VerticalLayout {
         roomService.createRoom(room);
 
     }
+
 }
