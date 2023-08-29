@@ -26,30 +26,61 @@ public class RoomList extends VerticalLayout {
     TextField filterText = new TextField();
     NavBar navBar = new NavBar();
     private RoomService service;
+    RoomForm form;
+
     public RoomList(RoomService service) {
         this.service = service;
         addClassName("roomList-view");
         configureGrid();
+        configureForm();
         add(
                 navBar,
                 getToolbar(),
                 getContent()
         );
-
         updateList();
+        closeEditor();
     }
 
-    private void updateList() {
-        grid.setItems(service.findAllRoom(filterText.getValue()));
+    private void configureForm() {
+        form = new RoomForm(service.findAllAccommodations(), service.findAllStatuses());
+        form.setWidth("5em");
+        form.addSaveListener(this::saveRoom);
+        form.addDeleteListener(this::deleteRoom);
+        form.addCloseListener(e -> closeEditor());
     }
 
-    private Component getContent(){
-        HorizontalLayout content = new HorizontalLayout(grid);
+    private HorizontalLayout getContent(){
+        HorizontalLayout content = new HorizontalLayout(grid,form);
         content.setFlexGrow(2,grid);
+        content.setFlexGrow(1,form);
         content.addClassName("content");
         content.setSizeFull();
 
         return content;
+    }
+
+
+    private void deleteRoom(RoomForm.DeleteEvent event) {
+        service.deleteRoom(event.getRoom());
+        updateList();
+        closeEditor();
+    }
+
+    private void saveRoom(RoomForm.SaveEvent event) {
+        service.saveRoom(event.getRoom());
+        updateList();
+        closeEditor();
+    }
+
+    private void closeEditor() {
+        form.setRoom(null);
+        form.setVisible(false);
+        removeClassName("editing");
+    }
+
+    private void updateList() {
+        grid.setItems(service.findAllRoom(filterText.getValue()));
     }
 
     private Component getToolbar() {
@@ -70,5 +101,16 @@ public class RoomList extends VerticalLayout {
         grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight","availablility");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
+        grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
+    }
+
+    private void editRoom(Room room) {
+        if(room == null){
+            closeEditor();
+        }else {
+            form.setRoom(room);
+            form.setVisible(true);
+            addClassName("editing");
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.BookingApp.Service;
 
+import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Status;
+import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoomRepository;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Repository.StatusRepository;
@@ -12,10 +14,12 @@ import java.util.List;
 public class RoomService implements  IRoomService{
 
     private final RoomRepository roomRepository;
+    private final AccommodationRepository accommodationRepository;
     private final StatusRepository statusRepository;
 
-    public RoomService (RoomRepository roomRepository, StatusRepository statusRepository){
+    public RoomService (RoomRepository roomRepository,AccommodationRepository accommodationRepository, StatusRepository statusRepository){
         this.roomRepository =roomRepository;
+        this.accommodationRepository = accommodationRepository;
         this.statusRepository = statusRepository;
     }
 
@@ -28,6 +32,10 @@ public class RoomService implements  IRoomService{
 
     }
 
+    public List<Accommodation> findAllAccommodations(){
+        return accommodationRepository.findAll();
+    }
+
     public long countRooms(){
         return roomRepository.count();
     }
@@ -37,12 +45,12 @@ public class RoomService implements  IRoomService{
     }
 
     public void saveRoom(Room room){
-        if(room == null){
+        if(room == null) {
             System.err.println("Room is null");
             return;
         }
+            roomRepository.save(room);
 
-        roomRepository.save(room);
     }
 
     public List<Status> findAllStatuses(){

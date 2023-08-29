@@ -31,6 +31,8 @@ public class SecurityConfig extends VaadinWebSecurity{
         //web.ignoring().requestMatchers("/images/**");
         super.configure(web);
     }
+
+    //Just for simplicity- this should be secured.
     @Bean
     public UserDetailsManager userDetailsManager(){
 

@@ -1,5 +1,6 @@
 package com.BookingApp.Views.Manager;
 
+import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.Status;
 import com.vaadin.flow.component.Component;
@@ -14,8 +15,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
@@ -35,9 +34,8 @@ public class RoomForm extends FormLayout {
     Button canceButton =new Button("Cancel");
     private Room room;
 
-    public RoomForm(List<Status> statuses) {
+    public RoomForm(List<Accommodation> accommodations, List<Status> statuses) {
         addClassName("room-form");
-//        binder.bindInstanceFields(this);
 
         availability.setItems(statuses);
         availability.setItemLabelGenerator(Status::getName);
@@ -63,9 +61,9 @@ public class RoomForm extends FormLayout {
         deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         canceButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-//        saveButton.addClickListener( e -> validatateAndSave());
-//        deleteButton.addClickListener(e -> fireEvent(new DeleteEvent( this, room)));
-//        canceButton.addClickListener(e -> fireEvent(new CloseEvent(this)));
+        saveButton.addClickListener( e -> fireEvent(new SaveEvent(this, room)));
+        deleteButton.addClickListener(e -> fireEvent(new DeleteEvent( this, room)));
+        canceButton.addClickListener(e -> fireEvent(new CloseEvent(this)));
 
         saveButton.addClickShortcut(Key.ENTER);
         canceButton.addClickShortcut(Key.ESCAPE);
@@ -73,56 +71,56 @@ public class RoomForm extends FormLayout {
         return new HorizontalLayout(saveButton,deleteButton,canceButton);
     }
 
-//    private void validatateAndSave() {
+    private void validatateAndSave() {
 //        try{
 //            binder.writeBean(room);
 //            fireEvent(new SaveEvent(this,room));
 //        }catch (ValidationException e){
 //            e.printStackTrace();
 //        }
-//    }
+    }
 
 
-//    public static abstract class RoomFormEvent extends ComponentEvent<RoomForm> {
-//        private Room room;
-//
-//        protected RoomFormEvent(RoomForm source, Room contact) {
-//            super(source, false);
-//            this.room = contact;
-//        }
-//
-//        public Room getContact() {
-//            return room;
-//        }
-//    }
+    public static abstract class RoomFormEvent extends ComponentEvent<RoomForm> {
+        private Room room;
 
-//    public static class SaveEvent extends RoomFormEvent {
-//        SaveEvent(RoomForm source, Room contact) {
-//            super(source, contact);
-//        }
-//    }
-//
-//    public static class DeleteEvent extends RoomFormEvent {
-//        DeleteEvent(RoomForm source, Room contact) {
-//            super(source, contact);
-//        }
-//
-//    }
-//
-//    public static class CloseEvent extends RoomFormEvent {
-//        CloseEvent(RoomForm source) {
-//            super(source, null);
-//        }
-//    }
-//
-//    public Registration addDeleteListener(ComponentEventListener<DeleteEvent> listener) {
-//        return addListener(DeleteEvent.class, listener);
-//    }
-//
-//    public Registration addSaveListener(ComponentEventListener<SaveEvent> listener) {
-//        return addListener(SaveEvent.class, listener);
-//    }
-//    public Registration addCloseListener(ComponentEventListener<CloseEvent> listener) {
-//        return addListener(CloseEvent.class, listener);
-//    }
+        protected RoomFormEvent(RoomForm source, Room room) {
+            super(source, false);
+            this.room = room;
+        }
+
+        public Room getRoom() {
+            return room;
+        }
+    }
+
+    public static class SaveEvent extends RoomFormEvent {
+        SaveEvent(RoomForm source, Room room) {
+            super(source, room);
+        }
+    }
+
+    public static class DeleteEvent extends RoomFormEvent {
+        DeleteEvent(RoomForm source, Room room) {
+            super(source, room);
+        }
+
+    }
+
+    public static class CloseEvent extends RoomFormEvent {
+        CloseEvent(RoomForm source) {
+            super(source, null);
+        }
+    }
+
+    public Registration addDeleteListener(ComponentEventListener<DeleteEvent> listener) {
+        return addListener(DeleteEvent.class, listener);
+    }
+
+    public Registration addSaveListener(ComponentEventListener<SaveEvent> listener) {
+        return addListener(SaveEvent.class, listener);
+    }
+    public Registration addCloseListener(ComponentEventListener<CloseEvent> listener) {
+        return addListener(CloseEvent.class, listener);
+    }
 }
