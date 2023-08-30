@@ -41,8 +41,6 @@ public class RoomForm extends FormLayout {
         addClassName("room-form");
         binder.bindInstanceFields(this);
 
-//binder.forField(pricePerNight).withConverter(new StringToDoubleConverter("Please enter a number")).bind("pricePerNight");
-
         availability.setItems(statuses);
         availability.setItemLabelGenerator(Status::getName);
 
@@ -136,11 +134,4 @@ public class RoomForm extends FormLayout {
         return getEventBus().addListener(eventType,listener);
     }
 
-    public TextField getPricePerNight() {
-        return pricePerNight;
-    }
-
-    public void setPricePerNight(TextField pricePerNight) {
-        this.pricePerNight = pricePerNight;
-    }
 }
