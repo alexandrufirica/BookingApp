@@ -17,6 +17,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.*;
 import com.vaadin.flow.data.converter.Converter;
+import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.shared.Registration;
 
@@ -26,8 +27,8 @@ public class RoomForm extends FormLayout {
 
     Binder<Room> binder = new BeanValidationBinder<>(Room.class);
     TextField roomType = new TextField("Room Type");
-    NumberField numberOfRooms = new NumberField("Number of rooms");
-    NumberField capacity = new NumberField("Capacity");
+    TextField numberOfRooms = new TextField("Number of rooms");
+    TextField capacity = new TextField("Capacity");
     TextField pricePerNight = new TextField("Price per Night");
     ComboBox<Status> availability = new ComboBox<>("Availability");
     TextArea roomDesciption = new TextArea("Room Description");
@@ -40,7 +41,7 @@ public class RoomForm extends FormLayout {
         addClassName("room-form");
         binder.bindInstanceFields(this);
 
-        binder.forField(pricePerNight).withConverter(new StringToIntegerConverter("Please enter a number")).bind(Room::getPricePerNight, Room::setPricePerNight);
+//binder.forField(pricePerNight).withConverter(new StringToDoubleConverter("Please enter a number")).bind("pricePerNight");
 
         availability.setItems(statuses);
         availability.setItemLabelGenerator(Status::getName);
