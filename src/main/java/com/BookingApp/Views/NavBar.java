@@ -10,6 +10,8 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.RouterLink;
+import org.springframework.stereotype.Component;
+
 
 
 public class NavBar extends AppLayout {
@@ -48,11 +50,4 @@ public class NavBar extends AppLayout {
         return new Tab(link);
     }
 
-    private Tab createTab(String viewName) {
-        RouterLink link = new RouterLink();
-        link.add(viewName);
-        link.setTabIndex(-1);
-
-        return new Tab(link);
-    }
 }

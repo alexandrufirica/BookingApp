@@ -15,18 +15,20 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.ValidationException;
+import com.vaadin.flow.data.binder.*;
+import com.vaadin.flow.data.converter.Converter;
+import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
 
 public class RoomForm extends FormLayout {
 
-//    Binder<Room> binder = new BeanValidationBinder<>(Room.class);
+    Binder<Room> binder = new BeanValidationBinder<>(Room.class);
     TextField roomType = new TextField("Room Type");
     NumberField numberOfRooms = new NumberField("Number of rooms");
     NumberField capacity = new NumberField("Capacity");
-    NumberField pricePerNight = new NumberField("Price per Night");
+    TextField pricePerNight = new TextField("Price per Night");
     ComboBox<Status> availability = new ComboBox<>("Availability");
     TextArea roomDesciption = new TextArea("Room Description");
     Button saveButton =new Button("Save");
@@ -36,6 +38,9 @@ public class RoomForm extends FormLayout {
 
     public RoomForm(List<Accommodation> accommodations, List<Status> statuses) {
         addClassName("room-form");
+        binder.bindInstanceFields(this);
+
+        binder.forField(pricePerNight).withConverter(new StringToIntegerConverter("Please enter a number")).bind(Room::getPricePerNight, Room::setPricePerNight);
 
         availability.setItems(statuses);
         availability.setItemLabelGenerator(Status::getName);
@@ -53,15 +58,16 @@ public class RoomForm extends FormLayout {
 
     public void setRoom(Room room){
         this.room = room;
-//        binder.readBean(room);
+        binder.readBean(room);
     }
+
 
     private Component createButtonLayout() {
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         canceButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-        saveButton.addClickListener( e -> fireEvent(new SaveEvent(this, room)));
+        saveButton.addClickListener(e -> validatateAndSave());
         deleteButton.addClickListener(e -> fireEvent(new DeleteEvent( this, room)));
         canceButton.addClickListener(e -> fireEvent(new CloseEvent(this)));
 
@@ -72,12 +78,12 @@ public class RoomForm extends FormLayout {
     }
 
     private void validatateAndSave() {
-//        try{
-//            binder.writeBean(room);
-//            fireEvent(new SaveEvent(this,room));
-//        }catch (ValidationException e){
-//            e.printStackTrace();
-//        }
+        try{
+            binder.writeBean(room);
+            fireEvent(new SaveEvent(this,room));
+        }catch (ValidationException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -122,5 +128,18 @@ public class RoomForm extends FormLayout {
     }
     public Registration addCloseListener(ComponentEventListener<CloseEvent> listener) {
         return addListener(CloseEvent.class, listener);
+    }
+
+    public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType,
+                                                                 ComponentEventListener<T> listener) {
+        return getEventBus().addListener(eventType,listener);
+    }
+
+    public TextField getPricePerNight() {
+        return pricePerNight;
+    }
+
+    public void setPricePerNight(TextField pricePerNight) {
+        this.pricePerNight = pricePerNight;
     }
 }

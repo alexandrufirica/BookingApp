@@ -90,7 +90,7 @@ public class RoomList extends VerticalLayout {
          filterText.addValueChangeListener(e -> updateList());
 
         Button addRoomButton = new Button("Add Room");
-        addRoomButton.addClickListener( e -> form.setVisible(true));
+        addRoomButton.addClickListener( e -> addRoom());
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addRoomButton);
         toolbar.addClassName("toolbar");
@@ -113,5 +113,10 @@ public class RoomList extends VerticalLayout {
             form.setVisible(true);
             addClassName("editing");
         }
+    }
+
+    private void addRoom(){
+        grid.asSingleSelect().clear();
+        editRoom(new Room());
     }
 }
