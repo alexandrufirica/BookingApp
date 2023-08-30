@@ -50,6 +50,14 @@ public class RoomList extends VerticalLayout {
         form.addCloseListener(e -> closeEditor());
     }
 
+    private void configureGrid() {
+        grid.addClassName("room-grid");
+        grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight","availablility");
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.asSingleSelect().addValueChangeListener(event -> editRooFm( event.getValue()));
+    }
+
     private HorizontalLayout getContent(){
         HorizontalLayout content = new HorizontalLayout(grid,form);
         content.setFlexGrow(2,grid);
@@ -60,6 +68,19 @@ public class RoomList extends VerticalLayout {
         return content;
     }
 
+    private Component getToolbar() {
+        filterText.setPlaceholder("Filter by type...");
+        filterText.setClearButtonVisible(true);
+        filterText.setValueChangeMode(ValueChangeMode.LAZY);
+        filterText.addValueChangeListener(e -> updateList());
+
+        Button addRoomButton = new Button("Add Room");
+        addRoomButton.addClickListener( e -> addRoom());
+
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, addRoomButton);
+        toolbar.addClassName("toolbar");
+        return toolbar;
+    }
 
     private void deleteRoom(RoomForm.DeleteEvent event) {
         service.deleteRoom(event.getRoom());
@@ -81,28 +102,6 @@ public class RoomList extends VerticalLayout {
 
     private void updateList() {
         grid.setItems(service.findAllRoom(filterText.getValue()));
-    }
-
-    private Component getToolbar() {
-         filterText.setPlaceholder("Filter by type...");
-         filterText.setClearButtonVisible(true);
-         filterText.setValueChangeMode(ValueChangeMode.LAZY);
-         filterText.addValueChangeListener(e -> updateList());
-
-        Button addRoomButton = new Button("Add Room");
-        addRoomButton.addClickListener( e -> addRoom());
-
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, addRoomButton);
-        toolbar.addClassName("toolbar");
-        return toolbar;
-    }
-
-    private void configureGrid() {
-        grid.addClassName("room-grid");
-        grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight","availablility");
-        grid.getColumns().forEach(col -> col.setAutoWidth(true));
-
-        grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
     }
 
     private void editRoom(Room room) {
