@@ -18,7 +18,7 @@ public class User {
             strategy = GenerationType.SEQUENCE
     )
     private Long id;
-    private String email;
+    private String emailAdress;
     private String givenName;
     private String surName;
     private String country;
@@ -33,10 +33,10 @@ public class User {
 
     }
 
-    public User(String givenName, String surName, String email, String country, String city, String adress, String postalCode, String phoneNumber, String password, String role){
+    public User(String givenName, String surName, String emailAdress, String country, String city, String adress, String postalCode, String phoneNumber, String password, String role){
         this.givenName = givenName;
         this.surName = surName;
-        this.email = email;
+        this.emailAdress = emailAdress;
         this.country = country;
         this.city = city;
         this.adress = adress;
@@ -48,12 +48,12 @@ public class User {
     public Long getId() {
         return id;
     }
-    public String getEmail() {
-        return email;
+    public String getEmailAdress() {
+        return emailAdress;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailAdress(String emailAdress) {
+        this.emailAdress = emailAdress;
     }
 
     public String getGivenName() {
