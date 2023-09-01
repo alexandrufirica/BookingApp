@@ -48,6 +48,7 @@ public class SecurityConfig extends VaadinWebSecurity{
                         .roles("ADMIN")
                         .build();
 
+
         return new InMemoryUserDetailsManager(user, admin);
     }
 

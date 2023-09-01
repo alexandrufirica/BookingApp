@@ -10,6 +10,5 @@ public interface IUserService {
 
     void createUser(User user);
 
-    public void getUser(String username);
 
 }
