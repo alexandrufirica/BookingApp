@@ -16,6 +16,7 @@ public class Room extends AbstractEntity{
     @JsonIgnoreProperties({"rooms"})
     private Accommodation accommodation;
     @NotNull
+    @JoinColumn(name = "status_id")
     @ManyToOne
     private Status status;
     @NotEmpty
@@ -30,7 +31,6 @@ public class Room extends AbstractEntity{
     private double pricePerNight;
 
     private boolean availability;
-
 
     public Room(){
 

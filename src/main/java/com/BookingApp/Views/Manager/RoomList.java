@@ -1,5 +1,6 @@
 package com.BookingApp.Views.Manager;
 
+import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
@@ -26,10 +27,13 @@ public class RoomList extends VerticalLayout {
     TextField filterText = new TextField();
     NavBar navBar = new NavBar();
     private RoomService service;
+    private Accommodation accommodation;
     RoomForm form;
 
-    public RoomList(RoomService service) {
+    public RoomList(RoomService service, Accommodation accommodation) {
         this.service = service;
+        this.accommodation = accommodation;
+        accommodation.setId(43L);
         addClassName("roomList-view");
         configureGrid();
         configureForm();
@@ -52,7 +56,7 @@ public class RoomList extends VerticalLayout {
 
     private void configureGrid() {
         grid.addClassName("room-grid");
-        grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight","availability");
+        grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight","status");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
@@ -108,6 +112,7 @@ public class RoomList extends VerticalLayout {
         if(room == null){
             closeEditor();
         }else {
+            room.setAccommodation(accommodation);
             form.setRoom(room);
             form.setVisible(true);
             addClassName("editing");
