@@ -58,7 +58,7 @@ public class RoomList extends VerticalLayout {
     private void configureGrid() {
         grid.addClassName("room-grid");
         grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight");
-        grid.addColumn(Room::getStatusName).setHeader("Status");
+        grid.addColumn(Room::getStatusName).setHeader("Availbility");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
     }
