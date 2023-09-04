@@ -2,6 +2,7 @@ package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
+import com.BookingApp.Data.Entity.Status;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
@@ -56,9 +57,9 @@ public class RoomList extends VerticalLayout {
 
     private void configureGrid() {
         grid.addClassName("room-grid");
-        grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight","status");
+        grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight");
+        grid.addColumn(Room::getStatusName).setHeader("Status");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
-
         grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
     }
 

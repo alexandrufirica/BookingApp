@@ -58,6 +58,10 @@ public class Room extends AbstractEntity{
         return status;
     }
 
+    public String getStatusName(){
+        return status.getName();
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }
