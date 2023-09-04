@@ -52,7 +52,7 @@ public class RoomList extends VerticalLayout {
 
     private void configureGrid() {
         grid.addClassName("room-grid");
-        grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight","availablility");
+        grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight","availability");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));

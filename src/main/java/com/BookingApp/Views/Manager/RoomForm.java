@@ -12,13 +12,9 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.*;
-import com.vaadin.flow.data.converter.Converter;
-import com.vaadin.flow.data.converter.StringToDoubleConverter;
-import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
@@ -30,8 +26,8 @@ public class RoomForm extends FormLayout {
     TextField numberOfRooms = new TextField("Number of rooms");
     TextField capacity = new TextField("Capacity");
     TextField pricePerNight = new TextField("Price per Night");
-    ComboBox<Status> availability = new ComboBox<>("Availability");
-    TextArea roomDesciption = new TextArea("Room Description");
+    ComboBox<Status> status = new ComboBox<>("Availability");
+    TextArea roomDescription = new TextArea("Room Description");
     Button saveButton =new Button("Save");
     Button deleteButton =new Button("Delete");
     Button canceButton =new Button("Cancel");
@@ -41,16 +37,16 @@ public class RoomForm extends FormLayout {
         addClassName("room-form");
         binder.bindInstanceFields(this);
 
-        availability.setItems(statuses);
-        availability.setItemLabelGenerator(Status::getName);
+        status.setItems(statuses);
+        status.setItemLabelGenerator(Status::getName);
 
         add(
                 roomType,
                 numberOfRooms,
                 capacity,
                 pricePerNight,
-                availability,
-                roomDesciption,
+                status,
+                roomDescription,
                 createButtonLayout()
         );
     }

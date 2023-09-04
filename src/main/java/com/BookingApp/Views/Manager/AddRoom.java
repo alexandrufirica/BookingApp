@@ -3,11 +3,8 @@ package com.BookingApp.Views.Manager;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.Status;
-import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
-import com.BookingApp.Security.SecurityService;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -21,18 +18,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.Router;
-import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.RouteRegistry;
-import jakarta.annotation.Nullable;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.RouteMatcher;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("Booking App")
@@ -57,7 +43,7 @@ public class AddRoom extends VerticalLayout {
         this.status = status;
         this.room= room;
 
-        accommodation.setId(3L);
+        accommodation.setId(43L);
         status.setId(1L);
 
 
@@ -94,7 +80,7 @@ public class AddRoom extends VerticalLayout {
             room.setRoomType(roomType.getValue());
             room.setCapacity(roomCapacity.getValue());
             room.setNumberOfRooms(numberOfRooms.getValue());
-            room.setAvailablility(available.getValue());
+            room.setAvailability(available.getValue());
             room.setRoomDescription((roomDescription.getValue()));
             room.setPricePerNight(pricePerNight.getValue());
             createRoom(room);
