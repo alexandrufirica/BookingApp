@@ -2,7 +2,7 @@ package com.BookingApp.Data.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -19,17 +19,16 @@ public class Room extends AbstractEntity{
     @JoinColumn(name = "status_id")
     @ManyToOne
     private Status status;
-    @NotEmpty
+    @NotNull
     private String roomType;
     @NotNull
     private int numberOfRooms;
-
     private  String roomDescription;
-
+    @NotNull
     private int capacity;
-
+    @NotNull
     private double pricePerNight;
-
+    @NotNull
     private boolean availability;
 
     public Room(){
