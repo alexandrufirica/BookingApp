@@ -49,7 +49,7 @@ public class LoginView extends VerticalLayout  {
                 button = new Button("Login", e -> {
                     try {
                         authService.authenticate(email.getValue(), password.getValue());
-                        UI.getCurrent().navigate("MyApp");
+                        UI.getCurrent().navigate("RoomList");
                     } catch (AuthService.AuthException ex) {
                         Notification.show("Wrong Credentials");
                     }

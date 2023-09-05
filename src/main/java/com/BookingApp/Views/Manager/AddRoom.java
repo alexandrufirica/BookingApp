@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("Booking App")
 @Route (value = "/addRoom")
-@RolesAllowed("ADMIN")
 public class AddRoom extends VerticalLayout {
     private Button button;
     private TextField roomType;

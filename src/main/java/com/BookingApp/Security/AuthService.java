@@ -49,7 +49,7 @@ public class AuthService {
         getAuthorizedRoutes(role).stream()
                 .forEach(route ->
                         RouteConfiguration.forSessionScope().setRoute(
-                        route.route, route.view
+                        route.route, BookingAppController.class
                         ));
     }
 
