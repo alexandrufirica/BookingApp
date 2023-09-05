@@ -1,23 +1,19 @@
 package com.BookingApp.Data.Entity;
 
 import jakarta.persistence.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
+import org.apache.commons.codec.digest.DigestUtils;
+
+
+import java.util.Random;
 
 @Entity
 @Component
 @Table(name = "users")
-public class User {
+public class User extends AbstractEntity {
 
-    @Id
-    @SequenceGenerator(
-            name = "user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "user_sequence",
-            strategy = GenerationType.SEQUENCE
-    )
-    private Long id;
+
     private String emailAdress;
     private String givenName;
     private String surName;
@@ -26,8 +22,11 @@ public class User {
     private String adress;
     private String postalCode;
     private String phoneNumber;
-    private String password;
-    private String role;
+    private String passwordSalt;
+    private String passwordHash;
+    private Role role;
+    private String activationCode;
+    private boolean active;
 
     public User(){
 
@@ -42,12 +41,16 @@ public class User {
         this.adress = adress;
         this.postalCode = postalCode;
         this.phoneNumber = phoneNumber;
-        this.password = password;
+        this.passwordSalt = RandomStringUtils.random(32);
+        this.passwordHash = DigestUtils.sha1Hex(password + passwordSalt);
+        this.activationCode = RandomStringUtils.randomAlphanumeric(32);
 
     }
-    public Long getId() {
-        return id;
+
+    public boolean checkPassword(String password){
+        return DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash);
     }
+
     public String getEmailAdress() {
         return emailAdress;
     }
@@ -112,19 +115,35 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordSalt() {
+        return passwordSalt;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordSalt(String password) {
+        this.passwordSalt = password;
     }
 
-    public String getRole() {
-        return role;
+    public String getPasswordHash() { return passwordHash; }
+
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+
+    public Role getRole() { return role; }
+
+    public void setRole(Role role) { this.role = role; }
+
+    public String getActivationCode() {
+        return activationCode;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

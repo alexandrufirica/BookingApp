@@ -86,8 +86,8 @@ public class CreateUser extends VerticalLayout {
             user.setPostalCode(postalCode.getValue());
             user.setPhoneNumber(phone.getValue());
             user.setEmailAdress(email.getValue());
-            user.setPassword(password.getValue());
-            user.setRole("USER");
+//            user.setPassword(password.getValue());
+//            user.setRole("USER");
             createUser(user);
         });
 

@@ -17,11 +17,11 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @PageTitle(value = "Booking Login")
 @Route (value = "/login")
 @AnonymousAllowed
-public class Login extends VerticalLayout implements BeforeEnterListener, ComponentEventListener<AbstractLogin.LoginEvent> {
+public class LoginView extends VerticalLayout implements BeforeEnterListener, ComponentEventListener<AbstractLogin.LoginEvent> {
 
     public static final String LOGIN_SUCCESS_URL ="/addRoom";
     LoginForm loginForm = new LoginForm();
-    public Login(){
+    public LoginView(){
         getStyle().set("background-color", "var(--lumo-contrast-5pct)")
                 .set("display", "flex").set("justify-content", "center")
                 .set("padding", "var(--lumo-space-l)");
