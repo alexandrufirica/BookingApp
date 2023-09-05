@@ -13,8 +13,7 @@ import java.util.Random;
 @Table(name = "users")
 public class User extends AbstractEntity {
 
-
-    private String emailAdress;
+    private String email;
     private String givenName;
     private String surName;
     private String country;
@@ -32,10 +31,10 @@ public class User extends AbstractEntity {
 
     }
 
-    public User(String givenName, String surName, String emailAdress, String country, String city, String adress, String postalCode, String phoneNumber, String password, String role){
+    public User(String givenName, String surName, String email, String country, String city, String adress, String postalCode, String phoneNumber, String password, Role role){
         this.givenName = givenName;
         this.surName = surName;
-        this.emailAdress = emailAdress;
+        this.email = email;
         this.country = country;
         this.city = city;
         this.adress = adress;
@@ -44,6 +43,7 @@ public class User extends AbstractEntity {
         this.passwordSalt = RandomStringUtils.random(32);
         this.passwordHash = DigestUtils.sha1Hex(password + passwordSalt);
         this.activationCode = RandomStringUtils.randomAlphanumeric(32);
+        this.role = role;
 
     }
 
@@ -51,12 +51,12 @@ public class User extends AbstractEntity {
         return DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash);
     }
 
-    public String getEmailAdress() {
-        return emailAdress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailAdress(String emailAdress) {
-        this.emailAdress = emailAdress;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getGivenName() {

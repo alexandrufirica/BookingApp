@@ -9,8 +9,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
-@PageTitle("MY App")
-@Route(value = "/myapp")
+@PageTitle("MyApp")
+//@Route(value = "/myapp")
 @PermitAll
 public class BookingAppController extends VerticalLayout {
 
@@ -18,6 +18,7 @@ public class BookingAppController extends VerticalLayout {
     public  BookingAppController(){
         NavBar navBar = new NavBar();
 
+        addClassName("controller");
         add(navBar);
         hello();
 
