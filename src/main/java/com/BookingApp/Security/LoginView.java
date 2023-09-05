@@ -3,6 +3,7 @@ package com.BookingApp.Security;
 import com.BookingApp.Views.Manager.CreateAccomodation;
 import com.BookingApp.Views.Manager.CreateUser;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -24,6 +25,8 @@ public class LoginView extends VerticalLayout  {
 
     public static final String LOGIN_SUCCESS_URL ="/addRoom";
 
+    private Button button;
+
     public LoginView(AuthService authService){
         getStyle().set("background-color", "var(--lumo-contrast-5pct)")
                 .set("display", "flex").set("justify-content", "center")
@@ -37,11 +40,13 @@ public class LoginView extends VerticalLayout  {
         TextField email = new TextField("Email");
         PasswordField password = new PasswordField("Password");
 
+
+
         add(
                 new H1("Welcome at Booking App"),
                 email,
                 password,
-                new Button("Login", e -> {
+                button = new Button("Login", e -> {
                     try {
                         authService.authenticate(email.getValue(), password.getValue());
                         UI.getCurrent().navigate("MyApp");
@@ -50,9 +55,10 @@ public class LoginView extends VerticalLayout  {
                     }
 
                 })
+
         );
 
-
+        button.addClickShortcut(Key.ENTER);
 
         add(
                 createButton("Create User Account", CreateUser.class),
