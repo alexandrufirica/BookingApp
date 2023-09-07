@@ -2,6 +2,7 @@ package com.BookingApp.Views;
 
 import com.BookingApp.BookingAppController;
 import com.BookingApp.Security.SecurityService;
+import com.BookingApp.Security.SecurityUtils;
 import com.BookingApp.Views.Manager.AddRoom;
 import com.BookingApp.Views.Manager.RoomList;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -16,9 +17,9 @@ import org.springframework.stereotype.Component;
 
 public class NavBar extends AppLayout {
 
-    private SecurityService securityService;
+    private SecurityUtils securityUtils;
     public NavBar() {
-        securityService = new SecurityService();
+        securityUtils = new SecurityUtils();
         H1 title = new H1("BookingApp");
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("left", "var(--lumo-space-l)").set("margin", "0")
@@ -28,7 +29,7 @@ public class NavBar extends AppLayout {
 
         Button logout = new Button("Log out");
 
-        logout.addClickListener( e -> securityService.logout());
+        logout.addClickListener( e -> securityUtils.logout());
         addToNavbar(title, tabs , logout);
     }
 

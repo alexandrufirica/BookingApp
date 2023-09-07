@@ -3,31 +3,25 @@ package com.BookingApp.Security;
 import com.BookingApp.Views.Manager.CreateAccomodation;
 import com.BookingApp.Views.Manager.CreateUser;
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.AbstractLogin;
+import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLink;
+
 
 @PageTitle(value = "Booking Login")
 @Route (value = "/login")
 @AnonymousAllowed
-public class LoginView extends VerticalLayout  {
+public class LoginView extends VerticalLayout implements BeforeEnterListener, ComponentEventListener<AbstractLogin.LoginEvent> {
 
-    public static final String LOGIN_SUCCESS_URL ="/addRoom";
-
-    private Button button;
-
-    public LoginView(AuthService authService){
+    public static final String LOGIN_SUCCESS_URL ="/myapp";
+    LoginForm loginForm = new LoginForm();
+    public LoginView(){
         getStyle().set("background-color", "var(--lumo-contrast-5pct)")
                 .set("display", "flex").set("justify-content", "center")
                 .set("padding", "var(--lumo-space-l)");
@@ -37,33 +31,27 @@ public class LoginView extends VerticalLayout  {
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-        TextField email = new TextField("Email");
-        PasswordField password = new PasswordField("Password");
+        loginForm.setAction("login");
 
+        add(new H1("BookingApp Login"), loginForm);
 
-
-        add(
-                new H1("Welcome at Booking App"),
-                email,
-                password,
-                button = new Button("Login", e -> {
-                    try {
-                        authService.authenticate(email.getValue(), password.getValue());
-                        UI.getCurrent().navigate("RoomList");
-                    } catch (AuthService.AuthException ex) {
-                        Notification.show("Wrong Credentials");
-                    }
-
-                })
-
-        );
-
-        button.addClickShortcut(Key.ENTER);
+        loginForm.getElement().setAttribute("no-autofocus", "");
 
         add(
                 createButton("Create User Account", CreateUser.class),
                 createButton("Create Accommodation Account", CreateAccomodation.class));
 
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
+        if(beforeEnterEvent.getLocation()
+                .getQueryParameters()
+                .getParameters()
+                .containsKey("error")){
+
+            loginForm.setError(true);
+        }
     }
 
     private Button createButton(String buttonName, Class cls) {
@@ -79,4 +67,15 @@ public class LoginView extends VerticalLayout  {
         return button;
     }
 
+    public void onComponentEvent(AbstractLogin.LoginEvent loginEvent) {
+        boolean authenticated = SecurityUtils.authenticate(
+                loginEvent.getUsername(), loginEvent.getPassword());
+        System.out.println(authenticated);
+        System.out.println(loginEvent.getUsername() + "" +loginEvent.getPassword());
+        if (authenticated) {
+            UI.getCurrent().getPage().setLocation(LOGIN_SUCCESS_URL);
+        } else {
+            loginForm.setError(true);
+        }
+    }
 }

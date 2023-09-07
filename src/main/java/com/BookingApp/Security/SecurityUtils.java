@@ -4,6 +4,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinServletRequest;
 import com.vaadin.flow.server.VaadinSession;
 import jakarta.servlet.ServletException;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 public class SecurityUtils {
     private static final String LOGOUT_SUCCESS_URL = "/";
@@ -25,12 +26,14 @@ public class SecurityUtils {
             return true;
         } catch (ServletException e) {
             // login exception handle code omitted
+
             return false;
         }
     }
 
     public static void logout() {
-        VaadinSession.getCurrent().getSession().invalidate();
         UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
+        SecurityContextLogoutHandler logoutHandler =new SecurityContextLogoutHandler();
+        logoutHandler.logout(VaadinServletRequest.getCurrent().getHttpServletRequest(),null, null);
     }
 }

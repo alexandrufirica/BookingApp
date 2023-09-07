@@ -22,8 +22,7 @@ import java.util.Collections;
 
 @PageTitle(value = "RoomList")
 @Route(value = "/roomlist")
-@RouteAlias("")
-
+@RolesAllowed("ADMIN")
 public class RoomList extends VerticalLayout {
     Grid<Room> grid = new Grid<>(Room.class);
     TextField filterText = new TextField();
