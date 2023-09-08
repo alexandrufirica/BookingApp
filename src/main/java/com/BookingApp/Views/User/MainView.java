@@ -6,6 +6,7 @@ import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
@@ -34,7 +35,6 @@ public class MainView extends VerticalLayout implements AfterNavigationObserver 
     public MainView(AccommodationService accommodationService){
         this.accommodationService = accommodationService;
         addClassName("home-view");
-
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn( accommodation -> createCard(accommodation));
         add(navBar,grid);
@@ -67,8 +67,13 @@ public class MainView extends VerticalLayout implements AfterNavigationObserver 
 
         decription.add(header);
         card.add(decription);
+        card.addClickListener(event -> navigate());
         return card;
 
+    }
+
+    private void navigate() {
+        UI.getCurrent().getPage().setLocation("/accommodation");
     }
 
     @Override
