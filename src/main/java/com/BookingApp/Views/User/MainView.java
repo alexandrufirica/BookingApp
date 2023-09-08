@@ -4,9 +4,11 @@ import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Service.AccommodationService;
+import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -27,16 +29,15 @@ import java.util.List;
 public class MainView extends VerticalLayout implements AfterNavigationObserver {
 
     Grid<Accommodation>  grid = new Grid<>();
-
+    NavBar navBar = new NavBar();
     AccommodationService accommodationService;
     public MainView(AccommodationService accommodationService){
         this.accommodationService = accommodationService;
         addClassName("home-view");
-        setSizeFull();
-        grid.setHeight("100%");
+
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn( accommodation -> createCard(accommodation));
-        add(grid);
+        add(navBar,grid);
     }
 
     private Component createCard(Accommodation accommodation) {
