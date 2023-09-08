@@ -1,4 +1,4 @@
-package com.BookingApp.Views.Manager;
+package com.BookingApp.Views.Login;
 
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Security.AuthService;

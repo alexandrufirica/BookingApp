@@ -1,7 +1,6 @@
-package com.BookingApp.Security;
+package com.BookingApp.Views.Login;
 
-import com.BookingApp.Views.Manager.CreateAccomodation;
-import com.BookingApp.Views.Manager.CreateUser;
+import com.BookingApp.Security.SecurityUtils;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
