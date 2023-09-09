@@ -8,7 +8,7 @@ import jakarta.annotation.security.PermitAll;
 import jdk.jfr.Registered;
 
 @PageTitle("Accommodation-view")
-@Route("/accommodation")
+@Route("/accommodationPage")
 @PermitAll
 public class AccommodationView extends VerticalLayout {
 
