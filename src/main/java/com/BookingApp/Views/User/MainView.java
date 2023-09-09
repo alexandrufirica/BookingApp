@@ -32,6 +32,8 @@ public class MainView extends VerticalLayout implements AfterNavigationObserver 
     Grid<Accommodation>  grid = new Grid<>();
     NavBar navBar = new NavBar();
     AccommodationService accommodationService;
+    public static long accommodationId;
+
     public MainView(AccommodationService accommodationService){
         this.accommodationService = accommodationService;
         addClassName("home-view");
@@ -62,7 +64,7 @@ public class MainView extends VerticalLayout implements AfterNavigationObserver 
         country.addClassName("country");
         Span city = new Span(accommodation.getCity());
         city.addClassName("city");
-
+        accommodationId = accommodation.getId();
         header.add(name,country,city);
 
         decription.add(header);

@@ -5,6 +5,7 @@ import com.BookingApp.Data.Entity.Accommodation;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccommodationService implements  IAccommodationService{
@@ -27,6 +28,7 @@ public class AccommodationService implements  IAccommodationService{
         accommodationRepository.save(accommodation);
     }
     public void getAccommodation(long id){
-        accommodationRepository.getReferenceById(id);
+
+          accommodationRepository.findById(id);
     }
 }
