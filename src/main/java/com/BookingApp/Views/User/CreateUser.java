@@ -1,8 +1,10 @@
-package com.BookingApp.Views.Login;
+package com.BookingApp.Views.User;
 
+import com.BookingApp.Data.Entity.Role;
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Security.AuthService;
 import com.BookingApp.Service.UserService;
+import com.BookingApp.Views.Manager.RoomList;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -81,18 +83,22 @@ public class CreateUser extends VerticalLayout {
         reTypePassowrd = new PasswordField("Re-type Password");
         reTypePassowrd.setRequiredIndicatorVisible(true);
         
-        createButton = new Button("Create Profile", e -> createUser(
-                            givenName.getValue(),
-                            surName.getValue(),
-                            country.getValue(),
-                            city.getValue(),
-                            adress.getValue(),
-                            postalCode.getValue(),
-                            phone.getValue(),
-                            email.getValue(),
-                            password.getValue(),
-                            reTypePassowrd.getValue()
-                             ));
+        createButton = new Button("Create Profile", e -> {
+            createUser(
+                    givenName.getValue(),
+                    surName.getValue(),
+                    country.getValue(),
+                    city.getValue(),
+                    adress.getValue(),
+                    postalCode.getValue(),
+                    phone.getValue(),
+                    email.getValue(),
+                    password.getValue(),
+                    reTypePassowrd.getValue()
+            );
+            createButton.getUI().ifPresent(ui -> ui.navigate("/login"));
+            }
+        );
 
 
         createButton.addClickShortcut(Key.ENTER);
@@ -117,7 +123,7 @@ public class CreateUser extends VerticalLayout {
         }else if(!password.equals(reTypePassowrd)){
             Notification.show("Password don't match");
         }else {
-            authService.register(givenName, surName, email, country, city, adress, postalCode, phone, password);
+            authService.registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password, Role.USER);
             Notification.show("Registration succeeded.");
         }
     }

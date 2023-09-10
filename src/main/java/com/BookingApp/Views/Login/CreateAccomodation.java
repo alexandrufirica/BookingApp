@@ -86,7 +86,6 @@ public class CreateAccomodation extends VerticalLayout {
            accommodation.setPhoneNumber(phone.getValue());
            accommodation.setEmail(email.getValue());
            accommodation.setPassword(password.getValue());
-           accommodation.setRole("MANAGER");
            createAccommodation(accommodation);
         });
 
@@ -106,6 +105,10 @@ public class CreateAccomodation extends VerticalLayout {
     @PostMapping
     public void createAccommodation(Accommodation accommodation){
         accommodationService.createAccomodation(accommodation);
+
+    }
+
+    private void createAccommodation(String name, String city, String country, String adress, String postalCode, String email, String phoneNumber, String password, String role){
 
     }
 }

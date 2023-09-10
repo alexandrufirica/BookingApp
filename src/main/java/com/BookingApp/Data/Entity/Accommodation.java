@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Component
+//@Table(name = "accommodations")
 public class Accommodation extends AbstractEntity {
 
     @NotBlank
@@ -30,7 +31,7 @@ public class Accommodation extends AbstractEntity {
     @NotBlank
     private String password;
     @NotBlank
-    private String role;
+    private Role role;
     @OneToMany(mappedBy = "accommodation")
     @Nullable
     private List<Room> rooms = new LinkedList<>();
@@ -41,14 +42,16 @@ public class Accommodation extends AbstractEntity {
 
     }
 
-    public Accommodation(String name, String city, String country,String adress,String email, String phoneNumber, String password){
+    public Accommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Role role){
         this.name = name;
         this.city = city;
         this.country = country;
         this.adress = adress;
+        this.postalCode = postalCode;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.role = role;
     }
 
 
@@ -65,10 +68,10 @@ public class Accommodation extends AbstractEntity {
         return roomsCount;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
     public String getPostalCode() {

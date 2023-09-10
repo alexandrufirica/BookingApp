@@ -1,6 +1,7 @@
-package com.BookingApp.Views.Login;
+package com.BookingApp.Security;
 
-import com.BookingApp.Security.SecurityUtils;
+import com.BookingApp.Views.Manager.CreateAccomodation;
+import com.BookingApp.Views.User.CreateUser;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -36,9 +37,23 @@ public class LoginView extends VerticalLayout implements BeforeEnterListener, Co
 
         loginForm.getElement().setAttribute("no-autofocus", "");
 
+        Button createUser = new Button("Create User Account");
+        createUser.addClickListener( e ->
+                createUser.getUI().ifPresent(ui -> ui.navigate(CreateUser.class))
+        );
+
+
+        Button createAccommodation = new Button("Create Accommodation Account");
+        createAccommodation.addClickListener( e ->
+                createAccommodation.getUI().ifPresent(ui -> ui.navigate(CreateAccomodation.class))
+        );
+
+
+
         add(
-                createButton("Create User Account", CreateUser.class),
-                createButton("Create Accommodation Account", CreateAccomodation.class));
+                createUser,
+                createAccommodation
+                );
 
     }
 

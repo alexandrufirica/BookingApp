@@ -1,8 +1,10 @@
 package com.BookingApp.Security;
 
 import com.BookingApp.BookingAppController;
+import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Role;
 import com.BookingApp.Data.Entity.User;
+import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.UserRepository;
 import com.BookingApp.Views.Manager.AddRoom;
 import com.BookingApp.Views.Manager.RoomList;
@@ -28,10 +30,12 @@ public class AuthService {
     }
 
     private final UserRepository userRepository;
+    private final AccommodationRepository accommodationRepository;
 //    private final MailSender mailSender;
 
-    public AuthService(UserRepository userRepository){
+    public AuthService(UserRepository userRepository, AccommodationRepository accommodationRepository){
         this.userRepository = userRepository;
+        this.accommodationRepository = accommodationRepository;
 //        this.mailSender = mailSender;
     }
 
@@ -71,8 +75,8 @@ public class AuthService {
         return routes;
     }
 
-    public void register(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password) {
-         userRepository.save(new User(givenName, surName, email, country, city, adress, postalCode, phone, password, Role.USER));
+    public void registerUser(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password, Role role) {
+         userRepository.save(new User(givenName, surName, email, country, city, adress, postalCode, phone, password, role));
 //        String text = "http://localhost:8080/activate?code=" + user.getActivationCode();
 //        SimpleMailMessage message = new SimpleMailMessage();
 //        message.setFrom("noreply@example.com");
@@ -80,6 +84,10 @@ public class AuthService {
 //        message.setText(text);
 //        message.setTo(email);
 //        mailSender.send(message);
+    }
+
+    public void registerAccommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Role role) {
+        accommodationRepository.save(new Accommodation(name, country, city, adress, postalCode, phoneNumber, email, password, role));
     }
 
     public void activate(String activationCode) throws AuthException {
