@@ -1,4 +1,4 @@
-package com.BookingApp.Views.Login;
+package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Role;
