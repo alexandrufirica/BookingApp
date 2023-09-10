@@ -115,12 +115,12 @@ public class CreateUser extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 
-    private void createUser(String givenName, String surName, String country, String city, String adress, String postalCode, String phone, String email, String password, String reTypePassowrd) {
+    private void createUser(String givenName, String surName, String country, String city, String adress, String postalCode, String phone, String email, String password, String reTypePassword) {
         if(email.trim().isEmpty()){
             Notification.show("Enter a email");
         }else if (password.isEmpty()){
             Notification.show("Enter a password");
-        }else if(!password.equals(reTypePassowrd)){
+        }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
         }else {
             authService.registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password, Role.USER);

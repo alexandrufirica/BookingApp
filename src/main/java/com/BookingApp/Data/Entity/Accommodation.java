@@ -3,6 +3,8 @@ package com.BookingApp.Data.Entity;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.Formula;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Component
-//@Table(name = "accommodations")
+@Table(name = "accommodations")
 public class Accommodation extends AbstractEntity {
 
     @NotBlank
@@ -29,7 +31,9 @@ public class Accommodation extends AbstractEntity {
     @NotBlank
     private String phoneNumber;
     @NotBlank
-    private String password;
+    private String passwordSalt;
+    private String passwordHash;
+    private String activationCode;
     @NotBlank
     private Role role;
     @OneToMany(mappedBy = "accommodation")
@@ -50,7 +54,9 @@ public class Accommodation extends AbstractEntity {
         this.postalCode = postalCode;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.password = password;
+        this.passwordSalt = RandomStringUtils.random(32);
+        this.passwordHash = DigestUtils.sha1Hex(password + passwordSalt);
+        this.activationCode = RandomStringUtils.randomAlphanumeric(32);
         this.role = role;
     }
 
@@ -80,12 +86,12 @@ public class Accommodation extends AbstractEntity {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
-    public String getPassword() {
-        return password;
+    public String getPasswordSalt() {
+        return passwordSalt;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordSalt(String passwordSalt) {
+        this.passwordSalt = passwordSalt;
     }
     public String getCountry() {
         return country;
