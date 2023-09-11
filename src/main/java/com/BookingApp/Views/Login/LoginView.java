@@ -69,18 +69,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterListener, Co
         }
     }
 
-    private Button createButton(String buttonName, Class cls) {
-        RouterLink link = new RouterLink();
-        link.add(buttonName);
-        link.setRoute(cls);
-        link.setTabIndex(-1);
-        Button button = new Button(link);
-        button.addThemeVariants(
-                ButtonVariant.LUMO_TERTIARY
-        );
-
-        return button;
-    }
 
     public void onComponentEvent(AbstractLogin.LoginEvent loginEvent) {
         boolean authenticated = SecurityUtils.authenticate(

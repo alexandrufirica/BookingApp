@@ -128,9 +128,4 @@ public class CreateUser extends VerticalLayout {
         }
     }
 
-    @PostMapping
-    public void createUser(User user){
-        userService.createUser(user);
-
-    }
 }

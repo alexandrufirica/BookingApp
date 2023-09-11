@@ -43,37 +43,14 @@ public class AuthService {
         User user = userRepository.getUserByEmail(email);
         if(user != null && user.checkPassword(password) && user.isActive()){
             VaadinSession.getCurrent().setAttribute(User.class,user);
-            createRoutes(user.getRole());
         }else{
             throw new AuthException();
         }
     }
 
-    private void createRoutes(Role role) {
-        getAuthorizedRoutes(role).stream()
-                .forEach(route ->
-                        RouteConfiguration.forSessionScope().setRoute(
-                        route.route, BookingAppController.class
-                        ));
-    }
 
-    public List<AuthorizedRoute> getAuthorizedRoutes(Role role) {
-        ArrayList<AuthorizedRoute> routes = new ArrayList<AuthorizedRoute>();
 
-        if (role.equals(Role.USER)) {
-            routes.add(new AuthorizedRoute("MyApp", "App", BookingAppController.class));
 
-        } else if (role.equals(Role.MANAGER)) {
-            routes.add(new AuthorizedRoute("roomlist", "RoomList", RoomList.class));
-            routes.add(new AuthorizedRoute("addRoom", "AddRoom", AddRoom.class));
-
-        } else if (role.equals(Role.ADMIN)) {
-            routes.add(new AuthorizedRoute("roomlist", "RoomList", RoomList.class));
-            routes.add(new AuthorizedRoute("addRoom", "AddRoom", AddRoom.class));
-            routes.add(new AuthorizedRoute("MyApp", "App", BookingAppController.class));
-        }
-        return routes;
-    }
 
     public void registerUser(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password, Role role) {
          userRepository.save(new User(givenName, surName, email, country, city, adress, postalCode, phone, password, role));

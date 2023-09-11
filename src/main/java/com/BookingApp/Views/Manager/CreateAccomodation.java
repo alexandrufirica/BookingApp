@@ -109,11 +109,6 @@ public class CreateAccomodation extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 
-    @PostMapping
-    public void createAccommodation(Accommodation accommodation){
-        accommodationService.createAccomodation(accommodation);
-
-    }
 
     private void createAccommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, String reTypePassword){
         if(email.trim().isEmpty()){
