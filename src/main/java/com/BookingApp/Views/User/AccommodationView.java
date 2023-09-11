@@ -3,6 +3,7 @@ package com.BookingApp.Views.User;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Service.AccommodationService;
+import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -15,6 +16,7 @@ import jdk.jfr.Registered;
 @PermitAll
 public class AccommodationView extends VerticalLayout {
 
+    NavBar navBar = new NavBar();
     private final AccommodationRepository accommodationRepository;
 
     public AccommodationView(AccommodationRepository accommodationRepository){
@@ -25,6 +27,8 @@ public class AccommodationView extends VerticalLayout {
         addClassName("accommodation-view");
 
         H1 label = new H1("Accommodation " + accommodation.getName());
-        add(label);
+        add(navBar,label);
+
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 }
