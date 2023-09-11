@@ -24,7 +24,7 @@ public class AccommodationView extends VerticalLayout {
 
         addClassName("accommodation-view");
 
-        H1 label = new H1("Accommodation" + accommodation.getName());
+        H1 label = new H1("Accommodation " + accommodation.getName());
         add(label);
     }
 }

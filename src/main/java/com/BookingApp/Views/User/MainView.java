@@ -63,12 +63,14 @@ public class MainView extends VerticalLayout implements AfterNavigationObserver 
         country.addClassName("country");
         Span city = new Span(accommodation.getCity());
         city.addClassName("city");
-        accommodationId = accommodation.getId();
         header.add(name,country,city);
 
         decription.add(header);
         card.add(decription);
-        card.addClickListener(event -> navigate());
+        card.addClickListener(event -> {
+            accommodationId = accommodation.getId();
+            navigate();
+        });
         return card;
 
     }
