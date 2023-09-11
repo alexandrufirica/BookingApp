@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("BookingApp - Create Accommodation")
 @Route(value = "/newaccommodation")
-@Component
 @AnonymousAllowed
 public class CreateAccomodation extends VerticalLayout {
 

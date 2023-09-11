@@ -28,7 +28,6 @@ import java.util.List;
 @Route(value = "/mainview")
 @RolesAllowed({"USER","ADMIN"})
 public class MainView extends VerticalLayout implements AfterNavigationObserver {
-
     Grid<Accommodation>  grid = new Grid<>();
     NavBar navBar = new NavBar();
     AccommodationService accommodationService;

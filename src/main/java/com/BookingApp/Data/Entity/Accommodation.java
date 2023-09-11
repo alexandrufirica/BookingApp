@@ -15,26 +15,16 @@ import java.util.List;
 @Component
 @Table(name = "accommodations")
 public class Accommodation extends AbstractEntity {
-
-    @NotBlank
     private String name;
-    @NotBlank
     private String city;
-    @NotBlank
     private String country;
-    @NotBlank
     private String adress;
-    @NotBlank
     private String postalCode;
-    @NotBlank
     private String email;
-    @NotBlank
     private String phoneNumber;
-    @NotBlank
     private String passwordSalt;
     private String passwordHash;
     private String activationCode;
-    @NotBlank
     private Role role;
     @OneToMany(mappedBy = "accommodation")
     @Nullable
