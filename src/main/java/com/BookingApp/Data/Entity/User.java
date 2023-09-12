@@ -51,6 +51,14 @@ public class User extends AbstractEntity {
         return DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash);
     }
 
+    public String getPassword(String password){
+        if(DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash)){
+            return password;
+        }
+        return null;
+    }
+
+
     public String getEmail() {
         return email;
     }

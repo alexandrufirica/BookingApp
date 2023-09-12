@@ -106,7 +106,7 @@ public class RoomList extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findRoomByAccommodation(73L));
+        grid.setItems(service.findRoomByAccommodation(accommodation.getId()));
     }
 
     private void editRoom(Room room) {

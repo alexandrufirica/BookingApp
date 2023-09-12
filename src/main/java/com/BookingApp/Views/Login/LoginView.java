@@ -38,6 +38,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterListener, Co
 
         loginForm.getElement().setAttribute("no-autofocus", "");
 
+
         Button createUser = new Button("Create User Account");
         createUser.addClickListener( e ->
                 createUser.getUI().ifPresent(ui -> ui.navigate(CreateUser.class))
@@ -73,8 +74,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterListener, Co
     public void onComponentEvent(AbstractLogin.LoginEvent loginEvent) {
         boolean authenticated = SecurityUtils.authenticate(
                 loginEvent.getUsername(), loginEvent.getPassword());
-        System.out.println(authenticated);
-        System.out.println(loginEvent.getUsername() + "" +loginEvent.getPassword());
         if (authenticated) {
             UI.getCurrent().getPage().setLocation(LOGIN_SUCCESS_URL);
         } else {
