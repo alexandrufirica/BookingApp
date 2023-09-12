@@ -11,4 +11,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query("select c from Room c " +
             "where lower(c.roomType) like lower(concat('%', :searchTerm, '%')) ")
     List<Room> search(@Param("searchTerm") String searchTerm);
+
+    List<Room> getRoomsByAccommodationId (Long id);
 }

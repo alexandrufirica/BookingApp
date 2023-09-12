@@ -62,5 +62,9 @@ public class RoomService implements  IRoomService{
     public void createRoom(Room room) {
         roomRepository.save(room);
     }
+
+    public List<Room> findRoomByAccommodation(Long accommodationId){
+        return roomRepository.getRoomsByAccommodationId(accommodationId);
+    }
 }
 

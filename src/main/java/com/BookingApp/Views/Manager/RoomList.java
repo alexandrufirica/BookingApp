@@ -34,7 +34,7 @@ public class RoomList extends VerticalLayout {
     public RoomList(RoomService service, Accommodation accommodation) {
         this.service = service;
         this.accommodation = accommodation;
-        accommodation.setId(43L);
+        accommodation.setId(73L);
         addClassName("roomList-view");
         configureGrid();
         configureForm();
@@ -106,7 +106,7 @@ public class RoomList extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findAllRoom(filterText.getValue()));
+        grid.setItems(service.findRoomByAccommodation(73L));
     }
 
     private void editRoom(Room room) {

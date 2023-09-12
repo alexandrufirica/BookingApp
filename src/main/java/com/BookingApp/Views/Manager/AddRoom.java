@@ -3,6 +3,7 @@ package com.BookingApp.Views.Manager;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.Status;
+import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Key;
@@ -34,16 +35,17 @@ public class AddRoom extends VerticalLayout {
     private NumberField pricePerNight;
     private final RoomService roomService;
     private final Room room;
-    private Accommodation accommodation;
+    private AccommodationRepository accommodationRepository;
     private Status status;
 
-    public AddRoom(RoomService roomService,Accommodation accommodation,Status status, Room room){
+    public AddRoom(RoomService roomService,AccommodationRepository accommodationRepository,Status status, Room room){
         this.roomService = roomService;
-        this.accommodation = accommodation;
+        this.accommodationRepository = accommodationRepository;
         this.status = status;
         this.room= room;
 
-        accommodation.setId(43L);
+        Accommodation accommodation = accommodationRepository.getAccommodationById(73L);
+
         status.setId(1L);
 
 
