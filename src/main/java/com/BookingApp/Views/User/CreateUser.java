@@ -1,10 +1,10 @@
 package com.BookingApp.Views.User;
 
-import com.BookingApp.Data.Entity.Role;
+import com.BookingApp.Data.Entity.Roles;
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Security.AuthService;
+import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.UserService;
-import com.BookingApp.Views.Manager.RoomList;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -17,8 +17,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import org.aspectj.weaver.ast.Not;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("BookingApp - Create User Account")
 @Route(value = "/newuser")
@@ -38,13 +36,16 @@ public class CreateUser extends VerticalLayout {
     private UserService userService;
     private final User user;
 
-    private final AuthService authService;
+//    private final AuthService authService;
+
+    private final CustomUserDetailsService customUserDetailsService;
 
     
-    public CreateUser (UserService userService, User user, AuthService authService){
+    public CreateUser (UserService userService, User user, CustomUserDetailsService customUserDetailsService ){
         this.userService = userService;
         this.user = user;
-        this.authService = authService;
+//        this.authService = authService;
+        this.customUserDetailsService = customUserDetailsService;
 
 
         H1 label = new H1("BookingApp");
@@ -123,7 +124,7 @@ public class CreateUser extends VerticalLayout {
         }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
         }else {
-            authService.registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password, Role.USER);
+            customUserDetailsService.registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password, Roles.USER);
             Notification.show("Registration succeeded.");
         }
     }

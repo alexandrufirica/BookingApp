@@ -3,10 +3,8 @@ package com.BookingApp.Data.Entity;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
-import org.apache.commons.codec.digest.DigestUtils;
 
-
-import java.util.Random;
+import java.util.Set;
 
 @Entity
 @Component
@@ -21,9 +19,14 @@ public class User extends AbstractEntity {
     private String adress;
     private String postalCode;
     private String phoneNumber;
-    private String passwordSalt;
-    private String passwordHash;
-    private Role role;
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "name_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private Set<Role> roles;
     private String activationCode;
     private boolean active;
 
@@ -31,7 +34,7 @@ public class User extends AbstractEntity {
 
     }
 
-    public User(String givenName, String surName, String email, String country, String city, String adress, String postalCode, String phoneNumber, String password, Role role){
+    public User(String givenName, String surName, String email, String country, String city, String adress, String postalCode, String phoneNumber, String password, Roles roles){
         this.givenName = givenName;
         this.surName = surName;
         this.email = email;
@@ -40,23 +43,22 @@ public class User extends AbstractEntity {
         this.adress = adress;
         this.postalCode = postalCode;
         this.phoneNumber = phoneNumber;
-        this.passwordSalt = RandomStringUtils.random(32);
-        this.passwordHash = DigestUtils.sha1Hex(password + passwordSalt);
+        this.password = password;
         this.activationCode = RandomStringUtils.randomAlphanumeric(32);
-        this.role = role;
+//        this.roles = roles;
 
     }
 
-    public boolean checkPassword(String password){
-        return DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash);
-    }
+//    public boolean checkPassword(String password){
+//        return DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash);
+//    }
 
-    public String getPassword(String password){
-        if(DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash)){
-            return password;
-        }
-        return null;
-    }
+//    public String getPassword(String password){
+//        if(DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash)){
+//            return password;
+//        }
+//        return null;
+//    }
 
 
     public String getEmail() {
@@ -123,21 +125,21 @@ public class User extends AbstractEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPasswordSalt() {
-        return passwordSalt;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordSalt(String password) {
-        this.passwordSalt = password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getPasswordHash() { return passwordHash; }
+//    public String getPasswordHash() { return passwordHash; }
+//
+//    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
-    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
-
-    public Role getRole() { return role; }
-
-    public void setRole(Role role) { this.role = role; }
+//    public Roles getRole() { return roles; }
+//
+//    public void setRole(Roles roles) { this.roles = roles; }
 
     public String getActivationCode() {
         return activationCode;
@@ -153,5 +155,13 @@ public class User extends AbstractEntity {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

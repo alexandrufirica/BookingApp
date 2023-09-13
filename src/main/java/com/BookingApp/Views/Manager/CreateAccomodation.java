@@ -1,7 +1,7 @@
 package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Accommodation;
-import com.BookingApp.Data.Entity.Role;
+import com.BookingApp.Data.Entity.Roles;
 import com.BookingApp.Security.AuthService;
 import com.BookingApp.Service.AccommodationService;
 import com.vaadin.flow.component.Key;
@@ -16,8 +16,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("BookingApp - Create Accommodation")
 @Route(value = "/newaccommodation")
@@ -118,7 +116,7 @@ public class CreateAccomodation extends VerticalLayout {
         }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
         }else {
-            authService.registerAccommodation(name, country, city, adress, postalCode, phoneNumber, email, password, Role.MANAGER);
+            authService.registerAccommodation(name, country, city, adress, postalCode, phoneNumber, email, password, Roles.MANAGER);
             Notification.show("Registration succeeded.");
         }
     }

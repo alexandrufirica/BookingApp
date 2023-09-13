@@ -1,6 +1,23 @@
 package com.BookingApp.Data.Entity;
 
-public enum Role {
+import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 
-    USER, MANAGER, ADMIN
+@Entity
+@Component
+@Table(name = "roles")
+public class Role extends AbstractEntity {
+
+
+    @Column(length = 60)
+    private String name;
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

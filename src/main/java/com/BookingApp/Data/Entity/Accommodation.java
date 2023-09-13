@@ -2,7 +2,6 @@ package com.BookingApp.Data.Entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.Formula;
@@ -25,7 +24,7 @@ public class Accommodation extends AbstractEntity {
     private String passwordSalt;
     private String passwordHash;
     private String activationCode;
-    private Role role;
+    private Roles roles;
     @OneToMany(mappedBy = "accommodation")
     @Nullable
     private List<Room> rooms = new LinkedList<>();
@@ -36,7 +35,7 @@ public class Accommodation extends AbstractEntity {
 
     }
 
-    public Accommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Role role){
+    public Accommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Roles roles){
         this.name = name;
         this.city = city;
         this.country = country;
@@ -47,7 +46,7 @@ public class Accommodation extends AbstractEntity {
         this.passwordSalt = RandomStringUtils.random(32);
         this.passwordHash = DigestUtils.sha1Hex(password + passwordSalt);
         this.activationCode = RandomStringUtils.randomAlphanumeric(32);
-        this.role = role;
+        this.roles = roles;
     }
 
 
@@ -64,11 +63,11 @@ public class Accommodation extends AbstractEntity {
         return roomsCount;
     }
 
-    public Role getRole() {
-        return role;
+    public Roles getRole() {
+        return roles;
     }
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(Roles roles) {
+        this.roles = roles;
     }
     public String getPostalCode() {
         return postalCode;
