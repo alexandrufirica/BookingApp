@@ -43,8 +43,8 @@ public class AuthService {
 
 
 
-    public void registerUser(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password, Roles roles) {
-         userRepository.save(new User(givenName, surName, email, country, city, adress, postalCode, phone, password, roles));
+//    public void registerUser(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password, Roles roles) {
+//         userRepository.save(new User(givenName, surName, email, country, city, adress, postalCode, phone, password, roles));
 //        String text = "http://localhost:8080/activate?code=" + user.getActivationCode();
 //        SimpleMailMessage message = new SimpleMailMessage();
 //        message.setFrom("noreply@example.com");
@@ -52,7 +52,7 @@ public class AuthService {
 //        message.setText(text);
 //        message.setTo(email);
 //        mailSender.send(message);
-    }
+//    }
 
     public void registerAccommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Roles roles) {
         accommodationRepository.save(new Accommodation(name, country, city, adress, postalCode, phoneNumber, email, password, roles));

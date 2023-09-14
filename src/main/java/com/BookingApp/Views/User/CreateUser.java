@@ -40,7 +40,7 @@ public class CreateUser extends VerticalLayout {
 
     private final CustomUserDetailsService customUserDetailsService;
 
-    
+
     public CreateUser (UserService userService, User user, CustomUserDetailsService customUserDetailsService ){
         this.userService = userService;
         this.user = user;
@@ -124,7 +124,7 @@ public class CreateUser extends VerticalLayout {
         }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
         }else {
-            customUserDetailsService.registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password, Roles.USER);
+            customUserDetailsService.registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password);
             Notification.show("Registration succeeded.");
         }
     }

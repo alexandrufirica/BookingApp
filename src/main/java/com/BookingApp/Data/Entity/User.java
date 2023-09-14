@@ -26,7 +26,7 @@ public class User extends AbstractEntity {
             joinColumns = @JoinColumn(name = "name_id",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private Set<Role> roles;
+    private Set<Role> role;
     private String activationCode;
     private boolean active;
 
@@ -34,7 +34,7 @@ public class User extends AbstractEntity {
 
     }
 
-    public User(String givenName, String surName, String email, String country, String city, String adress, String postalCode, String phoneNumber, String password, Roles roles){
+    public User(String givenName, String surName, String email, String country, String city, String adress, String postalCode, String phoneNumber, String password, Set<Role> role){
         this.givenName = givenName;
         this.surName = surName;
         this.email = email;
@@ -45,7 +45,7 @@ public class User extends AbstractEntity {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.activationCode = RandomStringUtils.randomAlphanumeric(32);
-//        this.roles = roles;
+        this.role = role;
 
     }
 
@@ -137,9 +137,9 @@ public class User extends AbstractEntity {
 //
 //    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
-//    public Roles getRole() { return roles; }
+//    public Roles getRole() { return role; }
 //
-//    public void setRole(Roles roles) { this.roles = roles; }
+//    public void setRole(Roles role) { this.role = role; }
 
     public String getActivationCode() {
         return activationCode;
@@ -157,11 +157,11 @@ public class User extends AbstractEntity {
         this.active = active;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Set<Role> getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Set<Role> role) {
+        this.role = role;
     }
 }

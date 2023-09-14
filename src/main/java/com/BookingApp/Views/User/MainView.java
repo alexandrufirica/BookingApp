@@ -17,6 +17,7 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 
 import java.lang.reflect.Array;
@@ -26,7 +27,8 @@ import java.util.List;
 
 @PageTitle(value = "Main View")
 @Route(value = "/mainview")
-@RolesAllowed({"USER","ADMIN"})
+//@RolesAllowed({"USER","ADMIN"})
+@PermitAll
 public class MainView extends VerticalLayout implements AfterNavigationObserver {
     Grid<Accommodation>  grid = new Grid<>();
     NavBar navBar = new NavBar();
