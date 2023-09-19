@@ -1,6 +1,7 @@
 package com.BookingApp.Security;
 
 import com.BookingApp.Data.Entity.User;
+import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoleRepository;
 import com.BookingApp.Data.Repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,12 +18,13 @@ import java.util.stream.Collectors;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private UserRepository userRepository;
-
     private RoleRepository roleRepository;
+    private AccommodationRepository accommodationRepository;
 
-    public CustomUserDetailsService(UserRepository userRepository,RoleRepository roleRepository) {
+    public CustomUserDetailsService(UserRepository userRepository,RoleRepository roleRepository, AccommodationRepository accommodationRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.accommodationRepository = accommodationRepository;
     }
 
     @Override

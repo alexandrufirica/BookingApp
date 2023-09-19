@@ -136,7 +136,6 @@ public class CreateUser extends VerticalLayout {
     }
 
     public void registerUser(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password) {
-//        userRepository.save(new User(givenName, surName, email, country, city, adress, postalCode, phone, SecurityConfig.passwordEncoder().encode(password), Collections.singleton(roleRepository.findByName("ROLES_USER").get())));
 
         User user = new User();
         user.setGivenName(this.givenName.getValue());

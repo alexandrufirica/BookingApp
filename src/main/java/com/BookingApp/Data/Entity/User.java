@@ -51,18 +51,6 @@ public class User extends AbstractEntity {
 
     }
 
-//    public boolean checkPassword(String password){
-//        return DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash);
-//    }
-
-//    public String getPassword(String password){
-//        if(DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash)){
-//            return password;
-//        }
-//        return null;
-//    }
-
-
     public String getEmail() {
         return email;
     }
@@ -135,14 +123,6 @@ public class User extends AbstractEntity {
         this.password = password;
     }
 
-//    public String getPasswordHash() { return passwordHash; }
-//
-//    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
-
-//    public Roles getRole() { return role; }
-//
-//    public void setRole(Roles role) { this.role = role; }
-
     public String getActivationCode() {
         return activationCode;
     }
@@ -159,11 +139,4 @@ public class User extends AbstractEntity {
         this.active = active;
     }
 
-//    public Set<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
 }
