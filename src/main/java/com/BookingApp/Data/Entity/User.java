@@ -1,11 +1,13 @@
 package com.BookingApp.Data.Entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+@Data
 @Entity
 @Component
 @Table(name = "users")
@@ -21,12 +23,12 @@ public class User extends AbstractEntity {
     private String phoneNumber;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "name_id",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private Set<Role> role;
+    private Set<Role> roles;
     private String activationCode;
     private boolean active;
 
@@ -45,7 +47,7 @@ public class User extends AbstractEntity {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.activationCode = RandomStringUtils.randomAlphanumeric(32);
-        this.role = role;
+        this.roles = role;
 
     }
 
@@ -157,11 +159,11 @@ public class User extends AbstractEntity {
         this.active = active;
     }
 
-    public Set<Role> getRole() {
-        return role;
-    }
-
-    public void setRole(Set<Role> role) {
-        this.role = role;
-    }
+//    public Set<Role> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(Set<Role> roles) {
+//        this.roles = roles;
+//    }
 }

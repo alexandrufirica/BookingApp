@@ -9,11 +9,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("MyApp")
 @Route(value = "/myapp")
 @RouteAlias("")
-@PermitAll
+@RolesAllowed("USER")
 
 public class BookingAppController extends VerticalLayout {
 

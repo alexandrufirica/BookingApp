@@ -1,9 +1,13 @@
 package com.BookingApp.Views.User;
 
+import com.BookingApp.Data.Entity.Role;
 import com.BookingApp.Data.Entity.Roles;
 import com.BookingApp.Data.Entity.User;
+import com.BookingApp.Data.Repository.RoleRepository;
+import com.BookingApp.Data.Repository.UserRepository;
 import com.BookingApp.Security.AuthService;
 import com.BookingApp.Security.CustomUserDetailsService;
+import com.BookingApp.Security.SecurityConfig;
 import com.BookingApp.Service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -17,6 +21,10 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Collections;
 
 @PageTitle("BookingApp - Create User Account")
 @Route(value = "/newuser")
@@ -33,19 +41,17 @@ public class CreateUser extends VerticalLayout {
     private PasswordField password;
     private PasswordField reTypePassowrd;
     private Button createButton;
-    private UserService userService;
-    private final User user;
-
-//    private final AuthService authService;
-
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
-    public CreateUser (UserService userService, User user, CustomUserDetailsService customUserDetailsService ){
-        this.userService = userService;
-        this.user = user;
-//        this.authService = authService;
-        this.customUserDetailsService = customUserDetailsService;
+
+
+    public CreateUser ( UserRepository userRepository, RoleRepository roleRepository){
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
 
 
         H1 label = new H1("BookingApp");
@@ -124,9 +130,29 @@ public class CreateUser extends VerticalLayout {
         }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
         }else {
-            customUserDetailsService.registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password);
+            registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password);
             Notification.show("Registration succeeded.");
         }
+    }
+
+    public void registerUser(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password) {
+//        userRepository.save(new User(givenName, surName, email, country, city, adress, postalCode, phone, SecurityConfig.passwordEncoder().encode(password), Collections.singleton(roleRepository.findByName("ROLES_USER").get())));
+
+        User user = new User();
+        user.setGivenName(this.givenName.getValue());
+        user.setSurName(this.surName.getValue());
+        user.setEmail(this.email.getValue());
+        user.setCountry(this.country.getValue());
+        user.setCity(this.city.getValue());
+        user.setAdress(this.adress.getValue());
+        user.setPostalCode(this.postalCode.getValue());
+        user.setPhoneNumber(this.phone.getValue());
+        user.setPassword(passwordEncoder.encode(this.password.getValue()));
+
+        Role roles = roleRepository.findByName("ROLE_USER").get();
+        user.setRoles(Collections.singleton(roles));
+        userRepository.save(user);
+
     }
 
 }
