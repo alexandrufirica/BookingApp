@@ -103,7 +103,7 @@ public class CreateUser extends VerticalLayout {
                     password.getValue(),
                     reTypePassowrd.getValue()
             );
-            createButton.getUI().ifPresent(ui -> ui.navigate("/login"));
+
             }
         );
 
@@ -129,9 +129,12 @@ public class CreateUser extends VerticalLayout {
             Notification.show("Enter a password");
         }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
-        }else {
+        }else if (userRepository.existsByEmail(email)){
+            Notification.show("This email allready exists!");
+        } else {
             registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password);
             Notification.show("Registration succeeded.");
+            createButton.getUI().ifPresent(ui -> ui.navigate("/login"));
         }
     }
 
