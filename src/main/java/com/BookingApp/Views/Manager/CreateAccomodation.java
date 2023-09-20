@@ -6,6 +6,7 @@ import com.BookingApp.Data.Entity.Roles;
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoleRepository;
+import com.BookingApp.Data.Repository.UserRepository;
 import com.BookingApp.Security.AuthService;
 import com.BookingApp.Service.AccommodationService;
 import com.vaadin.flow.component.Key;
@@ -42,12 +43,14 @@ public class CreateAccomodation extends VerticalLayout {
     private Button createButton;
     private final AccommodationRepository accommodationRepository;
     private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public CreateAccomodation(AccommodationRepository accommodationRepository, RoleRepository roleRepository){
+    public CreateAccomodation(AccommodationRepository accommodationRepository, RoleRepository roleRepository, UserRepository userRepository){
         this.accommodationRepository = accommodationRepository;
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
 
 
         H1 label = new H1("BookingApp");
@@ -125,7 +128,9 @@ public class CreateAccomodation extends VerticalLayout {
             Notification.show("Password don't match");
         }else if(accommodationRepository.existsByEmail(email)){
             Notification.show("This email allready exists!");
-        }else {
+        } else if (userRepository.existsByEmail(email)) {
+            Notification.show("This email allready exists!");
+        } else {
             registerAccommodation(name, country, city, adress, postalCode, phoneNumber, email, password);
             Notification.show("Registration succeeded.");
             createButton.getUI().ifPresent( ui -> ui.navigate("/login"));
