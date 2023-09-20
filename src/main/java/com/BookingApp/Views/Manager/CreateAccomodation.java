@@ -1,7 +1,11 @@
 package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Accommodation;
+import com.BookingApp.Data.Entity.Role;
 import com.BookingApp.Data.Entity.Roles;
+import com.BookingApp.Data.Entity.User;
+import com.BookingApp.Data.Repository.AccommodationRepository;
+import com.BookingApp.Data.Repository.RoleRepository;
 import com.BookingApp.Security.AuthService;
 import com.BookingApp.Service.AccommodationService;
 import com.vaadin.flow.component.Key;
@@ -16,6 +20,10 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Collections;
 
 @PageTitle("BookingApp - Create Accommodation")
 @Route(value = "/newaccommodation")
@@ -32,14 +40,15 @@ public class CreateAccomodation extends VerticalLayout {
     private PasswordField password;
     private PasswordField reTypePassowrd;
     private Button createButton;
-    private final AccommodationService accommodationService;
-    private final Accommodation accommodation;
-    private final AuthService authService;
+    private final AccommodationRepository accommodationRepository;
+    private final RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public CreateAccomodation(AccommodationService accommodationService, Accommodation accommodation, AuthService authService){
-        this.accommodationService = accommodationService;
-        this.accommodation = accommodation;
-        this.authService = authService;
+    public CreateAccomodation(AccommodationRepository accommodationRepository, RoleRepository roleRepository){
+        this.accommodationRepository = accommodationRepository;
+        this.roleRepository = roleRepository;
+
 
         H1 label = new H1("BookingApp");
         H1 label2 = new H1("Create your accommodation profile");
@@ -116,8 +125,27 @@ public class CreateAccomodation extends VerticalLayout {
         }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
         }else {
-            authService.registerAccommodation(name, country, city, adress, postalCode, phoneNumber, email, password, Roles.MANAGER);
+            registerAccommodation(name, country, city, adress, postalCode, phoneNumber, email, password);
             Notification.show("Registration succeeded.");
         }
     }
+
+    public void registerAccommodation(String name, String country, String city, String adress, String postalCode, String phone,String email, String password) {
+
+        Accommodation accommodation = new Accommodation();
+        accommodation.setName(this.name.getValue());
+        accommodation.setEmail(this.email.getValue());
+        accommodation.setCountry(this.country.getValue());
+        accommodation.setCity(this.city.getValue());
+        accommodation.setAdress(this.adress.getValue());
+        accommodation.setPostalCode(this.postalCode.getValue());
+        accommodation.setPhoneNumber(this.phone.getValue());
+        accommodation.setPassword(passwordEncoder.encode(this.password.getValue()));
+
+        Role roles = roleRepository.findByName("ROLE_MANAGER").get();
+        accommodation.setRoles(Collections.singleton(roles));
+        accommodationRepository.save(accommodation);
+
+    }
+
 }

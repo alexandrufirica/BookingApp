@@ -2,6 +2,7 @@ package com.BookingApp.Data.Entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.Formula;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+@Data
 @Entity
 @Component
 @Table(name = "accommodations")
@@ -21,13 +24,20 @@ public class Accommodation extends AbstractEntity {
     private String postalCode;
     private String email;
     private String phoneNumber;
-    private String passwordSalt;
-    private String passwordHash;
+    private String password;
     private String activationCode;
-    private Roles roles;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "accommodation_roles",
+            joinColumns = @JoinColumn(name = "name_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private Set<Role> roles;
+
     @OneToMany(mappedBy = "accommodation")
     @Nullable
     private List<Room> rooms = new LinkedList<>();
+
     @Formula("(select count(c.id) from Room c where c.accommodation_id = id)")
     private int roomsCount;
 
@@ -35,7 +45,7 @@ public class Accommodation extends AbstractEntity {
 
     }
 
-    public Accommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Roles roles){
+    public Accommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Set<Role> role){
         this.name = name;
         this.city = city;
         this.country = country;
@@ -43,10 +53,9 @@ public class Accommodation extends AbstractEntity {
         this.postalCode = postalCode;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.passwordSalt = RandomStringUtils.random(32);
-        this.passwordHash = DigestUtils.sha1Hex(password + passwordSalt);
+        this.password = password;
         this.activationCode = RandomStringUtils.randomAlphanumeric(32);
-        this.roles = roles;
+        this.roles = role;
     }
 
 
@@ -63,24 +72,11 @@ public class Accommodation extends AbstractEntity {
         return roomsCount;
     }
 
-    public Roles getRole() {
-        return roles;
-    }
-    public void setRole(Roles roles) {
-        this.roles = roles;
-    }
     public String getPostalCode() {
         return postalCode;
     }
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
-    }
-    public String getPasswordSalt() {
-        return passwordSalt;
-    }
-
-    public void setPasswordSalt(String passwordSalt) {
-        this.passwordSalt = passwordSalt;
     }
     public String getCountry() {
         return country;

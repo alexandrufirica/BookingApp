@@ -1,9 +1,11 @@
 package com.BookingApp.Security;
 
+import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoleRepository;
 import com.BookingApp.Data.Repository.UserRepository;
+import com.vaadin.flow.component.notification.Notification;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,14 +31,31 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow( ()-> new UsernameNotFoundException("Username not found with this email: " + email));
+        if (userRepository.existsByEmail(email)) {
 
-        Set<GrantedAuthority> authorities = user
-                .getRoles()
-                .stream()
-                .map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),authorities);
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new UsernameNotFoundException("Username not found with this email: " + email));
+
+            Set<GrantedAuthority> authorities = user
+                    .getRoles()
+                    .stream()
+                    .map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+
+        } else if (accommodationRepository.existsByEmail(email)) {
+
+            Accommodation accommodation = accommodationRepository.findByEmail(email)
+                    .orElseThrow( () -> new UsernameNotFoundException("Username not found with this email: " + email));
+
+            Set<GrantedAuthority> authorities = accommodation
+                    .getRoles()
+                    .stream()
+                    .map((role -> new SimpleGrantedAuthority(role.getName()))).collect(Collectors.toSet());
+            return new org.springframework.security.core.userdetails.User(accommodation.getEmail(),accommodation.getPassword(),authorities);
+
+        }else {
+            return null;
+        }
     }
 
 }

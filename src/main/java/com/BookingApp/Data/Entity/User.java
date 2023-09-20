@@ -29,6 +29,7 @@ public class User extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles;
+
     private String activationCode;
     private boolean active;
 

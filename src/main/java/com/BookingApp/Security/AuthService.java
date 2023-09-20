@@ -54,9 +54,6 @@ public class AuthService {
 //        mailSender.send(message);
 //    }
 
-    public void registerAccommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Roles roles) {
-        accommodationRepository.save(new Accommodation(name, country, city, adress, postalCode, phoneNumber, email, password, roles));
-    }
 
     public void activate(String activationCode) throws AuthException {
         User user = userRepository.getUserByActivationCode(activationCode);
