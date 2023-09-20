@@ -99,7 +99,6 @@ public class CreateAccomodation extends VerticalLayout {
                     password.getValue(),
                     reTypePassowrd.getValue()
             );
-            createButton.getUI().ifPresent( ui -> ui.navigate("/login"));
             }
         );
 
@@ -124,9 +123,13 @@ public class CreateAccomodation extends VerticalLayout {
             Notification.show("Enter a password");
         }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
+        }else if(accommodationRepository.existsByEmail(email)){
+            Notification.show("This email allready exists!");
         }else {
             registerAccommodation(name, country, city, adress, postalCode, phoneNumber, email, password);
             Notification.show("Registration succeeded.");
+            createButton.getUI().ifPresent( ui -> ui.navigate("/login"));
+
         }
     }
 
