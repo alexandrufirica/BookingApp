@@ -3,6 +3,7 @@ package com.BookingApp.Views.Manager;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.Status;
+import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
@@ -27,14 +28,15 @@ public class RoomList extends VerticalLayout {
     Grid<Room> grid = new Grid<>(Room.class);
     TextField filterText = new TextField();
     NavBar navBar = new NavBar();
-    private RoomService service;
+    private RoomService roomService;
     private Accommodation accommodation;
     RoomForm form;
 
-    public RoomList(RoomService service, Accommodation accommodation) {
-        this.service = service;
-        this.accommodation = accommodation;
-        accommodation.setId(73L);
+    public RoomList(RoomService service) {
+        this.roomService = service;
+        this.accommodation = CustomUserDetailsService.accommodation;
+
+        accommodation.setId(CustomUserDetailsService.accommodation.getId());
         addClassName("roomList-view");
         configureGrid();
         configureForm();
@@ -48,7 +50,7 @@ public class RoomList extends VerticalLayout {
     }
 
     private void configureForm() {
-        form = new RoomForm(service.findAllAccommodations(), service.findAllStatuses());
+        form = new RoomForm(roomService.findAllAccommodations(), roomService.findAllStatuses());
         form.setWidth("5em");
         form.addSaveListener(this::saveRoom);
         form.addDeleteListener(this::deleteRoom);
@@ -88,13 +90,13 @@ public class RoomList extends VerticalLayout {
     }
 
     private void deleteRoom(RoomForm.DeleteEvent event) {
-        service.deleteRoom(event.getRoom());
+        roomService.deleteRoom(event.getRoom());
         updateList();
         closeEditor();
     }
 
     private void saveRoom(RoomForm.SaveEvent event) {
-        service.saveRoom(event.getRoom());
+        roomService.saveRoom(event.getRoom());
         updateList();
         closeEditor();
     }
@@ -106,7 +108,7 @@ public class RoomList extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findRoomByAccommodation(accommodation.getId()));
+        grid.setItems(roomService.findRoomByAccommodation(accommodation.getId()));
     }
 
     private void editRoom(Room room) {
