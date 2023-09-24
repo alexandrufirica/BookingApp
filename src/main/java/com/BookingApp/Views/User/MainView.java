@@ -13,10 +13,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.AfterNavigationEvent;
-import com.vaadin.flow.router.AfterNavigationObserver;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -27,7 +24,8 @@ import java.util.List;
 
 @PageTitle(value = "Main View")
 @Route(value = "/mainview")
-@RolesAllowed({"USER","ADMIN"})
+@RouteAlias("")
+@RolesAllowed({"USER","ADMIN","MANAGER"})
 public class MainView extends VerticalLayout implements AfterNavigationObserver {
     Grid<Accommodation>  grid = new Grid<>();
     NavBar navBar = new NavBar();

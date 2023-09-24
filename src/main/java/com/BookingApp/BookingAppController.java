@@ -13,7 +13,6 @@ import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("MyApp")
 @Route(value = "/myapp")
-@RouteAlias("")
 @RolesAllowed("USER")
 
 public class BookingAppController extends VerticalLayout {
