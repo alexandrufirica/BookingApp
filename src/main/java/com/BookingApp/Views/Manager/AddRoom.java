@@ -53,7 +53,7 @@ public class AddRoom extends VerticalLayout {
 
         NavBar navBar = new NavBar();
 
-        H1 name = new H1(" Welcome " + accommodation.getName());
+        H1 name = new H1(" Welcome " + CustomUserDetailsService.accommodation.getName());
 
         roomType = new TextField("Room Type");
 
