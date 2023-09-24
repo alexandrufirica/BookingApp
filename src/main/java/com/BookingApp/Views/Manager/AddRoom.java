@@ -39,16 +39,13 @@ public class AddRoom extends VerticalLayout {
     private Status status;
     private Accommodation accommodation;
 
-    public AddRoom(RoomService roomService, Status status, Room room, Accommodation accommodation){
+    public AddRoom(RoomService roomService, Status status, Accommodation accommodation){
         this.roomService = roomService;
         this.status = status;
-        this.room= room;
+        this.room= new Room();
         this.accommodation = accommodation;
 
         accommodation.setId(CustomUserDetailsService.accommodation.getId());
-        status.setId(1L);
-
-
 
         room.setAccommodation(accommodation);
         room.setStatus(status);
@@ -90,6 +87,12 @@ public class AddRoom extends VerticalLayout {
         });
 
         button.addClickShortcut(Key.ENTER);
+
+        if(available.isEnabled()){
+            status.setId(1L);
+        }else {
+            status.setId(0L);
+        }
 
         setMargin(true);
 
