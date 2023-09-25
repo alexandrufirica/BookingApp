@@ -34,7 +34,6 @@ public class AccommodationView extends VerticalLayout {
     NavBar navBar = new NavBar();
     private final AccommodationRepository accommodationRepository;
     private RoomService roomService;
-
     private Accommodation accommodation;
 
     public AccommodationView(AccommodationRepository accommodationRepository, RoomService roomService){
@@ -99,7 +98,7 @@ public class AccommodationView extends VerticalLayout {
 
 
     private void navigate() {
-        UI.getCurrent().getPage().setLocation("/mainview");
+        UI.getCurrent().getPage().setLocation("/reservation");
     }
 
 }
