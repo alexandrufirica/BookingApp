@@ -1,16 +1,15 @@
 package com.BookingApp.Data.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-@Data
 @Entity
 @Component
-@Table(name = "reservations")
 public class Reservation {
 
     @Id
@@ -22,14 +21,39 @@ public class Reservation {
             allocationSize = 1)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name= "accommodation_id")
+    @NotNull
+    @JsonIgnoreProperties({"reservations"})
+    private Accommodation accommodation;
+
     private LocalDate checkIn;
 
     private LocalDate checkOut;
 
     private String reservationName;
 
+    public Reservation(){
+
+    }
+    public Reservation(Accommodation accommodation, LocalDate checkIn, LocalDate checkOut, String reservationName){
+        this.accommodation = accommodation;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.reservationName = reservationName;
+
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public Accommodation getAccommodation() {
+        return accommodation;
+    }
+
+    public void setAccommodation(Accommodation accommodation) {
+        this.accommodation = accommodation;
     }
 
     public LocalDate getCheckIn() {
