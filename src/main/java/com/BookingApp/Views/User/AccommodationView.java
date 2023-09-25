@@ -60,8 +60,6 @@ public class AccommodationView extends VerticalLayout {
         );
         updateList();
 
-//        add(navBar, label, pickersLayout, grid);
-
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 
@@ -69,12 +67,11 @@ public class AccommodationView extends VerticalLayout {
         grid.addClassName("room-grid");
         grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
-//        grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
+        grid.asSingleSelect().addValueChangeListener(event -> navigate());
     }
 
     private HorizontalLayout getContent(){
         HorizontalLayout content = new HorizontalLayout(grid);
-//        content.setFlexGrow(2,grid);
         content.addClassName("content");
         content.setSizeFull();
 
@@ -102,52 +99,9 @@ public class AccommodationView extends VerticalLayout {
         grid.setItems(roomService.findRoomByAccommodation(accommodation.getId()));
     }
 
-//    private Component createCard(Room room) {
-//        HorizontalLayout card = new HorizontalLayout();
-//        card.addClassName("card");
-//        card.setSpacing(false);
-//        card.getThemeList().add("spacing-s");
-//
-//        VerticalLayout decription = new VerticalLayout();
-//        decription.addClassName("decription");
-//        decription.setSpacing(false);
-//        decription.setPadding(false);
-//
-//        HorizontalLayout header = new HorizontalLayout();
-//        header.addClassName("header");
-//        header.setSpacing(false);
-//        header.getThemeList().add("spacing-s");
-//
-//        Span roomType = new Span("Room Type " + room.getRoomType());
-//        roomType.addClassName("roomType");
-//        Span capacity = new Span("Capacity " + room.getCapacity());
-//        capacity.addClassName("capacity");
-//        Span numberOfRooms = new Span("Rooms available " + room.getNumberOfRooms());
-//        numberOfRooms.addClassName("numberOfRooms");
-//        Span pricePerNight = new Span("Price per Night " + room.getPricePerNight());
-//        pricePerNight.addClassName("pricePerNight");
-//        header.add(roomType,capacity,numberOfRooms,pricePerNight);
-//
-//        decription.add(header);
-//        card.add(decription);
-//        card.addClickListener(event -> {
-//            navigate();
-//        });
-//        return card;
-//
-//    }
-//
-//    private void navigate() {
-//        UI.getCurrent().getPage().setLocation("/accommodationPage");
-//    }
 
-//    @Override
-//    public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
-//
-//        List<Room> rooms = new ArrayList<>();
-//
-//        rooms.addAll(roomService.getAllRooms());
-//
-//        grid.setItems(rooms);
-//    }
+    private void navigate() {
+        UI.getCurrent().getPage().setLocation("/mainview");
+    }
+
 }
