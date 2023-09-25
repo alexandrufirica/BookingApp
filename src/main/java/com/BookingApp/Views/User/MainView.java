@@ -7,6 +7,7 @@ import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
@@ -35,9 +36,24 @@ public class MainView extends VerticalLayout implements AfterNavigationObserver 
     public MainView(AccommodationService accommodationService){
         this.accommodationService = accommodationService;
         addClassName("home-view");
+
+        DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
+        singleFormat.setDateFormat("dd-MM-yyyy");
+
+        DatePicker checkinPicker = new DatePicker("Check-in:");
+        checkinPicker.setI18n(singleFormat);
+
+        DatePicker checkoutPicker = new DatePicker("Check-out:");
+        checkoutPicker.setI18n(singleFormat);
+
+        HorizontalLayout pickersLayout = new HorizontalLayout();
+        pickersLayout.add(checkinPicker, checkoutPicker);
+
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn( accommodation -> createCard(accommodation));
-        add(navBar,grid);
+        add(navBar,pickersLayout,grid);
+
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 
     private Component createCard(Accommodation accommodation) {

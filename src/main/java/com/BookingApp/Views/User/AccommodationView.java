@@ -1,33 +1,87 @@
 package com.BookingApp.Views.User;
 
 import com.BookingApp.Data.Entity.Accommodation;
+import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Repository.AccommodationRepository;
+import com.BookingApp.Service.AccommodationService;
+import com.BookingApp.Service.RoomService;
 import com.BookingApp.Views.NavBar;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @PageTitle("Accommodation-view")
 @Route("/accommodationPage")
 @PermitAll
 public class AccommodationView extends VerticalLayout {
-
+    Grid<Room> grid = new Grid<>(Room.class);
     NavBar navBar = new NavBar();
     private final AccommodationRepository accommodationRepository;
+    private RoomService roomService;
 
-    public AccommodationView(AccommodationRepository accommodationRepository){
+    private Accommodation accommodation;
+
+    public AccommodationView(AccommodationRepository accommodationRepository, RoomService roomService){
         this.accommodationRepository = accommodationRepository;
+        this.roomService = roomService;
 
-        Accommodation accommodation = accommodationRepository.getAccommodationById(MainView.accommodationId);
-
+        this.accommodation = accommodationRepository.getAccommodationById(MainView.accommodationId);
+        accommodation.setId(MainView.accommodationId);
         addClassName("accommodation-view");
 
         H1 label = new H1(accommodation.getName());
 
+
+        grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
+//        grid.addComponentColumn( room -> createCard(room));
+
+        configureGrid();
+        add(
+                navBar,
+                label,
+                getToolbar(),
+                getContent()
+        );
+        updateList();
+
+//        add(navBar, label, pickersLayout, grid);
+
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+    }
+
+    private void configureGrid() {
+        grid.addClassName("room-grid");
+        grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight");
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
+//        grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
+    }
+
+    private HorizontalLayout getContent(){
+        HorizontalLayout content = new HorizontalLayout(grid);
+//        content.setFlexGrow(2,grid);
+        content.addClassName("content");
+        content.setSizeFull();
+
+        return content;
+    }
+
+    private Component getToolbar() {
         DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
         singleFormat.setDateFormat("dd-MM-yyyy");
 
@@ -40,8 +94,60 @@ public class AccommodationView extends VerticalLayout {
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.add(checkinPicker, checkoutPicker);
 
-        add(navBar,label, pickersLayout);
-
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        return pickersLayout;
     }
+
+    private void updateList() {
+
+        grid.setItems(roomService.findRoomByAccommodation(accommodation.getId()));
+    }
+
+//    private Component createCard(Room room) {
+//        HorizontalLayout card = new HorizontalLayout();
+//        card.addClassName("card");
+//        card.setSpacing(false);
+//        card.getThemeList().add("spacing-s");
+//
+//        VerticalLayout decription = new VerticalLayout();
+//        decription.addClassName("decription");
+//        decription.setSpacing(false);
+//        decription.setPadding(false);
+//
+//        HorizontalLayout header = new HorizontalLayout();
+//        header.addClassName("header");
+//        header.setSpacing(false);
+//        header.getThemeList().add("spacing-s");
+//
+//        Span roomType = new Span("Room Type " + room.getRoomType());
+//        roomType.addClassName("roomType");
+//        Span capacity = new Span("Capacity " + room.getCapacity());
+//        capacity.addClassName("capacity");
+//        Span numberOfRooms = new Span("Rooms available " + room.getNumberOfRooms());
+//        numberOfRooms.addClassName("numberOfRooms");
+//        Span pricePerNight = new Span("Price per Night " + room.getPricePerNight());
+//        pricePerNight.addClassName("pricePerNight");
+//        header.add(roomType,capacity,numberOfRooms,pricePerNight);
+//
+//        decription.add(header);
+//        card.add(decription);
+//        card.addClickListener(event -> {
+//            navigate();
+//        });
+//        return card;
+//
+//    }
+//
+//    private void navigate() {
+//        UI.getCurrent().getPage().setLocation("/accommodationPage");
+//    }
+
+//    @Override
+//    public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
+//
+//        List<Room> rooms = new ArrayList<>();
+//
+//        rooms.addAll(roomService.getAllRooms());
+//
+//        grid.setItems(rooms);
+//    }
 }

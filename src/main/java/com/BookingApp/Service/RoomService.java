@@ -31,6 +31,9 @@ public class RoomService implements  IRoomService{
         }
 
     }
+    public List<Room>  getAllRooms(){
+        return roomRepository.findAll();
+    }
 
     public List<Accommodation> findAllAccommodations(){
         return accommodationRepository.findAll();
