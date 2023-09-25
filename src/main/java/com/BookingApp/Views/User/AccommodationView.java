@@ -47,9 +47,7 @@ public class AccommodationView extends VerticalLayout {
 
         H1 label = new H1(accommodation.getName());
 
-
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
-//        grid.addComponentColumn( room -> createCard(room));
 
         configureGrid();
         add(
