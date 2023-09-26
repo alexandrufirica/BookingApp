@@ -35,13 +35,15 @@ public class AccommodationView extends VerticalLayout {
     private final AccommodationRepository accommodationRepository;
     private RoomService roomService;
     private Accommodation accommodation;
+    public static long roomId;
 
-    public AccommodationView(AccommodationRepository accommodationRepository, RoomService roomService){
+    public AccommodationView(AccommodationRepository accommodationRepository, RoomService roomService, Room room){
         this.accommodationRepository = accommodationRepository;
         this.roomService = roomService;
 
         this.accommodation = accommodationRepository.getAccommodationById(MainView.accommodationId);
         accommodation.setId(MainView.accommodationId);
+
         addClassName("accommodation-view");
 
         H1 label = new H1(accommodation.getName());
@@ -64,7 +66,7 @@ public class AccommodationView extends VerticalLayout {
         grid.addClassName("room-grid");
         grid.setColumns("roomType","numberOfRooms","capacity","pricePerNight");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
-        grid.asSingleSelect().addValueChangeListener(event -> navigate());
+        grid.asSingleSelect().addValueChangeListener(event -> navigate(grid.asSingleSelect().getValue()));
     }
 
     private HorizontalLayout getContent(){
@@ -97,8 +99,13 @@ public class AccommodationView extends VerticalLayout {
     }
 
 
-    private void navigate() {
+    private void navigate(Room room) {
+        roomId = room.getId();
         UI.getCurrent().getPage().setLocation("/reservation");
+
     }
 
+    public Accommodation getAccommodation() {
+        return accommodation;
+    }
 }

@@ -13,4 +13,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> search(@Param("searchTerm") String searchTerm);
 
     List<Room> getRoomsByAccommodationId (Long id);
+
+    Room getRoomById (long id);
 }

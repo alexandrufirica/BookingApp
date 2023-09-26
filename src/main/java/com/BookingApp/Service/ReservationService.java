@@ -15,11 +15,13 @@ public class ReservationService implements IReservationService{
     }
     @Override
     public List<Reservation> getAllReservations() {
+
         return reservationRepository.findAll();
     }
 
     @Override
     public void createReservation(Reservation reservation) {
+
         reservationRepository.save(reservation);
     }
 }

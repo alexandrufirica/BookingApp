@@ -1,10 +1,19 @@
 package com.BookingApp.Views.User;
 
+import com.BookingApp.Data.Entity.Accommodation;
+import com.BookingApp.Data.Entity.Reservation;
+import com.BookingApp.Data.Entity.Room;
+import com.BookingApp.Data.Repository.AccommodationRepository;
+import com.BookingApp.Data.Repository.RoomRepository;
+import com.BookingApp.Service.ReservationService;
 import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -19,9 +28,21 @@ import jakarta.annotation.security.RolesAllowed;
 public class ReservationView extends VerticalLayout {
 
     NavBar navBar = new NavBar();
+    private final Reservation reservation;
+    private final Accommodation accommodation;
+    private final Room room;
+    private final AccommodationRepository accommodationRepository;
+    private final RoomRepository roomRepository;
+    private final ReservationService reservationService;
 
-    public ReservationView (){
+    public ReservationView (Reservation reservation, AccommodationRepository accommodationRepository, RoomRepository roomRepository, ReservationService reservationService){
+        this.reservation = reservation;
+        this.accommodationRepository = accommodationRepository;
+        this.roomRepository = roomRepository;
+        this.reservationService = reservationService;
 
+        this.accommodation = accommodationRepository.getAccommodationById(MainView.accommodationId);
+        this.room = roomRepository.getRoomById(AccommodationView.roomId);
         addClassName("reservation-view");
         add(
                 navBar,
@@ -32,6 +53,8 @@ public class ReservationView extends VerticalLayout {
     }
 
     private Component getComponent() {
+        H1 label = new H1(room.getRoomType());
+
         DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
         singleFormat.setDateFormat("dd-MM-yyyy");
 
@@ -48,14 +71,28 @@ public class ReservationView extends VerticalLayout {
 
         Button reserveButton = new Button("Reserve");
         reserveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        reserveButton.addClickListener( e -> {
+            reservation.setCheckIn(checkinPicker.getValue());
+            reservation.setCheckOut(checkoutPicker.getValue());
+            reservation.setReservationName(reservationName.getValue());
+            reservation.setAccommodation(accommodation);
+            createReservation(reservation);
+            Notification.show("Reservation created");
+        });
+
 
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.add(checkinPicker, checkoutPicker);
         pickersLayout.setDefaultVerticalComponentAlignment(Alignment.CENTER);
 
        VerticalLayout verticalLayout = new VerticalLayout();
-       verticalLayout.add(pickersLayout, reservationName, reserveButton);
+       verticalLayout.add(label,pickersLayout, reservationName, reserveButton);
        verticalLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        return verticalLayout;
+
+       return verticalLayout;
+    }
+
+    public void createReservation (Reservation reservation){
+        reservationService.createReservation(reservation);
     }
 }
