@@ -76,6 +76,7 @@ public class ReservationView extends VerticalLayout {
             reservation.setCheckOut(checkoutPicker.getValue());
             reservation.setReservationName(reservationName.getValue());
             reservation.setAccommodation(accommodation);
+            reservation.setRoomReserved(room.getRoomType());
             createReservation(reservation);
             Notification.show("Reservation created");
         });

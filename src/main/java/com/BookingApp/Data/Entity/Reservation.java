@@ -26,21 +26,20 @@ public class Reservation {
     @NotNull
     @JsonIgnoreProperties({"reservations"})
     private Accommodation accommodation;
-
     private LocalDate checkIn;
-
     private LocalDate checkOut;
-
     private String reservationName;
+    private String roomReserved;
 
     public Reservation(){
 
     }
-    public Reservation(Accommodation accommodation, LocalDate checkIn, LocalDate checkOut, String reservationName){
+    public Reservation(Accommodation accommodation, LocalDate checkIn, LocalDate checkOut, String reservationName, String roomReserved){
         this.accommodation = accommodation;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.reservationName = reservationName;
+        this.roomReserved = roomReserved;
 
     }
 
@@ -78,5 +77,13 @@ public class Reservation {
 
     public void setReservationName(String reservationName) {
         this.reservationName = reservationName;
+    }
+
+    public String getRoomReserved() {
+        return roomReserved;
+    }
+
+    public void setRoomReserved(String roomReserved) {
+        this.roomReserved = roomReserved;
     }
 }
