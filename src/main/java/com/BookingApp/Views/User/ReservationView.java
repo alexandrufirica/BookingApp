@@ -52,7 +52,7 @@ public class ReservationView extends VerticalLayout {
     }
 
     private Component getComponent() {
-        H1 label = new H1(room.getRoomType());
+        H1 label = new H1(room.getRoomType() + " Room");
 
         DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
         singleFormat.setDateFormat("dd-MM-yyyy");
