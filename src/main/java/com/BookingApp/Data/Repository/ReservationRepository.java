@@ -4,6 +4,7 @@ import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository <Reservation, Long> {
@@ -12,4 +13,5 @@ public interface ReservationRepository extends JpaRepository <Reservation, Long>
     Optional <Reservation> findByReservationName (String name);
     Reservation getAllByAccommodation(Accommodation accommodation);
     Boolean existsByReservationName(String name);
+    List<Reservation> getReservationByAccommodationId (Long id);
 }

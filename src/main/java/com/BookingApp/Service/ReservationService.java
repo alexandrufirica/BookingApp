@@ -24,4 +24,8 @@ public class ReservationService implements IReservationService{
 
         reservationRepository.save(reservation);
     }
+
+    public List<Reservation> findReservationByAccommodation(Long accommodationId){
+        return reservationRepository.getReservationByAccommodationId(accommodationId);
+    }
 }
