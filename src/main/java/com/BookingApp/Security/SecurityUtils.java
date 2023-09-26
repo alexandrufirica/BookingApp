@@ -4,6 +4,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinServletRequest;
 import com.vaadin.flow.server.VaadinSession;
 import jakarta.servlet.ServletException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 public class SecurityUtils {
@@ -31,6 +32,7 @@ public class SecurityUtils {
         }
     }
 
+    @Autowired
     public static void logout() {
         UI.getCurrent().getSession().close();
         UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);

@@ -36,7 +36,6 @@ public class RoomForm extends FormLayout {
     public RoomForm(List<Accommodation> accommodations, List<Status> statuses) {
         addClassName("room-form");
         binder.bindInstanceFields(this);
-
         status.setItems(statuses);
         status.setItemLabelGenerator(Status::getName);
 

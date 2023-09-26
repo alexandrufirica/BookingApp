@@ -2,7 +2,6 @@ package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Reservation;
-import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.ReservationService;
 import com.BookingApp.Views.NavBar;
