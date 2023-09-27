@@ -23,13 +23,14 @@ import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @PageTitle("Accommodation-view")
 @Route("/accommodationPage")
-@PermitAll
+@RolesAllowed({"USER","ADMIN"})
 public class AccommodationView extends VerticalLayout {
     Grid<Room> grid = new Grid<>(Room.class);
     UserNavBar userNavBar = new UserNavBar();

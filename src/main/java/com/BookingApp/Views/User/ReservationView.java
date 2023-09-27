@@ -22,7 +22,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("Reservation")
 @Route("/reservation")
-@RolesAllowed({"USER","ADMIN","MANAGER"})
+@RolesAllowed({"USER","ADMIN"})
 
 public class ReservationView extends VerticalLayout {
 
