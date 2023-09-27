@@ -1,7 +1,5 @@
 package com.BookingApp.Views;
 
-import com.BookingApp.BookingAppController;
-import com.BookingApp.Security.SecurityService;
 import com.BookingApp.Security.SecurityUtils;
 import com.BookingApp.Views.Manager.AddRoom;
 import com.BookingApp.Views.Manager.ReservationList;
@@ -13,9 +11,6 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.RouterLink;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 
 public class NavBar extends AppLayout {
