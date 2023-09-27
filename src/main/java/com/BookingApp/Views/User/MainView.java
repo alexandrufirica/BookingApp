@@ -29,7 +29,7 @@ import java.util.List;
 @RolesAllowed({"USER","ADMIN","MANAGER"})
 public class MainView extends VerticalLayout implements AfterNavigationObserver {
     Grid<Accommodation>  grid = new Grid<>();
-    NavBar navBar = new NavBar();
+    UserNavBar userNavBar = new UserNavBar();
     AccommodationService accommodationService;
     public static long accommodationId;
 
@@ -51,7 +51,7 @@ public class MainView extends VerticalLayout implements AfterNavigationObserver 
 
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn( accommodation -> createCard(accommodation));
-        add(navBar,pickersLayout,grid);
+        add(userNavBar,pickersLayout,grid);
 
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }

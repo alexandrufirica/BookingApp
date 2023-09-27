@@ -2,6 +2,7 @@ package com.BookingApp.Views.User;
 
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
+import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
@@ -31,7 +32,7 @@ import java.util.List;
 @PermitAll
 public class AccommodationView extends VerticalLayout {
     Grid<Room> grid = new Grid<>(Room.class);
-    NavBar navBar = new NavBar();
+    UserNavBar userNavBar = new UserNavBar();
     private final AccommodationRepository accommodationRepository;
     private RoomService roomService;
     private Accommodation accommodation;
@@ -52,7 +53,7 @@ public class AccommodationView extends VerticalLayout {
 
         configureGrid();
         add(
-                navBar,
+                userNavBar,
                 label,
                 getToolbar(),
                 getContent()

@@ -26,7 +26,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 public class ReservationView extends VerticalLayout {
 
-    NavBar navBar = new NavBar();
+    UserNavBar userNavBar = new UserNavBar();
     private final Reservation reservation;
     private final Accommodation accommodation;
     private final Room room;
@@ -44,7 +44,7 @@ public class ReservationView extends VerticalLayout {
         this.room = roomRepository.getRoomById(AccommodationView.roomId);
         addClassName("reservation-view");
         add(
-                navBar,
+                userNavBar,
                 getComponent()
         );
 
