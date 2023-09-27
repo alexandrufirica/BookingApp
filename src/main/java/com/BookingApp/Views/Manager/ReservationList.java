@@ -18,7 +18,7 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed({"ADMIN","MANAGER"})
 public class ReservationList extends VerticalLayout {
     Grid<Reservation> grid = new Grid<>(Reservation.class);
-    NavBar navBar = new NavBar();
+    ManagerNavBar navBar = new ManagerNavBar();
     private final ReservationService reservationService;
     private Accommodation accommodation;
 

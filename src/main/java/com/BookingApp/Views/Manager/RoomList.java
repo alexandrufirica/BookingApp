@@ -27,7 +27,7 @@ import java.util.Collections;
 public class RoomList extends VerticalLayout {
     Grid<Room> grid = new Grid<>(Room.class);
     TextField filterText = new TextField();
-    NavBar navBar = new NavBar();
+    ManagerNavBar navBar = new ManagerNavBar();
     private RoomService roomService;
     private Accommodation accommodation;
     RoomForm form;

@@ -17,7 +17,7 @@ import com.vaadin.flow.router.RouterLink;
 
 public class UserNavBar extends AppLayout {
 
-    private SecurityUtils securityUtils;
+    private final SecurityUtils securityUtils;
 
     private final Tabs tabs;
 

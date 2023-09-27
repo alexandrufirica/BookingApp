@@ -52,7 +52,7 @@ public class AddRoom extends VerticalLayout {
         room.setStatus(status);
 
 
-        NavBar navBar = new NavBar();
+        ManagerNavBar navBar = new ManagerNavBar();
 
         H1 name = new H1(" Welcome " + CustomUserDetailsService.accommodation.getName());
 
