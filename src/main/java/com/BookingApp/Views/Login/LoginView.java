@@ -20,7 +20,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @AnonymousAllowed
 public class LoginView extends VerticalLayout implements BeforeEnterListener, ComponentEventListener<AbstractLogin.LoginEvent> {
 
-    public static final String LOGIN_SUCCESS_URL ="/myapp";
+    public static final String LOGIN_SUCCESS_URL ="/roomlist";
     LoginForm loginForm = new LoginForm();
     public LoginView(){
         getStyle().set("background-color", "var(--lumo-contrast-5pct)")

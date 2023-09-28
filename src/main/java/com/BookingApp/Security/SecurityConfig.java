@@ -46,31 +46,31 @@ public class SecurityConfig extends VaadinWebSecurity {
         return configuration.getAuthenticationManager();
     }
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.csrf().disable()
-                .authorizeHttpRequests((authorize) -> authorize.requestMatchers(new AntPathRequestMatcher("/public/**")).permitAll());
-        super.configure(http);
-        setLoginView(http, LoginView.class);
-
-        return http.build();
-
-    }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/public/**"))
-//                .permitAll();
+//    @Bean
+//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+//        http.csrf().disable()
+//                .authorizeHttpRequests((authorize) -> authorize.requestMatchers(new AntPathRequestMatcher("/public/**")).permitAll());
 //        super.configure(http);
 //        setLoginView(http, LoginView.class);
 //
-//    }
+//        return http.build();
 //
-//    @Override
-//    protected void configure(WebSecurity web) throws Exception {
-//        //web.ignoring().requestMatchers("/images/**");
-//        super.configure(web);
 //    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/public/**"))
+                .permitAll();
+        super.configure(http);
+        setLoginView(http, LoginView.class);
+
+    }
+
+    @Override
+    protected void configure(WebSecurity web) throws Exception {
+        //web.ignoring().requestMatchers("/images/**");
+        super.configure(web);
+    }
 //
 //    //Just for simplicity- this should be secured.
 //    @Bean
