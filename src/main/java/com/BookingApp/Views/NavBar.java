@@ -4,7 +4,7 @@ import com.BookingApp.Security.SecurityUtils;
 import com.BookingApp.Views.Manager.AddRoom;
 import com.BookingApp.Views.Manager.ReservationList;
 import com.BookingApp.Views.Manager.RoomList;
-import com.BookingApp.Views.User.MainView;
+import com.BookingApp.Views.User.HomeView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -40,7 +40,7 @@ public class NavBar extends AppLayout {
         tabs.add(createTab("Add Room", AddRoom.class),
                 createTab("Reservations", ReservationList.class),
                 createTab("Room List", RoomList.class),
-                createTab("Main View", MainView.class));
+                createTab("Main View", HomeView.class));
         return tabs;
     }
 

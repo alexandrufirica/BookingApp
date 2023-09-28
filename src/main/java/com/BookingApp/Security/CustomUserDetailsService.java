@@ -19,14 +19,12 @@ import java.util.stream.Collectors;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
     private AccommodationRepository accommodationRepository;
 
     public static Accommodation accommodation;
 
-    public CustomUserDetailsService(UserRepository userRepository,RoleRepository roleRepository, AccommodationRepository accommodationRepository) {
+    public CustomUserDetailsService(UserRepository userRepository, AccommodationRepository accommodationRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.accommodationRepository = accommodationRepository;
     }
 

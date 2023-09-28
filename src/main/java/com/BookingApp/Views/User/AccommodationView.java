@@ -2,31 +2,19 @@ package com.BookingApp.Views.User;
 
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
-import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
-import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
-import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.AfterNavigationEvent;
-import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @PageTitle("Accommodation-view")
 @Route("/accommodationPage")
@@ -43,8 +31,8 @@ public class AccommodationView extends VerticalLayout {
         this.accommodationRepository = accommodationRepository;
         this.roomService = roomService;
 
-        this.accommodation = accommodationRepository.getAccommodationById(MainView.accommodationId);
-        accommodation.setId(MainView.accommodationId);
+        this.accommodation = accommodationRepository.getAccommodationById(HomeView.accommodationId);
+        accommodation.setId(HomeView.accommodationId);
 
         addClassName("accommodation-view");
 

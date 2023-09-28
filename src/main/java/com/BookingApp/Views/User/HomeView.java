@@ -1,40 +1,32 @@
 package com.BookingApp.Views.User;
 
 import com.BookingApp.Data.Entity.Accommodation;
-import com.BookingApp.Data.Entity.Room;
-import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Service.AccommodationService;
-import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
-import com.vaadin.flow.spring.annotation.RouteScopeOwner;
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @PageTitle(value = "Main View")
-@Route(value = "/mainview")
+@Route(value = "/home")
 //@RouteAlias("")
 @RolesAllowed({"USER","ADMIN"})
-public class MainView extends VerticalLayout implements AfterNavigationObserver {
+public class HomeView extends VerticalLayout implements AfterNavigationObserver {
     Grid<Accommodation>  grid = new Grid<>();
     UserNavBar userNavBar = new UserNavBar();
     AccommodationService accommodationService;
     public static long accommodationId;
 
-    public MainView(AccommodationService accommodationService){
+    public HomeView(AccommodationService accommodationService){
         this.accommodationService = accommodationService;
         addClassName("home-view");
 

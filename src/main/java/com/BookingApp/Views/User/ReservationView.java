@@ -6,7 +6,6 @@ import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoomRepository;
 import com.BookingApp.Service.ReservationService;
-import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -40,7 +39,7 @@ public class ReservationView extends VerticalLayout {
         this.roomRepository = roomRepository;
         this.reservationService = reservationService;
 
-        this.accommodation = accommodationRepository.getAccommodationById(MainView.accommodationId);
+        this.accommodation = accommodationRepository.getAccommodationById(HomeView.accommodationId);
         this.room = roomRepository.getRoomById(AccommodationView.roomId);
         addClassName("reservation-view");
         add(

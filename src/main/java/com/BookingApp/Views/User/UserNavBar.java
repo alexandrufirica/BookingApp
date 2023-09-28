@@ -1,17 +1,11 @@
 package com.BookingApp.Views.User;
 
 import com.BookingApp.Security.SecurityUtils;
-import com.BookingApp.Views.Manager.AddRoom;
-import com.BookingApp.Views.Manager.ReservationList;
-import com.BookingApp.Views.Manager.RoomList;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.RouterLink;
 
 
@@ -46,7 +40,7 @@ public class UserNavBar extends AppLayout {
         tabs.setAutoselect(false);
         tabs.getStyle().set("margin", "auto");
         tabs.add(
-                createTab("Main View", MainView.class));
+                createTab("Main View", HomeView.class));
         return tabs;
     }
 

@@ -18,7 +18,7 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @PageTitle(value = "Booking Login")
 @Route (value = "/login")
 @AnonymousAllowed
-public class LoginView extends VerticalLayout implements BeforeEnterListener, ComponentEventListener<AbstractLogin.LoginEvent> {
+public class LoginView extends VerticalLayout implements BeforeEnterObserver{
 
     public static final String LOGIN_SUCCESS_URL ="/roomlist";
     LoginForm loginForm = new LoginForm();
@@ -34,7 +34,9 @@ public class LoginView extends VerticalLayout implements BeforeEnterListener, Co
 
         loginForm.setAction("login");
 
-        add(new H1("BookingApp Login"), loginForm);
+        add(
+                new H1("BookingApp Login"),
+                loginForm);
 
         loginForm.getElement().setAttribute("no-autofocus", "");
 
@@ -68,16 +70,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterListener, Co
 
             loginForm.setError(true);
         }
+
     }
 
-
-    public void onComponentEvent(AbstractLogin.LoginEvent loginEvent) {
-        boolean authenticated = SecurityUtils.authenticate(
-                loginEvent.getUsername(), loginEvent.getPassword());
-        if (authenticated) {
-            UI.getCurrent().getPage().setLocation(LOGIN_SUCCESS_URL);
-        } else {
-            loginForm.setError(true);
-        }
-    }
 }
