@@ -84,7 +84,6 @@ public class AccommodationView extends VerticalLayout {
     }
 
     private void updateList() {
-
         grid.setItems(roomService.findRoomByAccommodation(accommodation.getId()));
     }
 

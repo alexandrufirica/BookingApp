@@ -2,7 +2,6 @@ package com.BookingApp.Security;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinServletRequest;
-import com.vaadin.flow.server.VaadinSession;
 import jakarta.servlet.ServletException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;

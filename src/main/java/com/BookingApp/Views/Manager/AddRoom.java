@@ -3,10 +3,8 @@ package com.BookingApp.Views.Manager;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.Status;
-import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.RoomService;
-import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -20,7 +18,6 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.web.bind.annotation.PostMapping;
 

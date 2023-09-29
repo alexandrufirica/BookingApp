@@ -1,21 +1,14 @@
 package com.BookingApp.Views.Login;
 
-import com.BookingApp.Data.Entity.Accommodation;
-import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.UserRepository;
-import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Security.SecurityUtils;
 import com.BookingApp.Views.Manager.CreateAccomodation;
 import com.BookingApp.Views.User.CreateUser;
-import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.login.AbstractLogin;
-import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;

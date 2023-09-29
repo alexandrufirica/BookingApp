@@ -18,7 +18,6 @@ import java.util.List;
 
 @PageTitle(value = "Home")
 @Route(value = "/home")
-//@RouteAlias("")
 @RolesAllowed({"USER","ADMIN"})
 public class HomeView extends VerticalLayout implements AfterNavigationObserver {
     Grid<Accommodation>  grid = new Grid<>();

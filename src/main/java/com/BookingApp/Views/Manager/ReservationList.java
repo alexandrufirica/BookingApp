@@ -4,7 +4,6 @@ import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Reservation;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.ReservationService;
-import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;

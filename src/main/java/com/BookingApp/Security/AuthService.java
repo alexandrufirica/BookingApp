@@ -30,19 +30,6 @@ public class AuthService {
 //        this.mailSender = mailSender;
     }
 
-    public void authenticate (String email,String password) throws AuthException{
-        User user = userRepository.getUserByEmail(email);
-        if(user != null ){
-            VaadinSession.getCurrent().setAttribute(User.class,user);
-        }else{
-            throw new AuthException();
-        }
-    }
-
-
-
-
-
 //    public void registerUser(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password, Roles roles) {
 //         userRepository.save(new User(givenName, surName, email, country, city, adress, postalCode, phone, password, roles));
 //        String text = "http://localhost:8080/activate?code=" + user.getActivationCode();

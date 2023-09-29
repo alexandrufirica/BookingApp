@@ -124,9 +124,5 @@ public class RoomForm extends FormLayout {
         return addListener(CloseEvent.class, listener);
     }
 
-    public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType,
-                                                                 ComponentEventListener<T> listener) {
-        return getEventBus().addListener(eventType,listener);
-    }
 
 }

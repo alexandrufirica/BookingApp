@@ -2,10 +2,8 @@ package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
-import com.BookingApp.Data.Entity.Status;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.RoomService;
-import com.BookingApp.Views.NavBar;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -15,11 +13,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
-
-import java.util.Collections;
 
 @PageTitle(value = "RoomList")
 @Route(value = "/roomlist")

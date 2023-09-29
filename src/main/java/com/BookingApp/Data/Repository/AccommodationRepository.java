@@ -1,7 +1,6 @@
 package com.BookingApp.Data.Repository;
 
 import com.BookingApp.Data.Entity.Accommodation;
-import com.BookingApp.Data.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -3,7 +3,6 @@ package com.BookingApp.Security;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
-import com.BookingApp.Data.Repository.RoleRepository;
 import com.BookingApp.Data.Repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

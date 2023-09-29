@@ -3,7 +3,6 @@ package com.BookingApp.Data.Entity;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.Formula;
 import org.springframework.stereotype.Component;

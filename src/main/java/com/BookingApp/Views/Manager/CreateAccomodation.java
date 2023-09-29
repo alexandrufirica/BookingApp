@@ -2,13 +2,9 @@ package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Role;
-import com.BookingApp.Data.Entity.Roles;
-import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoleRepository;
 import com.BookingApp.Data.Repository.UserRepository;
-import com.BookingApp.Security.AuthService;
-import com.BookingApp.Service.AccommodationService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;

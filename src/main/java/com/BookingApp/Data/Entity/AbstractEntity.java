@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Version;
-import org.springframework.stereotype.Component;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
