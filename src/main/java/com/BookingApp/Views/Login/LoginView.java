@@ -7,13 +7,17 @@ import com.BookingApp.Security.SecurityUtils;
 import com.BookingApp.Views.Manager.CreateAccomodation;
 import com.BookingApp.Views.User.CreateUser;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.AbstractLogin;
 import com.vaadin.flow.component.login.LoginForm;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
@@ -24,8 +28,6 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
     public static final String LOGIN_SUCCESS_URL ="/roomlist";
-    LoginForm loginForm = new LoginForm();
-
     public LoginView(){
         getStyle().set("background-color", "var(--lumo-contrast-5pct)")
                 .set("display", "flex").set("justify-content", "center")
@@ -36,14 +38,27 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-        loginForm.setAction("login");
+        TextField email = new TextField("Email");
+        PasswordField password = new PasswordField("Password");
+
+        Button loginButton = new Button("Login", e -> {
+            addClickShortcut(Key.ENTER);
+            try {
+                if(SecurityUtils.authenticate(email.getValue(),password.getValue())){
+                    UI.getCurrent().navigate(LOGIN_SUCCESS_URL);
+                }
+            } catch (Exception ex) {
+                Notification.show("Wrong Credentials");
+            }
+        });
+
 
         add(
                 new H1("BookingApp Login"),
-                loginForm);
-
-        loginForm.getElement().setAttribute("no-autofocus", "");
-
+                email,
+                password,
+                loginButton
+        );
 
         Button createUser = new Button("Create User Account");
         createUser.addClickListener( e ->
@@ -72,7 +87,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                 .getParameters()
                 .containsKey("error")){
 
-            loginForm.setError(true);
+            Notification.show("Login error");
         }
 
     }

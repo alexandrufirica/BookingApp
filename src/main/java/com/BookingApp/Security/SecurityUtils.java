@@ -15,7 +15,7 @@ public class SecurityUtils {
         return request != null && request.getUserPrincipal() != null;
     }
 
-    public static boolean authenticate(String username, String password) {
+    public static boolean authenticate(String email, String password) {
         VaadinServletRequest request = VaadinServletRequest.getCurrent();
         if (request == null) {
             // This is in a background thread and we can't access the request to
@@ -23,7 +23,7 @@ public class SecurityUtils {
             return false;
         }
         try {
-            request.login(username, password);
+            request.login(email, password);
             return true;
         } catch (ServletException e) {
             // login exception handle code omitted
