@@ -16,7 +16,7 @@ import jakarta.annotation.security.RolesAllowed;
 import java.util.ArrayList;
 import java.util.List;
 
-@PageTitle(value = "Main View")
+@PageTitle(value = "Home")
 @Route(value = "/home")
 //@RouteAlias("")
 @RolesAllowed({"USER","ADMIN"})

@@ -24,8 +24,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-//@EnableWebSecurity
-@EnableMethodSecurity
+@EnableWebSecurity
+//@EnableMethodSecurity
 @Configuration
 public class SecurityConfig extends VaadinWebSecurity {
 

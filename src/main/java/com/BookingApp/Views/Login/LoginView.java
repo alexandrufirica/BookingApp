@@ -1,5 +1,8 @@
 package com.BookingApp.Views.Login;
 
+import com.BookingApp.Data.Entity.Accommodation;
+import com.BookingApp.Data.Entity.User;
+import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Security.SecurityUtils;
 import com.BookingApp.Views.Manager.CreateAccomodation;
 import com.BookingApp.Views.User.CreateUser;
@@ -18,10 +21,11 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @PageTitle(value = "Booking Login")
 @Route (value = "/login")
 @AnonymousAllowed
-public class LoginView extends VerticalLayout implements BeforeEnterObserver{
+public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
     public static final String LOGIN_SUCCESS_URL ="/roomlist";
     LoginForm loginForm = new LoginForm();
+
     public LoginView(){
         getStyle().set("background-color", "var(--lumo-contrast-5pct)")
                 .set("display", "flex").set("justify-content", "center")

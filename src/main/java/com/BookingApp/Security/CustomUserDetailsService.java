@@ -23,6 +23,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public static Accommodation accommodation;
 
+    public static User user;
+
     public CustomUserDetailsService(UserRepository userRepository, AccommodationRepository accommodationRepository) {
         this.userRepository = userRepository;
         this.accommodationRepository = accommodationRepository;
@@ -32,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         if (userRepository.existsByEmail(email)) {
 
-            User user = userRepository.findByEmail(email)
+            user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new UsernameNotFoundException("Username not found with this email: " + email));
 
             Set<GrantedAuthority> authorities = user
