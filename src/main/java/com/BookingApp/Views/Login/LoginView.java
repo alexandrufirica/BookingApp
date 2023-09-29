@@ -2,6 +2,8 @@ package com.BookingApp.Views.Login;
 
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.User;
+import com.BookingApp.Data.Repository.AccommodationRepository;
+import com.BookingApp.Data.Repository.UserRepository;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Security.SecurityUtils;
 import com.BookingApp.Views.Manager.CreateAccomodation;
@@ -27,8 +29,15 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @AnonymousAllowed
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
-    public static final String LOGIN_SUCCESS_URL ="/roomlist";
-    public LoginView(){
+    public static final String LOGIN_ACCOMMODATION_URL ="/roomlist";
+    public static final String LOGIN_USER_URL ="/home";
+    public final AccommodationRepository accommodationRepository;
+    public final UserRepository userRepository;
+
+    public LoginView(AccommodationRepository accommodationRepository, UserRepository userRepository){
+        this.accommodationRepository = accommodationRepository;
+        this.userRepository = userRepository;
+
         getStyle().set("background-color", "var(--lumo-contrast-5pct)")
                 .set("display", "flex").set("justify-content", "center")
                 .set("padding", "var(--lumo-space-l)");
@@ -42,16 +51,20 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         PasswordField password = new PasswordField("Password");
 
         Button loginButton = new Button("Login", e -> {
-            addClickShortcut(Key.ENTER);
+
             try {
                 if(SecurityUtils.authenticate(email.getValue(),password.getValue())){
-                    UI.getCurrent().navigate(LOGIN_SUCCESS_URL);
+                    if(accommodationRepository.existsByEmail(email.getValue())){
+                        UI.getCurrent().navigate(LOGIN_ACCOMMODATION_URL);
+                    }else if( userRepository.existsByEmail(email.getValue())){
+                        UI.getCurrent().navigate(LOGIN_USER_URL);
+                    }
                 }
             } catch (Exception ex) {
                 Notification.show("Wrong Credentials");
             }
         });
-
+        loginButton.addClickShortcut(Key.ENTER);
 
         add(
                 new H1("BookingApp Login"),
