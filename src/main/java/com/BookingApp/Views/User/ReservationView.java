@@ -74,8 +74,13 @@ public class ReservationView extends VerticalLayout {
             reservation.setReservationName(reservationName.getValue());
             reservation.setAccommodation(accommodation);
             reservation.setRoomReserved(room.getRoomType());
-            createReservation(reservation);
-            Notification.show("Reservation created");
+            if(checkoutPicker.getValue().isBefore(checkinPicker.getValue())){
+                Notification.show("Check-out date can't be before Check-in date.");
+            }else{
+                createReservation(reservation);
+                Notification.show("Reservation created");
+            }
+
         });
 
 
