@@ -74,9 +74,13 @@ public class ReservationView extends VerticalLayout {
             reservation.setReservationName(reservationName.getValue());
             reservation.setAccommodation(accommodation);
             reservation.setRoomReserved(room.getRoomType());
-            if(checkoutPicker.getValue().isBefore(checkinPicker.getValue())){
-                Notification.show("Check-out date can't be before Check-in date.");
-            }else{
+            if(checkoutPicker.getValue().isBefore(checkinPicker.getValue()) ){
+                Notification.show("Check-out date can't be before Check-in date");
+            } else if (checkoutPicker.getValue().equals(checkinPicker.getValue())) {
+                Notification.show("Check-out date can't be in the same as Check-in date");
+            } else if (reservationName.isEmpty() || reservationName == null) {
+                Notification.show("Reservation needs a name");
+            } else{
                 createReservation(reservation);
                 Notification.show("Reservation created");
             }

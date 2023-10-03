@@ -8,6 +8,7 @@ import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Repository.StatusRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -29,8 +30,15 @@ public class RoomService implements  IRoomService{
         }else{
             return roomRepository.search(filterText,accommodationId);
         }
-
     }
+
+//    public List<Room> findAllAvailableRoom(LocalDate checkIn, LocalDate checkOut, Long accommodationId){
+//        if(checkIn == null || checkOut == null){
+//            return roomRepository.getRoomsByAccommodationId(accommodationId);
+//        }else {
+//            return roomRepository.search(checkIn,checkOut,accommodationId);
+//        }
+//    }
     public List<Room>  getAllRooms(){
         return roomRepository.findAll();
     }
