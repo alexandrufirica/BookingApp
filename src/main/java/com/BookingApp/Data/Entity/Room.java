@@ -14,6 +14,8 @@ public class Room extends AbstractEntity{
     @NotNull
     @JsonIgnoreProperties({"rooms"})
     private Accommodation accommodation;
+
+//    private Long accommodationId;
     @NotNull
     @JoinColumn(name = "status_id")
     @ManyToOne
@@ -42,6 +44,7 @@ public class Room extends AbstractEntity{
         this.availability = availability;
         this.accommodation = accommodation;
         this.status = status;
+//        this.accommodationId = accommodation.getId();
     }
 
     public Accommodation getAccommodation() {

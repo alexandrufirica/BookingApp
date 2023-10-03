@@ -15,7 +15,17 @@ import java.util.Set;
 @Entity
 @Component
 @Table(name = "accommodations")
-public class Accommodation extends AbstractEntity {
+public class Accommodation{
+
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "idgenerator")
+    @SequenceGenerator(
+            name = "idgenerator",
+            allocationSize = 1)
+    private Long id;
+
     private String name;
     private String city;
     private String country;
@@ -37,8 +47,8 @@ public class Accommodation extends AbstractEntity {
     @Nullable
     private List<Room> rooms = new LinkedList<>();
 
-    @Formula("(select count(c.id) from Room c where c.accommodation_id = id)")
-    private int roomsCount;
+//    @Formula("(select count(c.id) from Room c where c.accommodation_id = id)")
+//    private int roomsCount;
 
       public Accommodation(){
 
@@ -67,10 +77,14 @@ public class Accommodation extends AbstractEntity {
         this.rooms = rooms;
     }
 
-    public int getRoomsCount() {
-        return roomsCount;
-    }
+//    public int getRoomsCount() {
+//        return roomsCount;
+//    }
 
+
+    public Long getId() {
+        return id;
+    }
     public String getPostalCode() {
         return postalCode;
     }

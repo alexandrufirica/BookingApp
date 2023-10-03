@@ -23,11 +23,11 @@ public class RoomService implements  IRoomService{
         this.statusRepository = statusRepository;
     }
 
-    public List<Room> findAllRoom(String filterText){
+    public List<Room> findAllRoom(String filterText, Long accommodationId){
         if(filterText == null || filterText.isEmpty()){
-            return roomRepository.findAll();
+            return roomRepository.getRoomsByAccommodationId(accommodationId);
         }else{
-            return roomRepository.search(filterText);
+            return roomRepository.search(filterText,accommodationId);
         }
 
     }

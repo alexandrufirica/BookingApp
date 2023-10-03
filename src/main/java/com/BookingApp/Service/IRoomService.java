@@ -5,7 +5,7 @@ import com.BookingApp.Data.Entity.Room;
 import java.util.List;
 
 public interface IRoomService {
-     List<Room> findAllRoom(String filterText);
+     List<Room> findAllRoom(String filterText, Long accommodationId);
 
      void createRoom(Room room);
 }
