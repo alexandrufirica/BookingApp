@@ -21,12 +21,16 @@ import jakarta.annotation.security.RolesAllowed;
 @Route("/accommodationPage")
 @RolesAllowed({"USER","ADMIN"})
 public class AccommodationView extends VerticalLayout {
+
+    public static final Long STATUS_AVAILABLE = 1L;
+
     Grid<Room> grid = new Grid<>(Room.class);
     UserNavBar userNavBar = new UserNavBar();
     private final AccommodationRepository accommodationRepository;
     private RoomService roomService;
     private Accommodation accommodation;
     public static long roomId;
+
 
     public AccommodationView(AccommodationRepository accommodationRepository, RoomService roomService, Room room){
         this.accommodationRepository = accommodationRepository;
@@ -85,7 +89,7 @@ public class AccommodationView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(roomService.findRoomByAccommodation(accommodation.getId()));
+        grid.setItems(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
     }
 
 

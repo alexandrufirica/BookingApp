@@ -74,8 +74,8 @@ public class RoomService implements  IRoomService{
         roomRepository.save(room);
     }
 
-    public List<Room> findRoomByAccommodation(Long accommodationId){
-        return roomRepository.getRoomsByAccommodationId(accommodationId);
+    public List<Room> findRoomByAccommodationAndStatus(Long accommodationId, Long statusId){
+        return roomRepository.getRoomsByAccommodationIdAndStatusId(accommodationId, statusId);
     }
 }
 
