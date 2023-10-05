@@ -4,10 +4,12 @@ import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Service.AccommodationService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
@@ -19,7 +21,7 @@ import java.util.List;
 @PageTitle(value = "Home")
 @Route(value = "/home")
 @RolesAllowed({"USER","ADMIN"})
-public class HomeView extends VerticalLayout implements AfterNavigationObserver {
+public class HomeView extends AppLayout implements AfterNavigationObserver {
     Grid<Accommodation>  grid = new Grid<>();
     UserNavBar userNavBar = new UserNavBar();
     AccommodationService accommodationService;
@@ -41,11 +43,19 @@ public class HomeView extends VerticalLayout implements AfterNavigationObserver 
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.add(checkinPicker, checkoutPicker);
 
+
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn( accommodation -> createCard(accommodation));
-        add(userNavBar,pickersLayout,grid);
+        grid.setAllRowsVisible(true);
 
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        addToNavbar(userNavBar);
+
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+        verticalLayout.add(pickersLayout,grid);
+
+        setContent(verticalLayout);
+
     }
 
     private Component createCard(Accommodation accommodation) {
