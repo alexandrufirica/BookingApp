@@ -15,6 +15,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import jakarta.annotation.security.RolesAllowed;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.add(checkinPicker, checkoutPicker);
 
+//        long diffdays = ChronoUnit.DAYS.between(checkinPicker.getValue(),checkoutPicker.getValue());
 
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn( accommodation -> createCard(accommodation));
@@ -71,7 +73,6 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
 
         HorizontalLayout header = new HorizontalLayout();
         header.addClassName("header");
-        header.setSpacing(false);
         header.getThemeList().add("spacing-s");
 
         Span name = new Span(accommodation.getName());

@@ -52,6 +52,8 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                     }else if( userRepository.existsByEmail(email.getValue())){
                         UI.getCurrent().navigate(LOGIN_USER_URL);
                     }
+                }else {
+                    Notification.show("Wrong Credentials");
                 }
             } catch (Exception ex) {
                 Notification.show("Wrong Credentials");
