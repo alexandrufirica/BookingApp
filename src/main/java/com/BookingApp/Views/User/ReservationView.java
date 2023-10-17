@@ -5,7 +5,9 @@ import com.BookingApp.Data.Entity.Reservation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoomRepository;
+import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.ReservationService;
+import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -28,18 +30,18 @@ public class ReservationView extends VerticalLayout {
     private final Reservation reservation;
     private final Accommodation accommodation;
     private final Room room;
-    private final AccommodationRepository accommodationRepository;
-    private final RoomRepository roomRepository;
+    private final AccommodationService accommodationService;
+    private final RoomService roomService;
     private final ReservationService reservationService;
 
-    public ReservationView (Reservation reservation, AccommodationRepository accommodationRepository, RoomRepository roomRepository, ReservationService reservationService){
+    public ReservationView (Reservation reservation, AccommodationService accommodationService, RoomService roomService, ReservationService reservationService){
         this.reservation = reservation;
-        this.accommodationRepository = accommodationRepository;
-        this.roomRepository = roomRepository;
+        this.accommodationService = accommodationService;
+        this.roomService = roomService;
         this.reservationService = reservationService;
 
-        this.accommodation = accommodationRepository.getAccommodationById(HomeView.accommodationId);
-        this.room = roomRepository.getRoomById(AccommodationView.roomId);
+        this.accommodation = accommodationService.getAccommodationById(HomeView.accommodationId);
+        this.room = roomService.getRoomById(AccommodationView.roomId);
         addClassName("reservation-view");
         add(
                 userNavBar,

@@ -3,6 +3,7 @@ package com.BookingApp.Views.User;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Repository.AccommodationRepository;
+import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -26,17 +27,17 @@ public class AccommodationView extends VerticalLayout {
 
     Grid<Room> grid = new Grid<>(Room.class);
     UserNavBar userNavBar = new UserNavBar();
-    private final AccommodationRepository accommodationRepository;
+    private final AccommodationService accommodationService;
     private RoomService roomService;
     private Accommodation accommodation;
     public static long roomId;
 
 
-    public AccommodationView(AccommodationRepository accommodationRepository, RoomService roomService, Room room){
-        this.accommodationRepository = accommodationRepository;
+    public AccommodationView(AccommodationService accommodationService, RoomService roomService, Room room){
+        this.accommodationService = accommodationService;
         this.roomService = roomService;
 
-        this.accommodation = accommodationRepository.getAccommodationById(HomeView.accommodationId);
+        this.accommodation = accommodationService.getAccommodationById(HomeView.accommodationId);
         accommodation.setId(HomeView.accommodationId);
 
         addClassName("accommodation-view");
