@@ -5,6 +5,9 @@ import com.BookingApp.Data.Entity.Role;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoleRepository;
 import com.BookingApp.Data.Repository.UserRepository;
+import com.BookingApp.Service.AccommodationService;
+import com.BookingApp.Service.RoleService;
+import com.BookingApp.Service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -37,16 +40,16 @@ public class CreateAccomodation extends VerticalLayout {
     private PasswordField password;
     private PasswordField reTypePassowrd;
     private Button createButton;
-    private final AccommodationRepository accommodationRepository;
-    private final RoleRepository roleRepository;
-    private final UserRepository userRepository;
+    private final AccommodationService accommodationService;
+    private final RoleService roleService;
+    private final UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public CreateAccomodation(AccommodationRepository accommodationRepository, RoleRepository roleRepository, UserRepository userRepository){
-        this.accommodationRepository = accommodationRepository;
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
+    public CreateAccomodation(AccommodationService accommodationService, RoleService roleService, UserService userService){
+        this.accommodationService = accommodationService;
+        this.roleService = roleService;
+        this.userService = userService;
 
 
         H1 label = new H1("BookingApp");
@@ -122,9 +125,9 @@ public class CreateAccomodation extends VerticalLayout {
             Notification.show("Enter a password");
         }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
-        }else if(accommodationRepository.existsByEmail(email)){
+        }else if(accommodationService.existsByEmail(email)){
             Notification.show("This email allready exists!");
-        } else if (userRepository.existsByEmail(email)) {
+        } else if (userService.existsByEmail(email)) {
             Notification.show("This email allready exists!");
         } else {
             registerAccommodation(name, country, city, adress, postalCode, phoneNumber, email, password);
@@ -146,9 +149,9 @@ public class CreateAccomodation extends VerticalLayout {
         accommodation.setPhoneNumber(this.phone.getValue());
         accommodation.setPassword(passwordEncoder.encode(this.password.getValue()));
 
-        Role roles = roleRepository.findByName("ROLE_MANAGER").get();
+        Role roles = roleService.getRoleByName("ROLE_MANAGER");
         accommodation.setRoles(Collections.singleton(roles));
-        accommodationRepository.save(accommodation);
+        accommodationService.createAccomodation(accommodation);
 
     }
 

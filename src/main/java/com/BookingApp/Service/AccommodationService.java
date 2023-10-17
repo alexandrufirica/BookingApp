@@ -30,4 +30,8 @@ public class AccommodationService implements  IAccommodationService{
 
          return  accommodationRepository.getAccommodationById(id);
     }
+
+    public boolean existsByEmail(String email){
+        return accommodationRepository.existsByEmail(email);
+    }
 }
