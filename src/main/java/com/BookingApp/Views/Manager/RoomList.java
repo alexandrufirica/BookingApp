@@ -3,6 +3,7 @@ package com.BookingApp.Views.Manager;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Security.CustomUserDetailsService;
+import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -16,21 +17,29 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @PageTitle(value = "RoomList")
 @Route(value = "/roomlist")
 @RolesAllowed({"ADMIN", "MANAGER"})
 public class RoomList extends VerticalLayout {
+
+    public static final Long STATUS_AVAILABLE = 1L;
+
+
     Grid<Room> grid = new Grid<>(Room.class);
     TextField filterText = new TextField();
     ManagerNavBar navBar = new ManagerNavBar();
-    private RoomService roomService;
+    private final RoomService roomService;
+    private final AccommodationService accommodationService;
     private Accommodation accommodation;
+
     RoomForm form;
 
-    public RoomList(RoomService service) {
+    public RoomList(RoomService service, AccommodationService accommodationService) {
         this.roomService = service;
+        this.accommodationService = accommodationService;
         this.accommodation = CustomUserDetailsService.accommodation;
 
         accommodation.setId(CustomUserDetailsService.accommodation.getId());
@@ -107,6 +116,16 @@ public class RoomList extends VerticalLayout {
     private void updateList() {
         List<Room> rooms = new ArrayList<>();
         rooms.addAll(roomService.findAllRoom(filterText.getValue(),accommodation.getId()));
+
+        List<Room> availableRooms = new ArrayList<>();
+        availableRooms.addAll(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
+        if (availableRooms.isEmpty()){
+            accommodation.setHaveAvailableRooms(false);
+            accommodationService.saveAccommodation(accommodation);
+        }else{
+            accommodation.setHaveAvailableRooms(true);
+            accommodationService.saveAccommodation(accommodation);
+        }
         grid.setItems(rooms);
     }
 

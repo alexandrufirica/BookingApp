@@ -96,13 +96,7 @@ public class AccommodationView extends VerticalLayout {
         List<Room> rooms = new ArrayList<>();
         rooms.addAll(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
         grid.setItems(rooms);
-        if (rooms.isEmpty()){
-            accommodation.setHaveAvailableRooms(false);
-            accommodationService.saveAccommodation(accommodation);
-        }else{
-            accommodation.setHaveAvailableRooms(true);
-            accommodationService.saveAccommodation(accommodation);
-        }
+
     }
 
 
