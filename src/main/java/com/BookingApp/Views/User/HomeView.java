@@ -1,7 +1,9 @@
 package com.BookingApp.Views.User;
 
 import com.BookingApp.Data.Entity.Accommodation;
+import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Service.AccommodationService;
+import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -23,13 +25,16 @@ import java.util.List;
 @Route(value = "/home")
 @RolesAllowed({"USER","ADMIN"})
 public class HomeView extends AppLayout implements AfterNavigationObserver {
+    public static final Long STATUS_AVAILABLE = 1L;
     Grid<Accommodation>  grid = new Grid<>();
     UserNavBar userNavBar = new UserNavBar();
     AccommodationService accommodationService;
+    RoomService roomService;
     public static long accommodationId;
 
-    public HomeView(AccommodationService accommodationService){
+    public HomeView(AccommodationService accommodationService, RoomService roomService){
         this.accommodationService = accommodationService;
+        this.roomService = roomService;
         addClassName("home-view");
 
         DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
@@ -95,14 +100,16 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
 
     private void navigate() {
         UI.getCurrent().getPage().setLocation("/accommodationPage");
+        System.out.println("Accommodation have rooms? :" + roomService.existRoomByAccommodationId(accommodationId));
+
+
     }
 
     @Override
     public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
 
         List<Accommodation> accommodations = new ArrayList<>();
-
-        accommodations.addAll(accommodationService.getAllAccommodations());
+        accommodations.addAll(accommodationService.getAccommodationByHaveAvailableRooms());
 
         grid.setItems(accommodations);
     }

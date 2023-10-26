@@ -15,6 +15,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @PageTitle(value = "RoomList")
 @Route(value = "/roomlist")
 @RolesAllowed({"ADMIN", "MANAGER"})
@@ -44,7 +47,7 @@ public class RoomList extends VerticalLayout {
     }
 
     private void configureForm() {
-        form = new RoomForm(roomService.findAllAccommodations(), roomService.findAllStatuses());
+        form = new RoomForm(roomService.findAllStatuses());
         form.setWidth("5em");
         form.addSaveListener(this::saveRoom);
         form.addDeleteListener(this::deleteRoom);
@@ -102,7 +105,9 @@ public class RoomList extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(roomService.findAllRoom(filterText.getValue(),accommodation.getId()));
+        List<Room> rooms = new ArrayList<>();
+        rooms.addAll(roomService.findAllRoom(filterText.getValue(),accommodation.getId()));
+        grid.setItems(rooms);
     }
 
     private void editRoom(Room room) {

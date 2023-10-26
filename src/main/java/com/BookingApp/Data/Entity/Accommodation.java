@@ -35,6 +35,7 @@ public class Accommodation{
     private String phoneNumber;
     private String password;
     private String activationCode;
+    private boolean haveAvailableRooms;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "accommodation_roles",
@@ -54,7 +55,7 @@ public class Accommodation{
 
     }
 
-    public Accommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Set<Role> role){
+    public Accommodation(String name, String country, String city, String adress, String postalCode, String phoneNumber, String email, String password, Set<Role> role, boolean haveAvailableRooms){
         this.name = name;
         this.city = city;
         this.country = country;
@@ -65,6 +66,7 @@ public class Accommodation{
         this.password = password;
         this.activationCode = RandomStringUtils.randomAlphanumeric(32);
         this.roles = role;
+        this.haveAvailableRooms = haveAvailableRooms;
     }
 
 
@@ -81,6 +83,14 @@ public class Accommodation{
 //        return roomsCount;
 //    }
 
+
+    public boolean isHaveAvailableRooms() {
+        return haveAvailableRooms;
+    }
+
+    public void setHaveAvailableRooms(boolean haveAvailableRooms) {
+        this.haveAvailableRooms = haveAvailableRooms;
+    }
 
     public Long getId() {
         return id;

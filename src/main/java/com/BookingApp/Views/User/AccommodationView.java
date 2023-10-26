@@ -18,6 +18,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @PageTitle("Accommodation-view")
 @Route("/accommodationPage")
 @RolesAllowed({"USER","ADMIN"})
@@ -90,7 +93,16 @@ public class AccommodationView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
+        List<Room> rooms = new ArrayList<>();
+        rooms.addAll(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
+        grid.setItems(rooms);
+        if (rooms.isEmpty()){
+            accommodation.setHaveAvailableRooms(false);
+            accommodationService.saveAccommodation(accommodation);
+        }else{
+            accommodation.setHaveAvailableRooms(true);
+            accommodationService.saveAccommodation(accommodation);
+        }
     }
 
 

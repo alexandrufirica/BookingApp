@@ -148,6 +148,7 @@ public class CreateAccomodation extends VerticalLayout {
         accommodation.setPostalCode(this.postalCode.getValue());
         accommodation.setPhoneNumber(this.phone.getValue());
         accommodation.setPassword(passwordEncoder.encode(this.password.getValue()));
+        accommodation.setHaveAvailableRooms(false);
 
         Role roles = roleService.getRoleByName("ROLE_MANAGER");
         accommodation.setRoles(Collections.singleton(roles));

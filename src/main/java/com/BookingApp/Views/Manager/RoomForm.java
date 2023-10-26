@@ -33,7 +33,7 @@ public class RoomForm extends FormLayout {
     Button canceButton =new Button("Cancel");
     private Room room;
 
-    public RoomForm(List<Accommodation> accommodations, List<Status> statuses) {
+    public RoomForm(List<Status> statuses) {
         addClassName("room-form");
         binder.bindInstanceFields(this);
         status.setItems(statuses);

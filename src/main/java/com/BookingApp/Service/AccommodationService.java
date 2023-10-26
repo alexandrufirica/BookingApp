@@ -34,4 +34,17 @@ public class AccommodationService implements  IAccommodationService{
     public boolean existsByEmail(String email){
         return accommodationRepository.existsByEmail(email);
     }
+
+    public List<Accommodation> getAccommodationByHaveAvailableRooms (){
+        return accommodationRepository.getAccommodationByHaveAvailableRooms(true);
+    }
+
+    public void saveAccommodation(Accommodation accommodation){
+        if(accommodation == null) {
+            System.err.println("Room is null");
+            return;
+        }
+        accommodationRepository.save(accommodation);
+
+    }
 }

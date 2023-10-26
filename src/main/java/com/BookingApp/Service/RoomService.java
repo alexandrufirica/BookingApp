@@ -9,11 +9,12 @@ import com.BookingApp.Data.Repository.StatusRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RoomService implements  IRoomService{
-
+    public static final Long STATUS_AVAILABLE = 1L;
     private final RoomRepository roomRepository;
     private final AccommodationRepository accommodationRepository;
     private final StatusRepository statusRepository;
@@ -80,6 +81,20 @@ public class RoomService implements  IRoomService{
 
     public Room getRoomById(long id){
         return roomRepository.getRoomById(id);
+    }
+
+    public boolean existRoomByAccommodationId(long id){
+            return roomRepository.existsByAccommodationId(id);
+    }
+
+    public boolean haveAvailableRooms(long accommodationId, long statusId){
+        List<Room>  haveRooms = new ArrayList<>();
+        haveRooms.addAll(roomRepository.getRoomsByAccommodationIdAndStatusId(accommodationId, STATUS_AVAILABLE));
+        if (haveRooms.isEmpty()){
+            return false;
+        }else {
+            return true;
+        }
     }
 }
 

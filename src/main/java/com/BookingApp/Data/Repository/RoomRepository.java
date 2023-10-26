@@ -1,5 +1,6 @@
 package com.BookingApp.Data.Repository;
 
+import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +26,10 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> getRoomsByAccommodationIdAndStatusId (Long accommodationId, Long statusId);
 
     Room getRoomById (long id);
-}
+
+    int getNumberOfRoomsById(long id);
+
+    boolean existsByAccommodationId(long id);
+
+
+ }
