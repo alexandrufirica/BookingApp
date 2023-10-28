@@ -32,4 +32,8 @@ public class ReservationService implements IReservationService{
     public boolean existsByReservationName(String roomName){
         return reservationRepository.existsByReservationName(roomName);
     }
+
+    public boolean existsByRoomId(long id){
+        return reservationRepository.existsByRoomId(id);
+    }
 }

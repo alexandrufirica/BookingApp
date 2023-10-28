@@ -114,6 +114,7 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
         accommodations.addAll(accommodationService.getAccommodationByHaveAvailableRooms());
 
         grid.setItems(accommodations);
+        updateList();
     }
 
     public void updateList(){
@@ -122,9 +123,9 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
 
         for (Room room : allRooms){
             int numberOfRoomsRemain = room.getNumberOfRooms();
-            if(reservationService.existsByReservationName(room.getRoomType())){
-                numberOfRoomsRemain = numberOfRoomsRemain--;
-
+            if(reservationService.existsByRoomId(room.getId())){
+                numberOfRoomsRemain = --numberOfRoomsRemain;
+                System.out.println(numberOfRoomsRemain);
             }
         }
     }
