@@ -4,6 +4,7 @@ import com.BookingApp.Security.SecurityUtils;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.RouterLink;
@@ -20,16 +21,14 @@ public class ManagerNavBar extends AppLayout {
                 .set("left", "var(--lumo-space-l)").set("margin", "0")
                 .set("position", "absolute");
 
-
         tabs = getTabs();
 
         Button logout = new Button("Log out");
 
         logout.addClickListener( e -> securityUtils.logout());
 
-
-
         addToNavbar( title, tabs, logout);
+
     }
 
     private Tabs getTabs() {

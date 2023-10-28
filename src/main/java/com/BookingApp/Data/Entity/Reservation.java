@@ -25,6 +25,10 @@ public class Reservation {
     @NotNull
     @JsonIgnoreProperties({"reservations"})
     private Accommodation accommodation;
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    @NotNull
+    private Room room;
     private LocalDate checkIn;
     private LocalDate checkOut;
     private String reservationName;
@@ -33,8 +37,9 @@ public class Reservation {
     public Reservation(){
 
     }
-    public Reservation(Accommodation accommodation, LocalDate checkIn, LocalDate checkOut, String reservationName, String roomReserved){
+    public Reservation(Accommodation accommodation, Room room, LocalDate checkIn, LocalDate checkOut, String reservationName, String roomReserved){
         this.accommodation = accommodation;
+        this.room = room;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.reservationName = reservationName;
@@ -52,6 +57,14 @@ public class Reservation {
 
     public void setAccommodation(Accommodation accommodation) {
         this.accommodation = accommodation;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public LocalDate getCheckIn() {

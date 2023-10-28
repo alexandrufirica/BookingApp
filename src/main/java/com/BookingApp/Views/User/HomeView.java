@@ -3,6 +3,7 @@ package com.BookingApp.Views.User;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Service.AccommodationService;
+import com.BookingApp.Service.ReservationService;
 import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -17,6 +18,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import jakarta.annotation.security.RolesAllowed;
 
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +27,19 @@ import java.util.List;
 @Route(value = "/home")
 @RolesAllowed({"USER","ADMIN"})
 public class HomeView extends AppLayout implements AfterNavigationObserver {
-    public static final Long STATUS_AVAILABLE = 1L;
     Grid<Accommodation>  grid = new Grid<>();
     UserNavBar userNavBar = new UserNavBar();
     AccommodationService accommodationService;
     RoomService roomService;
+    ReservationService reservationService;
     public static long accommodationId;
 
-    public HomeView(AccommodationService accommodationService, RoomService roomService){
+    List<Accommodation> accommodations = new ArrayList<>();
+
+    public HomeView(AccommodationService accommodationService, RoomService roomService, ReservationService reservationService){
         this.accommodationService = accommodationService;
         this.roomService = roomService;
+        this.reservationService = reservationService;
         addClassName("home-view");
 
         DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
@@ -48,8 +53,6 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
 
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.add(checkinPicker, checkoutPicker);
-
-//        long diffdays = ChronoUnit.DAYS.between(checkinPicker.getValue(),checkoutPicker.getValue());
 
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn( accommodation -> createCard(accommodation));
@@ -108,10 +111,22 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
     @Override
     public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
 
-        List<Accommodation> accommodations = new ArrayList<>();
         accommodations.addAll(accommodationService.getAccommodationByHaveAvailableRooms());
 
         grid.setItems(accommodations);
+    }
+
+    public void updateList(){
+        List<Room> allRooms = new ArrayList<>();
+        allRooms.addAll(roomService.getAllRooms());
+
+        for (Room room : allRooms){
+            int numberOfRoomsRemain = room.getNumberOfRooms();
+            if(reservationService.existsByReservationName(room.getRoomType())){
+                numberOfRoomsRemain = numberOfRoomsRemain--;
+
+            }
+        }
     }
 
 }

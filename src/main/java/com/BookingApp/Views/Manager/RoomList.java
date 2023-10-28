@@ -8,6 +8,7 @@ import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -44,15 +45,21 @@ public class RoomList extends VerticalLayout {
 
         accommodation.setId(CustomUserDetailsService.accommodation.getId());
         addClassName("roomList-view");
+
+        H1 label = new H1(accommodation.getName() + " Room List");
+
         configureGrid();
         configureForm();
         add(
                 navBar,
+                label,
                 getToolbar(),
                 getContent()
         );
         updateList();
         closeEditor();
+
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 
     private void configureForm() {

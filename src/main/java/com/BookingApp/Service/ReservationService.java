@@ -28,4 +28,8 @@ public class ReservationService implements IReservationService{
     public List<Reservation> findReservationByAccommodation(Long accommodationId){
         return reservationRepository.getReservationByAccommodationId(accommodationId);
     }
+
+    public boolean existsByReservationName(String roomName){
+        return reservationRepository.existsByReservationName(roomName);
+    }
 }
