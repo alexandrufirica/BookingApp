@@ -36,4 +36,8 @@ public class ReservationService implements IReservationService{
     public boolean existsByRoomId(long id){
         return reservationRepository.existsByRoomId(id);
     }
+
+    public List<Reservation> getAllReservationsByRoomId(long id){
+        return reservationRepository.getAllByRoomId(id);
+    }
 }

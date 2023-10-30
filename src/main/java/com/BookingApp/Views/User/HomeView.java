@@ -1,6 +1,7 @@
 package com.BookingApp.Views.User;
 
 import com.BookingApp.Data.Entity.Accommodation;
+import com.BookingApp.Data.Entity.Reservation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.ReservationService;
@@ -33,8 +34,9 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
     RoomService roomService;
     ReservationService reservationService;
     public static long accommodationId;
-
     List<Accommodation> accommodations = new ArrayList<>();
+    DatePicker checkinPicker = new DatePicker("Check-in:");
+    DatePicker checkoutPicker = new DatePicker("Check-out:");
 
     public HomeView(AccommodationService accommodationService, RoomService roomService, ReservationService reservationService){
         this.accommodationService = accommodationService;
@@ -45,11 +47,11 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
         DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
         singleFormat.setDateFormat("dd-MM-yyyy");
 
-        DatePicker checkinPicker = new DatePicker("Check-in:");
         checkinPicker.setI18n(singleFormat);
-
-        DatePicker checkoutPicker = new DatePicker("Check-out:");
         checkoutPicker.setI18n(singleFormat);
+
+        checkinPicker.addValueChangeListener(e -> updateList());
+        checkoutPicker.addValueChangeListener( e -> updateList());
 
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.add(checkinPicker, checkoutPicker);
@@ -124,9 +126,21 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
         for (Room room : allRooms){
             int numberOfRoomsRemain = room.getNumberOfRooms();
             if(reservationService.existsByRoomId(room.getId())){
-                numberOfRoomsRemain = --numberOfRoomsRemain;
-                System.out.println(numberOfRoomsRemain);
-            }
+                List<Reservation> roomReservations = new ArrayList<>();
+                roomReservations.addAll(reservationService.getAllReservationsByRoomId(room.getId()));
+                for (Reservation reservation : roomReservations) {
+                    if(checkinPicker.getValue() != null && checkoutPicker.getValue() != null){
+                        if((reservation.getCheckIn().equals(checkinPicker.getValue()) ||
+                                checkinPicker.getValue().isAfter(reservation.getCheckIn()) && checkoutPicker.getValue().isBefore(reservation.getCheckOut()))) {
+                            numberOfRoomsRemain = --numberOfRoomsRemain;
+                            System.out.println(room.getRoomType() + " have available: " + numberOfRoomsRemain);
+                        }
+                    }else {
+                        System.out.println(room.getRoomType() + " have available: " + numberOfRoomsRemain);
+                    }
+
+                }
+                }
         }
     }
 

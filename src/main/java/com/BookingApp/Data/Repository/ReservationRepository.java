@@ -15,5 +15,6 @@ public interface ReservationRepository extends JpaRepository <Reservation, Long>
     Boolean existsByReservationName(String name);
     List<Reservation> getReservationByAccommodationId (Long id);
     Boolean existsByRoomId(long id);
+    List<Reservation> getAllByRoomId(long id);
 
 }
