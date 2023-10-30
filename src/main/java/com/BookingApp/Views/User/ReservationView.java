@@ -28,7 +28,7 @@ import jakarta.annotation.security.RolesAllowed;
 public class ReservationView extends VerticalLayout {
 
     UserNavBar userNavBar = new UserNavBar();
-    private final Reservation reservation;
+    private final Reservation reservation = new Reservation();
     private final Accommodation accommodation;
     private final Room room;
     private final AccommodationService accommodationService;
@@ -36,12 +36,10 @@ public class ReservationView extends VerticalLayout {
     private final ReservationService reservationService;
 
 
-    public ReservationView (Reservation reservation,
-                            AccommodationService accommodationService,
+    public ReservationView (AccommodationService accommodationService,
                             RoomService roomService,
                             ReservationService reservationService)
     {
-        this.reservation = reservation;
         this.accommodationService = accommodationService;
         this.roomService = roomService;
         this.reservationService = reservationService;

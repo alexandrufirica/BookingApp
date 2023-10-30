@@ -30,8 +30,6 @@ public class UserNavBar extends AppLayout {
 
         logout.addClickListener( e -> securityUtils.logout());
 
-
-
         addToNavbar( title, tabs, logout);
     }
 

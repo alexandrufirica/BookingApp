@@ -9,6 +9,8 @@ import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
@@ -50,11 +52,13 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
         checkinPicker.setI18n(singleFormat);
         checkoutPicker.setI18n(singleFormat);
 
-        checkinPicker.addValueChangeListener(e -> updateList());
-        checkoutPicker.addValueChangeListener( e -> updateList());
+        Button searchButton = new Button("Search");
+        searchButton.addClickListener(e -> updateList());
+        searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         HorizontalLayout pickersLayout = new HorizontalLayout();
-        pickersLayout.add(checkinPicker, checkoutPicker);
+        pickersLayout.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.BASELINE);
+        pickersLayout.add(checkinPicker, checkoutPicker, searchButton);
 
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
         grid.addComponentColumn( accommodation -> createCard(accommodation));
@@ -134,8 +138,12 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
                                 checkinPicker.getValue().isAfter(reservation.getCheckIn()) && checkoutPicker.getValue().isBefore(reservation.getCheckOut()))) {
                             numberOfRoomsRemain = --numberOfRoomsRemain;
                             System.out.println(room.getRoomType() + " have available: " + numberOfRoomsRemain);
+                            if (numberOfRoomsRemain == 0){
+                                allRooms.remove(room);
+                            }
                         }
-                    }else {
+
+                    } else {
                         System.out.println(room.getRoomType() + " have available: " + numberOfRoomsRemain);
                     }
 
