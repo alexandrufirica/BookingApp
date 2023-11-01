@@ -87,14 +87,9 @@ public class RoomService implements  IRoomService{
             return roomRepository.existsByAccommodationId(id);
     }
 
-    public boolean haveAvailableRooms(long accommodationId, long statusId){
-        List<Room>  haveRooms = new ArrayList<>();
-        haveRooms.addAll(roomRepository.getRoomsByAccommodationIdAndStatusId(accommodationId, STATUS_AVAILABLE));
-        if (haveRooms.isEmpty()){
-            return false;
-        }else {
-            return true;
-        }
+    public List<Room> haveAvailableRooms(long accommodationId){
+        return (roomRepository.getRoomsByAccommodationIdAndStatusId(accommodationId, STATUS_AVAILABLE));
+
     }
 }
 
