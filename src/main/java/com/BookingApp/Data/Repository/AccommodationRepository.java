@@ -16,6 +16,8 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
 
     Boolean existsByEmail(String email);
 
+    Boolean existsByName(String name);
+
     List<Accommodation> getAccommodationByHaveAvailableRooms (boolean haveRooms);
 
 

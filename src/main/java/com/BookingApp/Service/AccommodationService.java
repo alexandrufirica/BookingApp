@@ -47,4 +47,8 @@ public class AccommodationService implements  IAccommodationService{
         accommodationRepository.save(accommodation);
 
     }
+
+    public boolean existsByName(String name){
+        return  accommodationRepository.existsByName(name);
+    }
 }
