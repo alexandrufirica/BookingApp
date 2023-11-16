@@ -18,6 +18,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.shared.ThemeVariant;
 import com.vaadin.flow.router.*;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -29,17 +30,18 @@ import java.util.List;
 @PageTitle(value = "Home")
 @Route(value = "/home")
 @RolesAllowed({"USER","ADMIN"})
-public class HomeView extends AppLayout implements AfterNavigationObserver {
+public class HomeView extends AppLayout {
     public static final Long STATUS_AVAILABLE = 1L;
-    Grid<Accommodation> grid = new Grid<>(Accommodation.class);
+    Grid<Accommodation> grid = new Grid<>();
     UserNavBar userNavBar = new UserNavBar();
     AccommodationService accommodationService;
     RoomService roomService;
     ReservationService reservationService;
     public static long accommodationId;
-    private List<Accommodation> accommodations = new ArrayList<>();
+    List<Accommodation> accommodations = new ArrayList<>();
     DatePicker checkinPicker = new DatePicker("Check-in:");
     DatePicker checkoutPicker = new DatePicker("Check-out:");
+    VerticalLayout verticalLayout = new VerticalLayout();
 
     public HomeView(AccommodationService accommodationService, RoomService roomService, ReservationService reservationService) {
         this.accommodationService = accommodationService;
@@ -54,32 +56,31 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
         checkoutPicker.setI18n(singleFormat);
 
         Button searchButton = new Button("Search");
-//        searchButton.addClickListener(e -> updateList());
+        searchButton.addClickListener(e -> updateList());
         searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.BASELINE);
         pickersLayout.add(checkinPicker, checkoutPicker, searchButton);
-        configureGrid();
-        grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
-//        grid.addComponentColumn(accommodation -> createCard(accommodation));
-        grid.setAllRowsVisible(true);
 
         addToNavbar(userNavBar);
 
-        VerticalLayout verticalLayout = new VerticalLayout();
+        accommodations.addAll(accommodationService.getAccommodationByHaveAvailableRooms());
+
         verticalLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-        verticalLayout.add(pickersLayout, grid);
-        updateList();
+
+        verticalLayout.add(pickersLayout);
+        for (Accommodation accommod: accommodations) {
+            verticalLayout.add(createCard(accommod));
+        }
+
         setContent(verticalLayout);
 
     }
 
     private Component createCard(Accommodation accommodation) {
-        HorizontalLayout card = new HorizontalLayout();
+        Button card = new Button();
         card.addClassName("card");
-        card.setSpacing(false);
-        card.getThemeList().add("spacing-s");
 
         VerticalLayout decription = new VerticalLayout();
         decription.addClassName("decription");
@@ -99,90 +100,64 @@ public class HomeView extends AppLayout implements AfterNavigationObserver {
         header.add(name, country, city);
 
         decription.add(header);
-        card.add(decription);
+        card.setIcon(decription);
         card.addClickListener(event -> {
             accommodationId = accommodation.getId();
             navigate();
         });
+        card.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         return card;
 
     }
 
     private void navigate() {
         UI.getCurrent().getPage().setLocation("/accommodationPage");
+        System.out.println("Accommodation have rooms? :" + roomService.existRoomByAccommodationId(accommodationId));
 
 
     }
-    private void configureGrid() {
-        grid.addClassName("accommodation-grid");
-        grid.setColumns("name","city");
-        grid.addColumn(Accommodation::isHaveAvailableRooms).setHeader("haveAvailableRooms");
-        grid.getColumns().forEach(col -> col.setAutoWidth(true));
-        grid.asSingleSelect().addValueChangeListener(event -> {
-            accommodationId = event.getValue().getId();
-            navigate();
-        });
-    }
-    @Override
-    public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
 
-//        for (Accommodation accommod:accommodations) {
-//            if (accommodationService.existsByName(accommod.getName())){
-////                grid.addComponentColumn(accommodation -> createCard(accommodation));
-//            }
-//
-//    }
-
-
-//        updateList();
-
-    }
 
     public void updateList() {
-        accommodations.addAll(accommodationService.getAccommodationByHaveAvailableRooms());
-        grid.setItems(accommodations);
+        try {
+            List<Accommodation> accommodationList = accommodations;
+            for (Accommodation accommodation : accommodationList) {
+                List<Room> roomList = new ArrayList<>();
+                List<Room> removedRooms = new ArrayList<>();
+                roomList.addAll(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
+                System.out.println("Available Rooms are : " + roomList);
+                for (Room room : roomList) {
+                    int numberOfRoomsAvailable = room.getNumberOfRooms();
+                    if (reservationService.existsByRoomId(room.getId())) {
+                        List<Reservation> reservationsList = new ArrayList<>();
+                        reservationsList.addAll(reservationService.getAllReservationsByRoomId(room.getId()));
+                        for (Reservation reservation : reservationsList) {
+                            if (checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
+                                if ((reservation.getCheckIn().equals(checkinPicker.getValue()) ||
+                                        checkinPicker.getValue().isAfter(reservation.getCheckIn()) && checkoutPicker.getValue().isBefore(reservation.getCheckOut()))) {
+                                    numberOfRoomsAvailable = --numberOfRoomsAvailable;
+                                }
+                            }
+                        }
+                    }
+                    if (numberOfRoomsAvailable <= 0) {
+                        removedRooms.add(room);
+                    }
+                    if (room == null || roomList.isEmpty()) {
+                        accommodationList.remove(accommodation);
+                    }
+                }
+                if (removedRooms.isEmpty()) {
+                    grid.setItems(accommodationList);
+                } else {
+                    roomList.removeAll(removedRooms);
+                    accommodations.remove(accommodation);
+                    grid.setItems(accommodations);
+                }
+            }
 
-//
-//        try {
-//            List<Accommodation> accommodationList = accommodations;
-//            for (Accommodation accommodation : accommodationList) {
-//                List<Room> roomList = new ArrayList<>();
-//                List<Room> removedRooms = new ArrayList<>();
-//                roomList.addAll(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
-//                System.out.println("Available Rooms are : " + roomList);
-//                for (Room room : roomList) {
-//                    int numberOfRoomsAvailable = room.getNumberOfRooms();
-//                    if (reservationService.existsByRoomId(room.getId())) {
-//                        List<Reservation> reservationsList = new ArrayList<>();
-//                        reservationsList.addAll(reservationService.getAllReservationsByRoomId(room.getId()));
-//                        for (Reservation reservation : reservationsList) {
-//                            if (checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
-//                                if ((reservation.getCheckIn().equals(checkinPicker.getValue()) ||
-//                                        checkinPicker.getValue().isAfter(reservation.getCheckIn()) && checkoutPicker.getValue().isBefore(reservation.getCheckOut()))) {
-//                                    numberOfRoomsAvailable = --numberOfRoomsAvailable;
-//                                }
-//                            }
-//                        }
-//                    }
-//                    if (numberOfRoomsAvailable <= 0) {
-//                        removedRooms.add(room);
-//                    }
-//                    if (room == null || roomList.isEmpty()) {
-//                        accommodationList.remove(accommodation);
-//                    }
-//                }
-//                if (removedRooms.isEmpty()) {
-//                    grid.setItems(accommodationList);
-//                } else {
-//                    roomList.removeAll(removedRooms);
-//                    accommodations.remove(accommodation);
-//                    grid.setItems(accommodations);
-//                }
-//            }
-//
-//        }catch (Exception ex){
-//            grid.setItems(accommodations);
-//        }
+        }catch (Exception ex){
+            grid.setItems(accommodations);
+        }
     }
-
 }
