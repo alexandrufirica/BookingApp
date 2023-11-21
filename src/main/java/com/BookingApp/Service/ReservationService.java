@@ -4,6 +4,7 @@ import com.BookingApp.Data.Entity.Reservation;
 import com.BookingApp.Data.Repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 @Service
 public class ReservationService implements IReservationService{
@@ -40,4 +41,6 @@ public class ReservationService implements IReservationService{
     public List<Reservation> getAllReservationsByRoomId(long id){
         return reservationRepository.getAllByRoomId(id);
     }
+
+
 }
