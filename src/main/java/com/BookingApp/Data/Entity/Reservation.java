@@ -98,4 +98,8 @@ public class Reservation {
     public void setRoomReserved(String roomReserved) {
         this.roomReserved = roomReserved;
     }
+
+    public  boolean containsInterval(LocalDate dateIn, LocalDate dateOut){
+        return !(checkOut.isBefore(dateIn) || checkOut.isAfter(dateOut));
+    }
 }
