@@ -100,6 +100,6 @@ public class Reservation {
     }
 
     public  boolean containsInterval(LocalDate dateIn, LocalDate dateOut){
-        return !(checkOut.isBefore(dateIn) || checkOut.isAfter(dateOut));
+        return checkIn.isEqual(dateIn) || checkIn.isAfter(dateIn) && checkOut.isBefore(dateOut);
     }
 }

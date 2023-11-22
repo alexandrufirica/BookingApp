@@ -114,15 +114,6 @@ public class HomeView extends AppLayout {
         System.out.println("Accommodation have rooms? :" + roomService.existRoomByAccommodationId(accommodationId));
     }
 
-    private boolean doesReservationExists(LocalDate dateIn, LocalDate dateOut){
-        for(Reservation reservation : reservations){
-            if(reservation.containsInterval(dateIn,dateOut)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void updateList() {
         cardLayout.removeAll();
 
@@ -162,8 +153,5 @@ public class HomeView extends AppLayout {
             cardLayout.add(createCard(accommod));
         }
 
-        //  if (reservation.getCheckIn().isEqual(checkinPicker.getValue()) ||
-//   reservation.getCheckIn().isAfter(checkinPicker.getValue()) && reservation.getCheckOut().isBefore(checkoutPicker.getValue())) {
-//
     }
 }
