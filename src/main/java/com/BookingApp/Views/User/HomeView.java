@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @PageTitle(value = "Home")
@@ -132,10 +133,12 @@ public class HomeView extends AppLayout {
         accommodationList.clear();
         accommodationList.addAll(accommodations);
 
-        for (Accommodation accommodation : accommodationList) {
+        Iterator<Accommodation> iterator = accommodationList.iterator();
+        while(iterator.hasNext()){
+            Accommodation accommodation = iterator.next();
             List<Room> roomList = new ArrayList<>();
-//            List<Room> removedRooms = new ArrayList<>();
             roomList.addAll(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
+
             for (Room room : roomList) {
                 int numberOfRoomsAvailable = room.getNumberOfRooms();
                 if (reservationService.existsByRoomId(room.getId())) {
@@ -149,7 +152,8 @@ public class HomeView extends AppLayout {
                         }
                     }
                     if (numberOfRoomsAvailable <= 0) {
-                        accommodationList.remove(accommodation);
+                        iterator.remove();
+                        break;
                     }
                 }
             }
@@ -157,29 +161,9 @@ public class HomeView extends AppLayout {
         for (Accommodation accommod: accommodationList) {
             cardLayout.add(createCard(accommod));
         }
-//                        if (checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
-//                            if (reservation.getCheckIn().isEqual(checkinPicker.getValue()) ||
-//                                    reservation.getCheckIn().isAfter(checkinPicker.getValue()) && reservation.getCheckOut().isBefore(checkoutPicker.getValue())) {
-//                                numberOfRoomsAvailable = --numberOfRoomsAvailable;
-//                            }
-//                        }
-//                    }
-//                }
-//                if (numberOfRoomsAvailable <= 0) {
-//                    removedRooms.add(room);
-//                }
-//                if (room == null || roomList.isEmpty()) {
-//                    accommodationList.remove(accommodation);
-//                }
-//            }
-//            if (!removedRooms.isEmpty()) {
-//                roomList.removeAll(removedRooms);
-//                accommodationList.remove(accommodation);
-//            }
-//        }
-//        for (Accommodation accommod: accommodationList) {
-//            cardLayout.add(createCard(accommod));
-//        }
 
+        //  if (reservation.getCheckIn().isEqual(checkinPicker.getValue()) ||
+//   reservation.getCheckIn().isAfter(checkinPicker.getValue()) && reservation.getCheckOut().isBefore(checkoutPicker.getValue())) {
+//
     }
 }
