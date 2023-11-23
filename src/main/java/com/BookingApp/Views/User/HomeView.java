@@ -121,12 +121,7 @@ public class HomeView extends AppLayout {
     public void updateList() {
         cardLayout.removeAll();
 
-        accommodations.clear();
-        accommodations.addAll(accommodationService.getAccommodationByHaveAvailableRooms());
-
-        List<Accommodation> accommodationList = new ArrayList<>();
-        accommodationList.clear();
-        accommodationList.addAll(accommodations);
+        List<Accommodation> accommodationList = accommodationService.getAccommodationByHaveAvailableRooms();
 
         Iterator<Accommodation> AccommodationIterator = accommodationList.iterator();
         while (AccommodationIterator.hasNext()) {
@@ -164,8 +159,8 @@ public class HomeView extends AppLayout {
                 break;
             }
         }
-        for (Accommodation accommod : accommodationList) {
-            cardLayout.add(createCard(accommod));
+        for (Accommodation accommodation : accommodationList) {
+            cardLayout.add(createCard(accommodation));
         }
     }
 }
