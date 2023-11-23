@@ -19,6 +19,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import jakarta.annotation.security.RolesAllowed;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -134,8 +135,12 @@ public class HomeView extends AppLayout {
                     List<Reservation> reservationsList = new ArrayList<>();
                     reservationsList.addAll(reservationService.getAllReservationsByRoomId(room.getId()));
                     for (Reservation reservation : reservationsList) {
+                        LocalDate checkIn = reservation.getCheckIn();
+                        LocalDate checkOut = reservation.getCheckOut();
                         if (checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
-                            if (reservation.containsInterval(checkinPicker.getValue(), checkoutPicker.getValue())) {
+                            LocalDate dateIn = checkinPicker.getValue();
+                            LocalDate dateOut = checkoutPicker.getValue();
+                            if (checkIn.isBefore(dateOut) && checkOut.isAfter(dateIn)) {
                                 numberOfRoomsAvailable = --numberOfRoomsAvailable;
                             }
                         }
