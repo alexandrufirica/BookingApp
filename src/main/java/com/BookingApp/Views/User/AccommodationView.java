@@ -7,6 +7,8 @@ import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
@@ -34,6 +36,8 @@ public class AccommodationView extends VerticalLayout {
     private RoomService roomService;
     private Accommodation accommodation;
     public static long roomId;
+    DatePicker checkinPicker = new DatePicker("Check-in:");
+    DatePicker checkoutPicker = new DatePicker("Check-out:");
 
 
     public AccommodationView(AccommodationService accommodationService, RoomService roomService, Room room){
@@ -80,14 +84,17 @@ public class AccommodationView extends VerticalLayout {
         DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
         singleFormat.setDateFormat("dd-MM-yyyy");
 
-        DatePicker checkinPicker = new DatePicker("Check-in:");
         checkinPicker.setI18n(singleFormat);
-
-        DatePicker checkoutPicker = new DatePicker("Check-out:");
         checkoutPicker.setI18n(singleFormat);
 
+        Button searchButton = new Button("Search");
+        searchButton.addClickListener(e -> updateList());
+        searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
         HorizontalLayout pickersLayout = new HorizontalLayout();
-        pickersLayout.add(checkinPicker, checkoutPicker);
+        pickersLayout.setDefaultVerticalComponentAlignment(Alignment.BASELINE);
+
+        pickersLayout.add(checkinPicker, checkoutPicker, searchButton);
 
         return pickersLayout;
     }

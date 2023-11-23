@@ -47,6 +47,22 @@ public class HomeView extends AppLayout {
         this.reservationService = reservationService;
         addClassName("home-view");
 
+        addToNavbar(userNavBar);
+
+        verticalLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+        cardLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+
+        verticalLayout.add(
+                getToolbar()
+                ,cardLayout
+        );
+
+        updateList();
+
+        setContent(verticalLayout);
+    }
+
+    private Component getToolbar() {
         DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
         singleFormat.setDateFormat("dd-MM-yyyy");
 
@@ -59,19 +75,10 @@ public class HomeView extends AppLayout {
 
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.BASELINE);
+
         pickersLayout.add(checkinPicker, checkoutPicker, searchButton);
 
-        addToNavbar(userNavBar);
-
-        verticalLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-        cardLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-
-        updateList();
-
-        verticalLayout.add(pickersLayout,cardLayout);
-
-        setContent(verticalLayout);
-
+        return pickersLayout;
     }
 
     private Component createCard(Accommodation accommodation) {
