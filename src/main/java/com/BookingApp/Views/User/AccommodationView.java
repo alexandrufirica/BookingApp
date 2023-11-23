@@ -106,28 +106,34 @@ public class AccommodationView extends VerticalLayout {
     private void updateList() {
         List<Room> roomList = roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE);
         Iterator<Room> roomIterator = roomList.iterator();
+
         while (roomIterator.hasNext()) {
             Room room = roomIterator.next();
             int numberOfRoomsAvailable = room.getNumberOfRooms();
             if (reservationService.existsByRoomId(room.getId())) {
-                List<Reservation> reservationsList = new ArrayList<>();
-                reservationsList.addAll(reservationService.getAllReservationsByRoomId(room.getId()));
-                for (Reservation reservation : reservationsList) {
+
+                List<Reservation> reservationsList = reservationService.getAllReservationsByRoomId(room.getId());
+                Iterator<Reservation> reservationIterator =reservationsList.iterator();
+                while (reservationIterator.hasNext()){
+                    Reservation reservation = reservationIterator.next();
                     LocalDate checkIn = reservation.getCheckIn();
                     LocalDate checkOut = reservation.getCheckOut();
                     if (checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
                         LocalDate dateIn = checkinPicker.getValue();
                         LocalDate dateOut = checkoutPicker.getValue();
                         if (checkIn.isBefore(dateOut) && checkOut.isAfter(dateIn)) {
-                            numberOfRoomsAvailable = --numberOfRoomsAvailable;
+                            numberOfRoomsAvailable--;
                         }
+                    }
+                    if (numberOfRoomsAvailable <= 0) {
+                        System.out.println("Before removing " + room.getRoomType());
+                        roomIterator.remove();
+                        System.out.println("After removing " + room.getRoomType());
+                        break;
                     }
                 }
             }
-            if (numberOfRoomsAvailable <= 0) {
-                roomIterator.remove();
-                break;
-            }
+
         }
 
         grid.setItems(roomList);
