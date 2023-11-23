@@ -22,6 +22,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
+import java.time.LocalDate;
+
 @PageTitle("Reservation")
 @Route("/reservation")
 @RolesAllowed({"USER","ADMIN"})
@@ -31,6 +33,8 @@ public class ReservationView extends VerticalLayout {
     private final Reservation reservation = new Reservation();
     private final Accommodation accommodation;
     private final Room room;
+    public static LocalDate dateIn;
+    public static LocalDate dateOut;
     private final AccommodationService accommodationService;
     private final RoomService roomService;
     private final ReservationService reservationService;
@@ -64,11 +68,17 @@ public class ReservationView extends VerticalLayout {
 
         DatePicker checkinPicker = new DatePicker("Check-in:");
         checkinPicker.setI18n(singleFormat);
-        checkinPicker.setRequiredIndicatorVisible(true);
+        checkinPicker.setReadOnly(true);
 
         DatePicker checkoutPicker = new DatePicker("Check-out:");
         checkoutPicker.setI18n(singleFormat);
-        checkoutPicker.setRequiredIndicatorVisible(true);
+        checkoutPicker.setReadOnly(true);
+
+        dateIn = AccommodationView.dateIn;
+        dateOut = AccommodationView.dateOut;
+
+        checkinPicker.setValue(AccommodationView.dateIn);
+        checkoutPicker.setValue(AccommodationView.dateOut);
 
         TextField reservationName = new TextField("Reservation name");
         reservationName.setRequiredIndicatorVisible(true);
@@ -76,8 +86,8 @@ public class ReservationView extends VerticalLayout {
         Button reserveButton = new Button("Reserve");
         reserveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         reserveButton.addClickListener( e -> {
-            reservation.setCheckIn(checkinPicker.getValue());
-            reservation.setCheckOut(checkoutPicker.getValue());
+            reservation.setCheckIn(dateIn);
+            reservation.setCheckOut(dateOut);
             reservation.setReservationName(reservationName.getValue());
             reservation.setAccommodation(accommodation);
             reservation.setRoomReserved(room.getRoomType());

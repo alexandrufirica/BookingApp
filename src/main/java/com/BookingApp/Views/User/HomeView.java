@@ -35,8 +35,10 @@ public class HomeView extends AppLayout {
     ReservationService reservationService;
     public static long accommodationId;
     List<Accommodation> accommodations = new ArrayList<>();
-    DatePicker checkinPicker = new DatePicker("Check-in:");
-    DatePicker checkoutPicker = new DatePicker("Check-out:");
+    public DatePicker checkinPicker = new DatePicker("Check-in:");
+    public DatePicker checkoutPicker = new DatePicker("Check-out:");
+    public static LocalDate dateIn;
+    public static LocalDate dateOut;
     VerticalLayout verticalLayout = new VerticalLayout();
     VerticalLayout cardLayout = new VerticalLayout();
     List<Reservation>  reservations = new ArrayList<>();
@@ -68,6 +70,12 @@ public class HomeView extends AppLayout {
 
         checkinPicker.setI18n(singleFormat);
         checkoutPicker.setI18n(singleFormat);
+
+        dateIn = AccommodationView.dateIn;
+        dateOut = AccommodationView.dateOut;
+
+        checkinPicker.setValue(AccommodationView.dateIn);
+        checkoutPicker.setValue(AccommodationView.dateOut);
 
         Button searchButton = new Button("Search");
         searchButton.addClickListener(e -> updateList());
@@ -140,8 +148,8 @@ public class HomeView extends AppLayout {
                         LocalDate checkIn = reservation.getCheckIn();
                         LocalDate checkOut = reservation.getCheckOut();
                         if (checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
-                            LocalDate dateIn = checkinPicker.getValue();
-                            LocalDate dateOut = checkoutPicker.getValue();
+                            dateIn = checkinPicker.getValue();
+                            dateOut = checkoutPicker.getValue();
                             if (checkIn.isBefore(dateOut) && checkOut.isAfter(dateIn)) {
                                 numberOfRoomsAvailable = --numberOfRoomsAvailable;
                             }

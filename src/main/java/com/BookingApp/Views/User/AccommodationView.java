@@ -39,6 +39,8 @@ public class AccommodationView extends VerticalLayout {
     private Accommodation accommodation;
     private ReservationService reservationService;
     public static long roomId;
+    public static LocalDate dateIn;
+    public static LocalDate dateOut;
     DatePicker checkinPicker = new DatePicker("Check-in:");
     DatePicker checkoutPicker = new DatePicker("Check-out:");
 
@@ -91,6 +93,12 @@ public class AccommodationView extends VerticalLayout {
         checkinPicker.setI18n(singleFormat);
         checkoutPicker.setI18n(singleFormat);
 
+        checkinPicker.setValue(HomeView.dateIn);
+        checkoutPicker.setValue(HomeView.dateOut);
+
+        dateIn = HomeView.dateIn;
+        dateOut = HomeView.dateOut;
+
         Button searchButton = new Button("Search");
         searchButton.addClickListener(e -> updateList());
         searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -119,8 +127,8 @@ public class AccommodationView extends VerticalLayout {
                     LocalDate checkIn = reservation.getCheckIn();
                     LocalDate checkOut = reservation.getCheckOut();
                     if (checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
-                        LocalDate dateIn = checkinPicker.getValue();
-                        LocalDate dateOut = checkoutPicker.getValue();
+                         dateIn = checkinPicker.getValue();
+                         dateOut = checkoutPicker.getValue();
                         if (checkIn.isBefore(dateOut) && checkOut.isAfter(dateIn)) {
                             numberOfRoomsAvailable--;
                         }
