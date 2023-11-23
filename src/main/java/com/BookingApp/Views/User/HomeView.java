@@ -12,7 +12,6 @@ import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -20,9 +19,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import jakarta.annotation.security.RolesAllowed;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -124,13 +120,15 @@ public class HomeView extends AppLayout {
         accommodationList.clear();
         accommodationList.addAll(accommodations);
 
-        Iterator<Accommodation> iterator = accommodationList.iterator();
-        while(iterator.hasNext()){
-            Accommodation accommodation = iterator.next();
+        Iterator<Accommodation> AccommodationIterator = accommodationList.iterator();
+        while (AccommodationIterator.hasNext()) {
+            Accommodation accommodation = AccommodationIterator.next();
             List<Room> roomList = new ArrayList<>();
             roomList.addAll(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
 
-            for (Room room : roomList) {
+            Iterator<Room> roomIterator = roomList.iterator();
+            while (roomIterator.hasNext()) {
+                Room room = roomIterator.next();
                 int numberOfRoomsAvailable = room.getNumberOfRooms();
                 if (reservationService.existsByRoomId(room.getId())) {
                     List<Reservation> reservationsList = new ArrayList<>();
@@ -142,16 +140,20 @@ public class HomeView extends AppLayout {
                             }
                         }
                     }
-                    if (numberOfRoomsAvailable <= 0) {
-                        iterator.remove();
-                        break;
-                    }
+                }
+                if (numberOfRoomsAvailable <= 0) {
+                    roomIterator.remove();
+                    break;
                 }
             }
+
+            if (roomList.isEmpty()) {
+                AccommodationIterator.remove();
+                break;
+            }
         }
-        for (Accommodation accommod: accommodationList) {
+        for (Accommodation accommod : accommodationList) {
             cardLayout.add(createCard(accommod));
         }
-
     }
 }
