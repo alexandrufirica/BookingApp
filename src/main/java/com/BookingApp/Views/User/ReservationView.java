@@ -3,8 +3,10 @@ package com.BookingApp.Views.User;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Reservation;
 import com.BookingApp.Data.Entity.Room;
+import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoomRepository;
+import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.AvailableRooms;
 import com.BookingApp.Service.ReservationService;
@@ -38,6 +40,7 @@ public class ReservationView extends VerticalLayout {
     private final AccommodationService accommodationService;
     private final RoomService roomService;
     private final ReservationService reservationService;
+    private User user;
 
 
     public ReservationView (AccommodationService accommodationService,
@@ -48,6 +51,7 @@ public class ReservationView extends VerticalLayout {
         this.roomService = roomService;
         this.reservationService = reservationService;
 
+        user = CustomUserDetailsService.user;
         this.accommodation = accommodationService.getAccommodationById(HomeView.accommodationId);
         this.room = roomService.getRoomById(AccommodationView.roomId);
 
@@ -82,6 +86,7 @@ public class ReservationView extends VerticalLayout {
 
         TextField reservationName = new TextField("Reservation name");
         reservationName.setRequiredIndicatorVisible(true);
+        reservationName.setValue(user.getGivenName() + " " +user.getSurName());
 
         Button reserveButton = new Button("Reserve");
         reserveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
