@@ -13,6 +13,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -78,8 +79,21 @@ public class HomeView extends AppLayout {
         checkoutPicker.setValue(AccommodationView.dateOut);
 
         Button searchButton = new Button("Search");
-        searchButton.addClickListener(e -> updateList());
         searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        searchButton.addClickListener(e ->{
+            if(checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
+                if (checkoutPicker.getValue().isBefore(checkinPicker.getValue())) {
+                    Notification.show("Check-out date can't be before Check-in date");
+                } else if (checkoutPicker.getValue().equals(checkinPicker.getValue())) {
+                    Notification.show("Check-out date can't be the same as Check-in date");
+                } else {
+                    updateList();
+                }
+            }
+        });
+
+
+
 
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.BASELINE);
