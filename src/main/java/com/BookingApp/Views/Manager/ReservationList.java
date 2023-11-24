@@ -47,7 +47,7 @@ public class ReservationList extends VerticalLayout {
         grid.addClassName("reservation-grid");
         grid.setColumns("roomReserved","checkIn","checkOut","reservationName");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
-//        grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
+        grid.setAllRowsVisible(true);
     }
 
     private HorizontalLayout getContent(){

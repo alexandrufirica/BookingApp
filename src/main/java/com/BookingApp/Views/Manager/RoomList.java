@@ -76,6 +76,7 @@ public class RoomList extends VerticalLayout {
         grid.addColumn(Room::getStatusName).setHeader("Availbility");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
+        grid.setAllRowsVisible(true);
     }
 
     private HorizontalLayout getContent(){
