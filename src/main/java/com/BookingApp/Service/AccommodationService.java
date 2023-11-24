@@ -48,6 +48,10 @@ public class AccommodationService implements  IAccommodationService{
 
     }
 
+    public List<Accommodation> getAllAccommodationByCityOrCountryAndHaveAvailableRooms (String location){
+        return accommodationRepository.getAllAccommodationByCityOrCountryAndHaveAvailableRooms(location, location, true);
+    }
+
     public boolean existsByName(String name){
         return  accommodationRepository.existsByName(name);
     }

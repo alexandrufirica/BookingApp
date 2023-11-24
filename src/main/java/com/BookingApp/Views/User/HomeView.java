@@ -14,9 +14,11 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -35,14 +37,14 @@ public class HomeView extends AppLayout {
     RoomService roomService;
     ReservationService reservationService;
     public static long accommodationId;
-    List<Accommodation> accommodations = new ArrayList<>();
-    public DatePicker checkinPicker = new DatePicker("Check-in:");
-    public DatePicker checkoutPicker = new DatePicker("Check-out:");
+    public DatePicker checkinPicker = new DatePicker("Check-in");
+    public DatePicker checkoutPicker = new DatePicker("Check-out");
+    TextField locationField = new TextField("Location");
     public static LocalDate dateIn;
     public static LocalDate dateOut;
     VerticalLayout verticalLayout = new VerticalLayout();
     VerticalLayout cardLayout = new VerticalLayout();
-    List<Reservation>  reservations = new ArrayList<>();
+
 
     public HomeView(AccommodationService accommodationService, RoomService roomService, ReservationService reservationService) {
         this.accommodationService = accommodationService;
@@ -75,8 +77,13 @@ public class HomeView extends AppLayout {
         dateIn = AccommodationView.dateIn;
         dateOut = AccommodationView.dateOut;
 
-        checkinPicker.setValue(AccommodationView.dateIn);
-        checkoutPicker.setValue(AccommodationView.dateOut);
+        if(dateIn != null || dateOut != null){
+            checkinPicker.setValue(AccommodationView.dateIn);
+            checkoutPicker.setValue(AccommodationView.dateOut);
+        }else {
+            checkinPicker.setValue(LocalDate.now());
+            checkoutPicker.setValue(LocalDate.now().plusDays(1));
+        }
 
         Button searchButton = new Button("Search");
         searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -97,8 +104,9 @@ public class HomeView extends AppLayout {
 
         HorizontalLayout pickersLayout = new HorizontalLayout();
         pickersLayout.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.BASELINE);
+        pickersLayout.setBoxSizing(BoxSizing.UNDEFINED);
 
-        pickersLayout.add(checkinPicker, checkoutPicker, searchButton);
+        pickersLayout.add(checkinPicker, checkoutPicker,locationField, searchButton);
 
         return pickersLayout;
     }
@@ -143,7 +151,12 @@ public class HomeView extends AppLayout {
     public void updateList() {
         cardLayout.removeAll();
 
-        List<Accommodation> accommodationList = accommodationService.getAccommodationByHaveAvailableRooms();
+        List<Accommodation> accommodationList;
+        if(locationField.isEmpty()){
+            accommodationList = accommodationService.getAccommodationByHaveAvailableRooms();
+        }else{
+            accommodationList = accommodationService.getAllAccommodationByCityOrCountryAndHaveAvailableRooms(locationField.getValue());
+        }
 
         Iterator<Accommodation> AccommodationIterator = accommodationList.iterator();
         while (AccommodationIterator.hasNext()) {

@@ -20,5 +20,7 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
 
     List<Accommodation> getAccommodationByHaveAvailableRooms (boolean haveRooms);
 
+    List<Accommodation> getAllAccommodationByCityOrCountryAndHaveAvailableRooms (String city, String country, boolean haveRooms);
+
 
 }
