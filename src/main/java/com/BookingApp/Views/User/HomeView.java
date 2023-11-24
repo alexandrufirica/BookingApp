@@ -23,7 +23,6 @@ import com.vaadin.flow.router.*;
 import jakarta.annotation.security.RolesAllowed;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -161,16 +160,14 @@ public class HomeView extends AppLayout {
         Iterator<Accommodation> AccommodationIterator = accommodationList.iterator();
         while (AccommodationIterator.hasNext()) {
             Accommodation accommodation = AccommodationIterator.next();
-            List<Room> roomList = new ArrayList<>();
-            roomList.addAll(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
+            List<Room> roomList = roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE);
 
             Iterator<Room> roomIterator = roomList.iterator();
             while (roomIterator.hasNext()) {
                 Room room = roomIterator.next();
                 int numberOfRoomsAvailable = room.getNumberOfRooms();
                 if (reservationService.existsByRoomId(room.getId())) {
-                    List<Reservation> reservationsList = new ArrayList<>();
-                    reservationsList.addAll(reservationService.getAllReservationsByRoomId(room.getId()));
+                    List<Reservation> reservationsList = reservationService.getAllReservationsByRoomId(room.getId());
                     for (Reservation reservation : reservationsList) {
                         LocalDate checkIn = reservation.getCheckIn();
                         LocalDate checkOut = reservation.getCheckOut();
@@ -178,7 +175,7 @@ public class HomeView extends AppLayout {
                             dateIn = checkinPicker.getValue();
                             dateOut = checkoutPicker.getValue();
                             if (checkIn.isBefore(dateOut) && checkOut.isAfter(dateIn)) {
-                                numberOfRoomsAvailable = --numberOfRoomsAvailable;
+                                --numberOfRoomsAvailable;
                             }
                         }
                     }
