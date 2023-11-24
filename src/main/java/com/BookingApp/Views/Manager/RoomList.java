@@ -27,8 +27,6 @@ import java.util.List;
 public class RoomList extends VerticalLayout {
 
     public static final Long STATUS_AVAILABLE = 1L;
-
-
     Grid<Room> grid = new Grid<>(Room.class);
     TextField filterText = new TextField();
     ManagerNavBar navBar = new ManagerNavBar();
@@ -76,7 +74,7 @@ public class RoomList extends VerticalLayout {
         grid.addColumn(Room::getStatusName).setHeader("Availbility");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
-        grid.setAllRowsVisible(true);
+//        grid.setAllRowsVisible(true);
     }
 
     private HorizontalLayout getContent(){

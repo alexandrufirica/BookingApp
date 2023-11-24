@@ -18,4 +18,8 @@ public class StatusService implements  IStatusService{
     public List<Status> findAllStatuses() {
         return statusRepository.findAll();
     }
+
+    public Status getStatusById(long id){
+        return statusRepository.getStatusById(id);
+    }
 }

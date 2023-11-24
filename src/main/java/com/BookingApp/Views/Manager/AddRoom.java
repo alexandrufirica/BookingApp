@@ -3,12 +3,15 @@ package com.BookingApp.Views.Manager;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.Status;
+import com.BookingApp.Data.Repository.StatusRepository;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.RoomService;
+import com.BookingApp.Service.StatusService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
@@ -27,33 +30,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AddRoom extends VerticalLayout {
     private Button button;
     private TextField roomType;
-    Select<Integer> roomCapacity;
+    private Select<Integer> roomCapacity;
     private IntegerField numberOfRooms;
-    private Checkbox available;
+    private Select<Status> available;
     private TextArea roomDescription;
     private NumberField pricePerNight;
     private final RoomService roomService;
+    private final StatusService statusService;
     private final Room room;
-    private Status status;
+    private Status status = new Status();
     private Accommodation accommodation;
 
-    public AddRoom(RoomService roomService, Status status, Accommodation accommodation){
+    public AddRoom(RoomService roomService, StatusService statusService, Accommodation accommodation){
         this.roomService = roomService;
-        this.status = status;
+        this.statusService = statusService;
         this.room= new Room();
         this.accommodation = accommodation;
 
         accommodation.setId(CustomUserDetailsService.accommodation.getId());
 
         room.setAccommodation(accommodation);
-        room.setStatus(status);
-
 
         ManagerNavBar navBar = new ManagerNavBar();
 
         H1 name = new H1(" Welcome " + CustomUserDetailsService.accommodation.getName());
 
         roomType = new TextField("Room Type");
+        roomType.setRequiredIndicatorVisible(true);
 
         roomDescription = new TextArea("Description");
         roomDescription.setMinWidth("500px");
@@ -65,32 +68,47 @@ public class AddRoom extends VerticalLayout {
         roomCapacity.setLabel("Capacity");
         roomCapacity.setItems(1,2,3,4,5,6,7,8,9,10);
         roomCapacity.setPlaceholder("Select No of Persons");
+        roomCapacity.setRequiredIndicatorVisible(true);
 
         numberOfRooms = new IntegerField("Number of Rooms");
+        numberOfRooms.setRequiredIndicatorVisible(true);
 
         pricePerNight = new NumberField("Price Per Night");
+        pricePerNight.setRequiredIndicatorVisible(true);
 
-        available = new Checkbox("Available");
+        available = new Select<>();
+        available.setLabel("Room Status");
+        available.setPlaceholder("Select Room Status");
+        available.setItems(statusService.findAllStatuses());
+        available.setItemLabelGenerator(Status::getName);
+        available.setRequiredIndicatorVisible(true);
 
         button = new Button("Post Room");
-        button.addClickListener(e -> {
-            room.setRoomType(roomType.getValue());
-            room.setCapacity(roomCapacity.getValue());
-            room.setNumberOfRooms(numberOfRooms.getValue());
-            room.setAvailability(available.getValue());
-            room.setRoomDescription((roomDescription.getValue()));
-            room.setPricePerNight(pricePerNight.getValue());
-            createRoom(room);
-            button.getUI().ifPresent(ui -> ui.navigate(RoomList.class));
-        });
+
+            button.addClickListener(e -> {
+                try {
+                    room.setRoomType(roomType.getValue());
+                    room.setCapacity(roomCapacity.getValue());
+                    room.setNumberOfRooms(numberOfRooms.getValue());
+                    room.setStatus(available.getValue());
+                    room.setRoomDescription((roomDescription.getValue()));
+                    room.setPricePerNight(pricePerNight.getValue());
+                    createRoom(room);
+                    button.getUI().ifPresent(ui -> ui.navigate(RoomList.class));
+                }catch (Exception ex){
+                    Notification notification = new Notification();
+                    notification.setPosition(Notification.Position.BOTTOM_CENTER);
+                    notification.setText("Please enter all requierd fields.");
+                    notification.open();
+                    notification.setDuration(3000);
+
+
+                }
+            });
+
 
         button.addClickShortcut(Key.ENTER);
 
-        if(available.isEnabled()){
-            status.setId(1L);
-        }else {
-            status.setId(0L);
-        }
 
         setMargin(true);
 
