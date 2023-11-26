@@ -52,6 +52,14 @@ public class User extends AbstractEntity {
 
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -139,5 +147,6 @@ public class User extends AbstractEntity {
     public void setActive(boolean active) {
         this.active = active;
     }
+
 
 }

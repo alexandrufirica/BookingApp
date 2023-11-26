@@ -17,6 +17,8 @@ import java.util.Set;
 @Table(name = "accommodations")
 public class Accommodation{
 
+
+
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -69,7 +71,13 @@ public class Accommodation{
         this.haveAvailableRooms = haveAvailableRooms;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public List<Room> getRooms() {
         return rooms;
@@ -84,6 +92,14 @@ public class Accommodation{
 //    }
 
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public boolean isHaveAvailableRooms() {
         return haveAvailableRooms;
     }
@@ -94,6 +110,10 @@ public class Accommodation{
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     public String getPostalCode() {
         return postalCode;
@@ -142,5 +162,6 @@ public class Accommodation{
     public void setAdress(String adress) {
         this.adress = adress;
     }
+
 }
 

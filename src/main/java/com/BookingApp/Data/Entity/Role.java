@@ -16,4 +16,11 @@ public class Role extends AbstractEntity {
     @Column(length = 60)
     private String name;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
