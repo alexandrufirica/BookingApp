@@ -9,7 +9,6 @@ import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -30,7 +29,7 @@ import java.util.List;
 @PageTitle(value = "Home")
 @Route(value = "/home")
 @RolesAllowed({"USER","ADMIN"})
-public class HomeView extends AppLayout {
+public class HomeView extends VerticalLayout {
     public static final Long STATUS_AVAILABLE = 1L;
     UserNavBar userNavBar = new UserNavBar();
     AccommodationService accommodationService;
@@ -42,7 +41,6 @@ public class HomeView extends AppLayout {
     TextField locationField = new TextField("Location");
     public static LocalDate dateIn;
     public static LocalDate dateOut;
-    VerticalLayout verticalLayout = new VerticalLayout();
     VerticalLayout cardLayout = new VerticalLayout();
 
 
@@ -52,19 +50,17 @@ public class HomeView extends AppLayout {
         this.reservationService = reservationService;
         addClassName("home-view");
 
-        addToNavbar(userNavBar);
-
-        verticalLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         cardLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
 
-        verticalLayout.add(
-                getToolbar()
-                ,cardLayout
+        add(
+                userNavBar,
+                getToolbar(),
+                cardLayout
         );
 
         updateList();
 
-        setContent(verticalLayout);
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 
     private Component getToolbar() {
