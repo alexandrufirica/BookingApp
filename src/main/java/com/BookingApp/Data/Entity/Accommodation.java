@@ -2,16 +2,12 @@ package com.BookingApp.Data.Entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.Data;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.hibernate.annotations.Formula;
 import org.springframework.stereotype.Component;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-@Data
 @Entity
 @Component
 @Table(name = "accommodations")

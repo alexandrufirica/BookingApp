@@ -1,13 +1,11 @@
 package com.BookingApp.Security;
 
-import com.BookingApp.Data.Entity.Accommodation;
-import com.BookingApp.Data.Entity.Roles;
+
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.UserRepository;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.server.VaadinSession;
-import org.springframework.stereotype.Service;
+
 
 //@Service
 public class AuthService {
@@ -16,7 +14,7 @@ public class AuthService {
 
     }
 
-    public class AuthException extends Exception{
+    public static class AuthException extends Exception{
 
     }
 

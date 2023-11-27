@@ -1,13 +1,11 @@
 package com.BookingApp.Data.Entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-@Data
 @Entity
 @Component
 @Table(name = "users")

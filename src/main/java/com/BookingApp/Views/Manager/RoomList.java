@@ -120,11 +120,9 @@ public class RoomList extends VerticalLayout {
     }
 
     private void updateList() {
-        List<Room> rooms = new ArrayList<>();
-        rooms.addAll(roomService.findAllRoom(filterText.getValue(),accommodation.getId()));
+        List<Room> rooms = roomService.findAllRoom(filterText.getValue(),accommodation.getId());
 
-        List<Room> availableRooms = new ArrayList<>();
-        availableRooms.addAll(roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE));
+        List<Room> availableRooms = roomService.findRoomByAccommodationAndStatus(accommodation.getId(), STATUS_AVAILABLE);
         if (availableRooms.isEmpty()){
             accommodation.setHaveAvailableRooms(false);
             accommodationService.saveAccommodation(accommodation);

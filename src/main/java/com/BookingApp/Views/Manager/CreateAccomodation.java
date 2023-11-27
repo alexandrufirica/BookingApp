@@ -2,9 +2,6 @@ package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Role;
-import com.BookingApp.Data.Repository.AccommodationRepository;
-import com.BookingApp.Data.Repository.RoleRepository;
-import com.BookingApp.Data.Repository.UserRepository;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoleService;
 import com.BookingApp.Service.UserService;
