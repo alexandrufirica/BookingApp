@@ -22,7 +22,7 @@ public class AccommodationService implements  IAccommodationService{
     }
 
     @Override
-    public void createAccomodation(Accommodation accommodation) {
+    public void saveAccomodation(Accommodation accommodation) {
 
         accommodationRepository.save(accommodation);
     }

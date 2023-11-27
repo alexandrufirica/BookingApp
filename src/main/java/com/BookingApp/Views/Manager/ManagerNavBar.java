@@ -54,7 +54,8 @@ public class ManagerNavBar extends AppLayout {
         Tabs tabs = new Tabs();
         tabs.add(createTab(VaadinIcon.LIST_SELECT,"RoomList", RoomList.class),
                 createTab(VaadinIcon.FOLDER_ADD, "Add Room", AddRoom.class),
-                createTab(VaadinIcon.LIST, "Reservations", ReservationList.class));
+                createTab(VaadinIcon.LIST, "Reservations", ReservationList.class),
+                createTab(VaadinIcon.FILE_PROCESS, "Account Settings", AccommodationSettings.class));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         return tabs;
     }

@@ -8,5 +8,5 @@ public interface IAccommodationService {
 
     List<Accommodation> getAllAccommodations();
 
-    void createAccomodation (Accommodation accommodation);
+    void saveAccomodation (Accommodation accommodation);
 }

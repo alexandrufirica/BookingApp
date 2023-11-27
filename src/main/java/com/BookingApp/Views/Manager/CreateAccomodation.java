@@ -149,7 +149,7 @@ public class CreateAccomodation extends VerticalLayout {
 
         Role roles = roleService.getRoleByName("ROLE_MANAGER");
         accommodation.setRoles(Collections.singleton(roles));
-        accommodationService.createAccomodation(accommodation);
+        accommodationService.saveAccomodation(accommodation);
 
     }
 
