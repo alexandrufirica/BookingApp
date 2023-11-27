@@ -7,6 +7,7 @@ import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.ReservationService;
 import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -94,14 +95,16 @@ public class AccommodationView extends VerticalLayout {
         checkinPicker.setI18n(singleFormat);
         checkoutPicker.setI18n(singleFormat);
 
-        checkinPicker.setValue(HomeView.dateIn);
-        checkoutPicker.setValue(HomeView.dateOut);
-
         dateIn = HomeView.dateIn;
         dateOut = HomeView.dateOut;
 
+        checkinPicker.setValue(HomeView.dateIn);
+        checkoutPicker.setValue(HomeView.dateOut);
+
+
         Button searchButton = new Button("Search");
         searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        searchButton.addClickShortcut(Key.ENTER);
         searchButton.addClickListener(e ->{
             if(checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
                 if (checkoutPicker.getValue().isBefore(checkinPicker.getValue())) {
@@ -109,6 +112,8 @@ public class AccommodationView extends VerticalLayout {
                 } else if (checkoutPicker.getValue().equals(checkinPicker.getValue())) {
                     Notification.show("Check-out date can't be the same as Check-in date");
                 } else {
+                    dateIn = checkinPicker.getValue();
+                    dateOut = checkoutPicker.getValue();
                     updateList();
                 }
             }

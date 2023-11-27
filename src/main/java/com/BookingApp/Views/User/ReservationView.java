@@ -4,14 +4,12 @@ import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Reservation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.User;
-import com.BookingApp.Data.Repository.AccommodationRepository;
-import com.BookingApp.Data.Repository.RoomRepository;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.AccommodationService;
-import com.BookingApp.Service.AvailableRooms;
 import com.BookingApp.Service.ReservationService;
 import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -120,6 +118,11 @@ public class ReservationView extends VerticalLayout {
        verticalLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
        return verticalLayout;
+    }
+
+    private void navigate() {
+        UI.getCurrent().getPage().setLocation("/home");
+
     }
 
     public void createReservation (Reservation reservation){

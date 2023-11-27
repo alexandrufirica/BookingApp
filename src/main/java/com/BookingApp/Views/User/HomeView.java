@@ -7,6 +7,7 @@ import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.ReservationService;
 import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
@@ -82,10 +83,13 @@ public class HomeView extends AppLayout {
         }else {
             checkinPicker.setValue(LocalDate.now());
             checkoutPicker.setValue(LocalDate.now().plusDays(1));
+            dateIn = checkinPicker.getValue();
+            dateOut = checkoutPicker.getValue();
         }
 
         Button searchButton = new Button("Search");
         searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        searchButton.addClickShortcut(Key.ENTER);
         searchButton.addClickListener(e ->{
             if(checkinPicker.getValue() != null && checkoutPicker.getValue() != null) {
                 if (checkoutPicker.getValue().isBefore(checkinPicker.getValue())) {
@@ -93,6 +97,8 @@ public class HomeView extends AppLayout {
                 } else if (checkoutPicker.getValue().equals(checkinPicker.getValue())) {
                     Notification.show("Check-out date can't be the same as Check-in date");
                 } else {
+                    dateIn = checkinPicker.getValue();
+                    dateOut = checkoutPicker.getValue();
                     updateList();
                 }
             }
