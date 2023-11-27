@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.Set;
 
 @Entity
@@ -29,6 +30,7 @@ public class User extends AbstractEntity {
     private Set<Role> roles;
 
     private String activationCode;
+    private File profilePicture;
     private boolean active;
 
     public User(){
@@ -146,5 +148,11 @@ public class User extends AbstractEntity {
         this.active = active;
     }
 
+    public File getProfilePicture() {
+        return profilePicture;
+    }
 
+    public void setProfilePicture(File profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 }

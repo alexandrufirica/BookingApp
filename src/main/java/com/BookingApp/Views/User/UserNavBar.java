@@ -52,7 +52,8 @@ public class UserNavBar extends AppLayout {
 
     private Tabs getToggleTabs() {
         Tabs tabs = new Tabs();
-        tabs.add(createTab(VaadinIcon.HOME, "Home", HomeView.class));
+        tabs.add(createTab(VaadinIcon.HOME, "Home", HomeView.class),
+                createTab(VaadinIcon.FILE_PROCESS, "Account Settings", UserSettings.class));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         return tabs;
     }

@@ -21,11 +21,12 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public void createUser(User user) {
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 
     public boolean existsByEmail(String email) {
         return  userRepository.existsByEmail(email);
     }
+
 }

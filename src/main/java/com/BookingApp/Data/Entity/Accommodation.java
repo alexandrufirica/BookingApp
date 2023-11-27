@@ -4,6 +4,9 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -12,9 +15,6 @@ import java.util.Set;
 @Component
 @Table(name = "accommodations")
 public class Accommodation{
-
-
-
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -33,6 +33,7 @@ public class Accommodation{
     private String phoneNumber;
     private String password;
     private String activationCode;
+    private File profilePicture;
     private boolean haveAvailableRooms;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -159,5 +160,12 @@ public class Accommodation{
         this.adress = adress;
     }
 
+    public File getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(File profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 }
 

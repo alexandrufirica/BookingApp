@@ -5,6 +5,7 @@ import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoleRepository;
 import com.BookingApp.Data.Repository.UserRepository;
+import com.BookingApp.Service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -37,14 +38,14 @@ public class CreateUser extends VerticalLayout {
     private PasswordField password;
     private PasswordField reTypePassowrd;
     private Button createButton;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final RoleRepository roleRepository;
     private final AccommodationRepository accommodationRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public CreateUser ( UserRepository userRepository, RoleRepository roleRepository, AccommodationRepository accommodationRepository){
-        this.userRepository = userRepository;
+    public CreateUser ( UserService userService, RoleRepository roleRepository, AccommodationRepository accommodationRepository){
+        this.userService = userService;
         this.roleRepository = roleRepository;
         this.accommodationRepository = accommodationRepository;
 
@@ -124,10 +125,10 @@ public class CreateUser extends VerticalLayout {
             Notification.show("Enter a password");
         }else if(!password.equals(reTypePassword)){
             Notification.show("Password don't match");
-        }else if (userRepository.existsByEmail(email)){
-            Notification.show("This email allready exists!");
+        }else if (userService.existsByEmail(email)){
+            Notification.show("This email allready exists as user!");
         } else if(accommodationRepository.existsByEmail(email)){
-            Notification.show("This email allready exists!");
+            Notification.show("This email allready exists as accommodation!");
         }else {
             registerUser(givenName, surName, email, country, city, adress, postalCode, phone, password);
             Notification.show("Registration succeeded.");
@@ -150,7 +151,7 @@ public class CreateUser extends VerticalLayout {
 
         Role roles = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singleton(roles));
-        userRepository.save(user);
+        userService.saveUser(user);
 
     }
 
