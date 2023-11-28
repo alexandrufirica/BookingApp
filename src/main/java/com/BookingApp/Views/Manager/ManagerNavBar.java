@@ -1,6 +1,8 @@
 package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Security.SecurityUtils;
+import com.vaadin.flow.component.ComponentEvent;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -20,11 +22,13 @@ public class ManagerNavBar extends AppLayout {
     public ManagerNavBar(){
         securityUtils = new SecurityUtils();
 
-        DrawerToggle toggle = new DrawerToggle();
+        DrawerToggle drawerToggle = new DrawerToggle();
+//        drawerToggle.addClickListener(e -> handleDrawerToggle());
 
         H1 title = new H1("BookingApp");
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
+
 
         navBarTabs = getNavBarTabs();
         toggleTabs = getToggleTabs();
@@ -35,9 +39,24 @@ public class ManagerNavBar extends AppLayout {
         setDrawerOpened(false);
 
         addToDrawer(toggleTabs);
-        addToNavbar(toggle, title, navBarTabs, logout);
+        addToNavbar(drawerToggle, title, navBarTabs, logout);
+
+//        setPrimarySection(Section.DRAWER);
 
     }
+
+//    private void handleDrawerToggle() {
+//        boolean isDrawerOpen = isDrawerOpened();
+//        UI.getCurrent().getSession().setAttribute("drawerOpen", isDrawerOpen);
+//
+//        // Set z-index for the drawer based on its open state
+//        if (isDrawerOpen) {
+//            getElement().getThemeList().add("drawer-open"); // Add a custom style when the drawer is open
+//        } else {
+//            getElement().getThemeList().remove("drawer-open"); // Remove the custom style when the drawer is closed
+//        }
+//    }
+
 
     private Tabs getNavBarTabs() {
         Tabs tabs = new Tabs();

@@ -6,6 +6,7 @@ import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
@@ -47,26 +48,13 @@ public class RoomList extends VerticalLayout {
         this.accommodation = CustomUserDetailsService.accommodation;
 
         accommodation = accommodationService.getAccommodationById(CustomUserDetailsService.accommodation.getId());
-        picture = accommodation.getProfilePicture();
         addClassName("roomList-view");
-
-        System.out.println("Profile Picture Length: " + picture.length);
-
-        StreamResource resource = new StreamResource("profile-picture.jpg", () -> new ByteArrayInputStream(picture));
-        Image image = new Image(resource,"Profile picture");
-        image.setHeight("100px");
-        image.setWidth("100px");
-
-        HorizontalLayout labelLayout = new HorizontalLayout();
-        H1 label = new H1(accommodation.getName() + " Room List");
-        labelLayout.setDefaultVerticalComponentAlignment(Alignment.CENTER);
-        labelLayout.add(image,label);
 
         configureGrid();
         configureForm();
         add(
                 navBar,
-                labelLayout,
+                getLabel(),
                 getToolbar(),
                 getContent()
         );
@@ -90,7 +78,23 @@ public class RoomList extends VerticalLayout {
         grid.addColumn(Room::getStatusName).setHeader("Availbility");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         grid.asSingleSelect().addValueChangeListener(event -> editRoom( event.getValue()));
-//        grid.setAllRowsVisible(true);
+        grid.setAllRowsVisible(true);
+
+    }
+
+    private HorizontalLayout getLabel(){
+        picture = accommodation.getProfilePicture();
+        StreamResource resource = new StreamResource("profile-picture.jpg", () -> new ByteArrayInputStream(picture));
+        Image image = new Image(resource,"Profile picture");
+        image.setHeight("100px");
+        image.setWidth("100px");
+
+        HorizontalLayout labelLayout = new HorizontalLayout();
+        H1 label = new H1(accommodation.getName() + " Room List");
+        labelLayout.setDefaultVerticalComponentAlignment(Alignment.CENTER);
+        labelLayout.add(image,label);
+
+        return  labelLayout;
     }
 
     private HorizontalLayout getContent(){
@@ -134,6 +138,7 @@ public class RoomList extends VerticalLayout {
         form.setVisible(false);
         removeClassName("editing");
     }
+
 
     private void updateList() {
         List<Room> rooms = roomService.findAllRoom(filterText.getValue(),accommodation.getId());
