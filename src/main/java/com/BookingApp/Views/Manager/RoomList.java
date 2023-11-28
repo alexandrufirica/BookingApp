@@ -5,7 +5,6 @@ import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
-import com.BookingApp.VaadinImageUtils;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -24,8 +23,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @PageTitle(value = "RoomList")
@@ -55,8 +52,6 @@ public class RoomList extends VerticalLayout {
 
         System.out.println("Profile Picture Length: " + picture.length);
 
-//        BufferedImage bufferedImage = convertBytesToImage(picture);
-//        Image image = VaadinImageUtils.convertBufferedImageToImage(bufferedImage);
         StreamResource resource = new StreamResource("profile-picture.jpg", () -> new ByteArrayInputStream(picture));
         Image image = new Image(resource,"Profile picture");
         image.setHeight("100px");
@@ -168,25 +163,6 @@ public class RoomList extends VerticalLayout {
     private void addRoom(){
         grid.asSingleSelect().clear();
         editRoom(new Room());
-    }
-
-    private BufferedImage convertBytesToImage(byte[] pictureData){
-        try ( ByteArrayInputStream bis = new ByteArrayInputStream(convertToPrimitive(pictureData))) {
-            return ImageIO.read(bis);
-        }catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
-    private static byte[] convertToPrimitive(byte[] objectArray) {
-        // Use Java Streams to convert Byte[] to byte[]
-        byte[] primitiveArray = new byte[objectArray.length];
-        for (int i = 0; i < objectArray.length; i++) {
-            primitiveArray[i] = objectArray[i];
-        }
-        return primitiveArray;
     }
 
 }

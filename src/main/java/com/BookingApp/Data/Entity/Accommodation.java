@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;

@@ -8,6 +8,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -46,7 +47,6 @@ public class AccommodationSettings extends VerticalLayout {
 
         MemoryBuffer buffer = new MemoryBuffer();
         Upload upload = new Upload(buffer);
-        upload.setAutoUpload(false);
 
         Button setProfilePictureButton = new Button("Set Profile Picture");
         setProfilePictureButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -55,24 +55,16 @@ public class AccommodationSettings extends VerticalLayout {
             InputStream inputStream = buffer.getInputStream();
             try {
                 picture = inputStream.readAllBytes();
+                saveAccommodationPicture();
+                Notification notification = new Notification("Profile Photo was updated");
+                notification.setDuration(3000);
+                notification.setOpened(true);
+
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            saveAccommodationPicture();
-        });
 
-//        upload.addStartedListener( e -> {
-//            String fileName = e.getFileName();
-//            InputStream inputStream = buffer.getInputStream();
-//            String mimeType = e.getMIMEType();
-//
-//            try {
-//                picture = inputStream.readAllBytes();
-//            } catch (IOException ex) {
-//                throw new RuntimeException(ex);
-//            }
-//            saveAccommodationPicture();
-//        });
+        });
 
         name = new TextField("Accommodation Name");
         name.setRequiredIndicatorVisible(true);
@@ -106,7 +98,7 @@ public class AccommodationSettings extends VerticalLayout {
         email.setPlaceholder("john@mail.com");
         email.setValue(accommodation.getEmail());
 
-        modifyAccommodationDetails = new Button("Modify", e -> {
+        modifyAccommodationDetails = new Button("Update Profile", e -> {
             updateAccommodation(
                     name.getValue(),
                     country.getValue(),
@@ -123,7 +115,7 @@ public class AccommodationSettings extends VerticalLayout {
                 label,
                 upload,
                 setProfilePictureButton,
-                getaccommodationDetails(),
+                getAccommodationDetails(),
                 modifyAccommodationDetails
         );
 
@@ -131,7 +123,7 @@ public class AccommodationSettings extends VerticalLayout {
 
     }
 
-    private Component getaccommodationDetails(){
+    private Component getAccommodationDetails(){
         FormLayout formLayout = new FormLayout();
         formLayout.add(name, country, city, adress,postalCode, phone, email);
         formLayout.setResponsiveSteps(
@@ -139,7 +131,6 @@ public class AccommodationSettings extends VerticalLayout {
                 new FormLayout.ResponsiveStep("50", 1)
         );
         formLayout.setColspan(name,2);
-        add(formLayout,modifyAccommodationDetails);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
         return formLayout;
