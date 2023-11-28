@@ -5,6 +5,7 @@ import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.AccommodationService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -45,21 +46,33 @@ public class AccommodationSettings extends VerticalLayout {
 
         MemoryBuffer buffer = new MemoryBuffer();
         Upload upload = new Upload(buffer);
-        upload.setMaxFileSize(2048576);
+        upload.setAutoUpload(false);
 
-        upload.addStartedListener( e -> {
-            String fileName = e.getFileName();
+        Button setProfilePictureButton = new Button("Set Profile Picture");
+        setProfilePictureButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        setProfilePictureButton.addClickListener( e -> {
+            upload.getElement().callJsFunction("uploadFiles");
             InputStream inputStream = buffer.getInputStream();
-            String mimeType = e.getMIMEType();
-
             try {
                 picture = inputStream.readAllBytes();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            uploadPicture();
             saveAccommodationPicture();
         });
+
+//        upload.addStartedListener( e -> {
+//            String fileName = e.getFileName();
+//            InputStream inputStream = buffer.getInputStream();
+//            String mimeType = e.getMIMEType();
+//
+//            try {
+//                picture = inputStream.readAllBytes();
+//            } catch (IOException ex) {
+//                throw new RuntimeException(ex);
+//            }
+//            saveAccommodationPicture();
+//        });
 
         name = new TextField("Accommodation Name");
         name.setRequiredIndicatorVisible(true);
@@ -109,6 +122,7 @@ public class AccommodationSettings extends VerticalLayout {
                 navBar,
                 label,
                 upload,
+                setProfilePictureButton,
                 getaccommodationDetails(),
                 modifyAccommodationDetails
         );
@@ -142,11 +156,10 @@ public class AccommodationSettings extends VerticalLayout {
 
         accommodationService.saveAccommodation(accommodation);
     }
-    public void uploadPicture(){
-        accommodation.setProfilePicture(picture);
-    }
 
     public void saveAccommodationPicture(){
+        accommodation.setProfilePicture(picture);
+
         accommodationService.saveAccommodation(accommodation);
     }
 }

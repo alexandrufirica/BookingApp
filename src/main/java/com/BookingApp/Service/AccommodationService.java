@@ -55,4 +55,5 @@ public class AccommodationService implements  IAccommodationService{
     public boolean existsByName(String name){
         return  accommodationRepository.existsByName(name);
     }
+
 }

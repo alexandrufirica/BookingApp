@@ -5,18 +5,25 @@ import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
+import com.BookingApp.VaadinImageUtils;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.StreamResource;
 import jakarta.annotation.security.RolesAllowed;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +40,7 @@ public class RoomList extends VerticalLayout {
     private final RoomService roomService;
     private final AccommodationService accommodationService;
     private Accommodation accommodation;
+    private byte[] picture;
 
     RoomForm form;
 
@@ -41,16 +49,29 @@ public class RoomList extends VerticalLayout {
         this.accommodationService = accommodationService;
         this.accommodation = CustomUserDetailsService.accommodation;
 
-        accommodation.setId(CustomUserDetailsService.accommodation.getId());
+        accommodation = accommodationService.getAccommodationById(CustomUserDetailsService.accommodation.getId());
+        picture = accommodation.getProfilePicture();
         addClassName("roomList-view");
 
+        System.out.println("Profile Picture Length: " + picture.length);
+
+//        BufferedImage bufferedImage = convertBytesToImage(picture);
+//        Image image = VaadinImageUtils.convertBufferedImageToImage(bufferedImage);
+        StreamResource resource = new StreamResource("profile-picture.jpg", () -> new ByteArrayInputStream(picture));
+        Image image = new Image(resource,"Profile picture");
+        image.setHeight("100px");
+        image.setWidth("100px");
+
+        HorizontalLayout labelLayout = new HorizontalLayout();
         H1 label = new H1(accommodation.getName() + " Room List");
+        labelLayout.setDefaultVerticalComponentAlignment(Alignment.CENTER);
+        labelLayout.add(image,label);
 
         configureGrid();
         configureForm();
         add(
                 navBar,
-                label,
+                labelLayout,
                 getToolbar(),
                 getContent()
         );
@@ -148,4 +169,24 @@ public class RoomList extends VerticalLayout {
         grid.asSingleSelect().clear();
         editRoom(new Room());
     }
+
+    private BufferedImage convertBytesToImage(byte[] pictureData){
+        try ( ByteArrayInputStream bis = new ByteArrayInputStream(convertToPrimitive(pictureData))) {
+            return ImageIO.read(bis);
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private static byte[] convertToPrimitive(byte[] objectArray) {
+        // Use Java Streams to convert Byte[] to byte[]
+        byte[] primitiveArray = new byte[objectArray.length];
+        for (int i = 0; i < objectArray.length; i++) {
+            primitiveArray[i] = objectArray[i];
+        }
+        return primitiveArray;
+    }
+
 }
