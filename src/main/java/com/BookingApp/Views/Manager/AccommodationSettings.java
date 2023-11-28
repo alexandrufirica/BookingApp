@@ -10,12 +10,17 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.upload.Upload;
+import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 @PageTitle(value = "Account Settings")
-@Route(value = "/accommodationsettings")
+@Route(value = "/accommodationSettings")
 @RolesAllowed({"MANAGER","ADMIN"})
 public class AccommodationSettings extends VerticalLayout {
 
@@ -30,12 +35,31 @@ public class AccommodationSettings extends VerticalLayout {
     private final Accommodation accommodation;
     private final Button modifyAccommodationDetails;
     private final AccommodationService accommodationService;
+    private byte[] picture;
     public AccommodationSettings(AccommodationService accommodationService){
         this.accommodationService = accommodationService;
 
         accommodation = CustomUserDetailsService.accommodation;
 
         H1 label = new H1(accommodation.getName() + " Account Settings");
+
+        MemoryBuffer buffer = new MemoryBuffer();
+        Upload upload = new Upload(buffer);
+        upload.setMaxFileSize(2048576);
+
+        upload.addStartedListener( e -> {
+            String fileName = e.getFileName();
+            InputStream inputStream = buffer.getInputStream();
+            String mimeType = e.getMIMEType();
+
+            try {
+                picture = inputStream.readAllBytes();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            uploadPicture();
+            saveAccommodationPicture();
+        });
 
         name = new TextField("Accommodation Name");
         name.setRequiredIndicatorVisible(true);
@@ -84,6 +108,7 @@ public class AccommodationSettings extends VerticalLayout {
         add(
                 navBar,
                 label,
+                upload,
                 getaccommodationDetails(),
                 modifyAccommodationDetails
         );
@@ -115,6 +140,13 @@ public class AccommodationSettings extends VerticalLayout {
         accommodation.setPostalCode(this.postalCode.getValue());
         accommodation.setPhoneNumber(this.phone.getValue());
 
+        accommodationService.saveAccommodation(accommodation);
+    }
+    public void uploadPicture(){
+        accommodation.setProfilePicture(picture);
+    }
+
+    public void saveAccommodationPicture(){
         accommodationService.saveAccommodation(accommodation);
     }
 }

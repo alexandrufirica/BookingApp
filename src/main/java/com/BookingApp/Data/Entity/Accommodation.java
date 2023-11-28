@@ -33,7 +33,7 @@ public class Accommodation{
     private String phoneNumber;
     private String password;
     private String activationCode;
-    private File profilePicture;
+    private byte[] profilePicture;
     private boolean haveAvailableRooms;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -160,11 +160,11 @@ public class Accommodation{
         this.adress = adress;
     }
 
-    public File getProfilePicture() {
+    public byte[] getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(File profilePicture) {
+    public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
 }
