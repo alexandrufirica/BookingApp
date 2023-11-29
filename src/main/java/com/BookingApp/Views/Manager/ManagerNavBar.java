@@ -19,15 +19,17 @@ public class ManagerNavBar extends AppLayout {
     private final SecurityUtils securityUtils;
     private final Tabs navBarTabs;
     private  final Tabs toggleTabs;
+    DrawerToggle drawerToggle;
     public ManagerNavBar(){
         securityUtils = new SecurityUtils();
 
-        DrawerToggle drawerToggle = new DrawerToggle();
-//        drawerToggle.addClickListener(e -> handleDrawerToggle());
+        drawerToggle = new DrawerToggle();
+
 
         H1 title = new H1("BookingApp");
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
+
 
 
         navBarTabs = getNavBarTabs();
@@ -42,21 +44,7 @@ public class ManagerNavBar extends AppLayout {
         addToNavbar(drawerToggle, title, navBarTabs, logout);
 
 //        setPrimarySection(Section.DRAWER);
-
     }
-
-//    private void handleDrawerToggle() {
-//        boolean isDrawerOpen = isDrawerOpened();
-//        UI.getCurrent().getSession().setAttribute("drawerOpen", isDrawerOpen);
-//
-//        // Set z-index for the drawer based on its open state
-//        if (isDrawerOpen) {
-//            getElement().getThemeList().add("drawer-open"); // Add a custom style when the drawer is open
-//        } else {
-//            getElement().getThemeList().remove("drawer-open"); // Remove the custom style when the drawer is closed
-//        }
-//    }
-
 
     private Tabs getNavBarTabs() {
         Tabs tabs = new Tabs();

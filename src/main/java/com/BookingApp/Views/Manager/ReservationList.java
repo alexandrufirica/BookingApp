@@ -30,7 +30,6 @@ public class ReservationList extends VerticalLayout {
         addClassName("reservationList-view");
 
         H1 label = new H1(accommodation.getName() + " Reservation List");
-
         configureGrid();
 
         add(
@@ -40,7 +39,7 @@ public class ReservationList extends VerticalLayout {
         );
         updateList();
 
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        setDefaultHorizontalComponentAlignment(Alignment.END);
     }
 
     private void configureGrid() {
@@ -54,9 +53,11 @@ public class ReservationList extends VerticalLayout {
         HorizontalLayout content = new HorizontalLayout(grid);
         content.addClassName("content");
         content.setSizeFull();
+        content.expand(grid);
 
         return content;
     }
+
 
     private void updateList(){
         grid.setItems(reservationService.findReservationByAccommodation(accommodation.getId()));

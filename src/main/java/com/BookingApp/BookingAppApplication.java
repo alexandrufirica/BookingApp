@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		offlinePath = "offline.html",
 		offlineResources = {"./images/offline.png"}
 )
+@Theme("my-theme")
 public class BookingAppApplication implements AppShellConfigurator {
 
 	public static void main(String[] args) {
