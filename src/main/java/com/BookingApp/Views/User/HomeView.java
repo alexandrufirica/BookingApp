@@ -12,6 +12,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.BoxSizing;
@@ -20,8 +21,10 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.StreamResource;
 import jakarta.annotation.security.RolesAllowed;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
@@ -116,25 +119,19 @@ public class HomeView extends VerticalLayout {
         Button card = new Button();
         card.addClassName("card");
 
-        VerticalLayout decription = new VerticalLayout();
-        decription.addClassName("decription");
-        decription.setSpacing(false);
-        decription.setPadding(false);
+        byte[] picture = accommodation.getProfilePicture();
+        StreamResource resource = new StreamResource("profile-picture.jpg", () -> new ByteArrayInputStream(picture));
+        Image image = new Image(resource,"Profile picture");
+        image.setHeight("100px");
+        image.setWidth("100px");
 
-        HorizontalLayout header = new HorizontalLayout();
-        header.addClassName("header");
-        header.getThemeList().add("spacing-s");
+        VerticalLayout verticalLayout = new VerticalLayout();
 
-        Span name = new Span(accommodation.getName());
-        name.addClassName("name");
-        Span country = new Span(accommodation.getCountry());
-        country.addClassName("country");
-        Span city = new Span(accommodation.getCity());
-        city.addClassName("city");
-        header.add(name, country, city);
+        card.setText(accommodation.getName() + " " + accommodation.getCountry() + " "  + accommodation.getCity());
+        card.setIcon(image);
+        card.setWidthFull();
+        card.setHeight("105px");
 
-        decription.add(header);
-        card.setIcon(decription);
         card.addClickListener(event -> {
             accommodationId = accommodation.getId();
             navigate();

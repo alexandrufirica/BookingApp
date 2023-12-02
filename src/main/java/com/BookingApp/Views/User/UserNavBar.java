@@ -22,7 +22,7 @@ public class UserNavBar extends AppLayout {
     public UserNavBar(){
         securityUtils = new SecurityUtils();
 
-        DrawerToggle toggle = new DrawerToggle();
+        DrawerToggle drawerToggle = new DrawerToggle();
 
         H1 title = new H1("BookingApp");
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
@@ -37,7 +37,7 @@ public class UserNavBar extends AppLayout {
         setDrawerOpened(false);
 
         addToDrawer(toggleTabs);
-        addToNavbar(toggle, title, navBarTabs, logout);
+        addToNavbar(drawerToggle, title, navBarTabs, logout);
 
     }
 

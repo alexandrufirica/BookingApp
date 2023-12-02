@@ -19,18 +19,14 @@ public class ManagerNavBar extends AppLayout {
     private final SecurityUtils securityUtils;
     private final Tabs navBarTabs;
     private  final Tabs toggleTabs;
-    DrawerToggle drawerToggle;
     public ManagerNavBar(){
         securityUtils = new SecurityUtils();
 
-        drawerToggle = new DrawerToggle();
-
+        DrawerToggle drawerToggle = new DrawerToggle();
 
         H1 title = new H1("BookingApp");
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
-
-
 
         navBarTabs = getNavBarTabs();
         toggleTabs = getToggleTabs();
@@ -43,7 +39,6 @@ public class ManagerNavBar extends AppLayout {
         addToDrawer(toggleTabs);
         addToNavbar(drawerToggle, title, navBarTabs, logout);
 
-//        setPrimarySection(Section.DRAWER);
     }
 
     private Tabs getNavBarTabs() {
