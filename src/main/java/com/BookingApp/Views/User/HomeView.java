@@ -12,8 +12,10 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -125,13 +127,25 @@ public class HomeView extends VerticalLayout {
         image.setHeight("100px");
         image.setWidth("100px");
 
-        VerticalLayout verticalLayout = new VerticalLayout();
+        H1 nameLabel = new H1(accommodation.getName());
+        nameLabel.setHeight("18px");
+        H1 countryLabel = new H1(accommodation.getCountry());
+        countryLabel.setHeight("18px");
+        H1 cityLabel = new H1(accommodation.getCity());
+        cityLabel.setHeight("18px");
 
-        card.setText(accommodation.getName() + " " + accommodation.getCountry() + " "  + accommodation.getCity());
-        card.setIcon(image);
+        HorizontalLayout horizontalLayout2 = new HorizontalLayout();
+        horizontalLayout2.add(countryLabel , cityLabel);
+
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.add(nameLabel, horizontalLayout2);
+
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.add(image, verticalLayout );
+
+        card.setIcon(horizontalLayout);
         card.setWidthFull();
         card.setHeight("105px");
-
         card.addClickListener(event -> {
             accommodationId = accommodation.getId();
             navigate();
