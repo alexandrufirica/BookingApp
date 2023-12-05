@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
-    private AccommodationRepository accommodationRepository;
+    private final UserRepository userRepository;
+    private final AccommodationRepository accommodationRepository;
 
     public static Accommodation accommodation;
 

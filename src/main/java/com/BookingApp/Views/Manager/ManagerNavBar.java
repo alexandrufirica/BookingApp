@@ -1,8 +1,6 @@
 package com.BookingApp.Views.Manager;
 
 import com.BookingApp.Security.SecurityUtils;
-import com.vaadin.flow.component.ComponentEvent;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -16,11 +14,8 @@ import com.vaadin.flow.router.RouterLink;
 
 public class ManagerNavBar extends AppLayout {
 
-    private final SecurityUtils securityUtils;
-    private final Tabs navBarTabs;
-    private  final Tabs toggleTabs;
+
     public ManagerNavBar(){
-        securityUtils = new SecurityUtils();
 
         DrawerToggle drawerToggle = new DrawerToggle();
 
@@ -28,11 +23,11 @@ public class ManagerNavBar extends AppLayout {
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 
-        navBarTabs = getNavBarTabs();
-        toggleTabs = getToggleTabs();
+        Tabs navBarTabs = getNavBarTabs();
+        Tabs toggleTabs = getToggleTabs();
 
         Button logout = new Button("Log out");
-        logout.addClickListener( e -> securityUtils.logout());
+        logout.addClickListener( e -> SecurityUtils.logout());
 
         setDrawerOpened(false);
 

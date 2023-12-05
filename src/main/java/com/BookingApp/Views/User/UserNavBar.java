@@ -15,12 +15,7 @@ import com.vaadin.flow.router.RouterLink;
 
 public class UserNavBar extends AppLayout {
 
-    private final SecurityUtils securityUtils;
-    private final Tabs navBarTabs;
-    private final Tabs toggleTabs;
-
     public UserNavBar(){
-        securityUtils = new SecurityUtils();
 
         DrawerToggle drawerToggle = new DrawerToggle();
 
@@ -28,11 +23,11 @@ public class UserNavBar extends AppLayout {
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 
-        navBarTabs = getNavBarTabs();
-        toggleTabs = getToggleTabs();
+        Tabs navBarTabs = getNavBarTabs();
+        Tabs toggleTabs = getToggleTabs();
 
         Button logout = new Button("Log out");
-        logout.addClickListener( e -> securityUtils.logout());
+        logout.addClickListener( e -> SecurityUtils.logout());
 
         setDrawerOpened(false);
 

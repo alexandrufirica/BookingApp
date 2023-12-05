@@ -1,6 +1,5 @@
 package com.BookingApp.Views.Manager;
 
-import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.Status;
 import com.vaadin.flow.component.Component;
@@ -82,7 +81,7 @@ public class RoomForm extends FormLayout {
 
 
     public static abstract class RoomFormEvent extends ComponentEvent<RoomForm> {
-        private Room room;
+        private final Room room;
 
         protected RoomFormEvent(RoomForm source, Room room) {
             super(source, false);

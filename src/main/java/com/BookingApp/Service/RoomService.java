@@ -8,8 +8,6 @@ import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Repository.StatusRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

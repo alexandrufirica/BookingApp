@@ -27,16 +27,16 @@ import java.util.Collections;
 @AnonymousAllowed
 public class CreateAccomodation extends VerticalLayout {
 
-    private TextField name;
-    private TextField country;
-    private TextField city;
-    private TextField adress;
-    private EmailField email;
-    private TextField phone;
-    private TextField postalCode;
-    private PasswordField password;
-    private PasswordField reTypePassowrd;
-    private Button createButton;
+    private final TextField name;
+    private final TextField country;
+    private final TextField city;
+    private final TextField adress;
+    private final EmailField email;
+    private final TextField phone;
+    private final TextField postalCode;
+    private final PasswordField password;
+    private final PasswordField reTypePassowrd;
+    private final Button createButton;
     private final AccommodationService accommodationService;
     private final RoleService roleService;
     private final UserService userService;
@@ -86,19 +86,17 @@ public class CreateAccomodation extends VerticalLayout {
 
 
 
-        createButton = new Button("Create Profile", e -> {
-            createAccommodation(
-                    name.getValue(),
-                    country.getValue(),
-                    city.getValue(),
-                    adress.getValue(),
-                    postalCode.getValue(),
-                    phone.getValue(),
-                    email.getValue(),
-                    password.getValue(),
-                    reTypePassowrd.getValue()
-            );
-            }
+        createButton = new Button("Create Profile", e -> createAccommodation(
+                name.getValue(),
+                country.getValue(),
+                city.getValue(),
+                adress.getValue(),
+                postalCode.getValue(),
+                phone.getValue(),
+                email.getValue(),
+                password.getValue(),
+                reTypePassowrd.getValue()
+        )
         );
 
         createButton.addClickShortcut(Key.ENTER);
@@ -137,14 +135,14 @@ public class CreateAccomodation extends VerticalLayout {
     public void registerAccommodation(String name, String country, String city, String adress, String postalCode, String phone,String email, String password) {
 
         Accommodation accommodation = new Accommodation();
-        accommodation.setName(this.name.getValue());
-        accommodation.setEmail(this.email.getValue());
-        accommodation.setCountry(this.country.getValue());
-        accommodation.setCity(this.city.getValue());
-        accommodation.setAdress(this.adress.getValue());
-        accommodation.setPostalCode(this.postalCode.getValue());
-        accommodation.setPhoneNumber(this.phone.getValue());
-        accommodation.setPassword(passwordEncoder.encode(this.password.getValue()));
+        accommodation.setName(name);
+        accommodation.setEmail(email);
+        accommodation.setCountry(country);
+        accommodation.setCity(city);
+        accommodation.setAdress(adress);
+        accommodation.setPostalCode(postalCode);
+        accommodation.setPhoneNumber(phone);
+        accommodation.setPassword(passwordEncoder.encode(password));
         accommodation.setHaveAvailableRooms(false);
 
         Role roles = roleService.getRoleByName("ROLE_MANAGER");

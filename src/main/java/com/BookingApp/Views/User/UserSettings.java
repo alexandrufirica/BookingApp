@@ -1,12 +1,10 @@
 package com.BookingApp.Views.User;
 
 import com.BookingApp.Data.Entity.User;
-import com.BookingApp.Data.Repository.UserRepository;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.charts.model.HorizontalAlign;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -80,18 +78,16 @@ public class UserSettings extends VerticalLayout {
         email.setPlaceholder("john@mail.com");
         email.setValue(user.getEmail());
 
-        modifyUserDetails = new Button("Modify", e -> {
-            updateUser(
-                    givenName.getValue(),
-                    surName.getValue(),
-                    country.getValue(),
-                    city.getValue(),
-                    adress.getValue(),
-                    postalCode.getValue(),
-                    phone.getValue(),
-                    email.getValue()
-            );
-        });
+        modifyUserDetails = new Button("Modify", e -> updateUser(
+                givenName.getValue(),
+                surName.getValue(),
+                country.getValue(),
+                city.getValue(),
+                adress.getValue(),
+                postalCode.getValue(),
+                phone.getValue(),
+                email.getValue()
+        ));
 
         add(
                 navBar,
@@ -119,14 +115,14 @@ public class UserSettings extends VerticalLayout {
     }
 
     private void updateUser(String givenName, String surName, String country, String city, String adress, String postalCode, String phone, String email){
-        user.setGivenName(this.givenName.getValue());
-        user.setSurName(this.surName.getValue());
-        user.setEmail(this.email.getValue());
-        user.setCountry(this.country.getValue());
-        user.setCity(this.city.getValue());
-        user.setAdress(this.adress.getValue());
-        user.setPostalCode(this.postalCode.getValue());
-        user.setPhoneNumber(this.phone.getValue());
+        user.setGivenName(givenName);
+        user.setSurName(surName);
+        user.setEmail(email);
+        user.setCountry(country);
+        user.setCity(city);
+        user.setAdress(adress);
+        user.setPostalCode(postalCode);
+        user.setPhoneNumber(phone);
 
         userService.saveUser(user);
     }

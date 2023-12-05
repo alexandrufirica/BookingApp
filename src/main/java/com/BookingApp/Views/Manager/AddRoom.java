@@ -3,13 +3,11 @@ package com.BookingApp.Views.Manager;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.Status;
-import com.BookingApp.Data.Repository.StatusRepository;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Service.StatusService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -28,18 +26,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Route (value = "/addRoom")
 @RolesAllowed({"ADMIN","MANAGER"})
 public class AddRoom extends VerticalLayout {
-    private Button button;
-    private TextField roomType;
-    private Select<Integer> roomCapacity;
-    private IntegerField numberOfRooms;
-    private Select<Status> available;
-    private TextArea roomDescription;
-    private NumberField pricePerNight;
+    private final Button button;
+    private final TextField roomType;
+    private final Select<Integer> roomCapacity;
+    private final IntegerField numberOfRooms;
+    private final Select<Status> available;
+    private final TextArea roomDescription;
+    private final NumberField pricePerNight;
     private final RoomService roomService;
     private final StatusService statusService;
     private final Room room;
-    private Status status = new Status();
-    private Accommodation accommodation;
+    private final Status status = new Status();
+    private final Accommodation accommodation;
 
     public AddRoom(RoomService roomService, StatusService statusService, Accommodation accommodation){
         this.roomService = roomService;
@@ -130,10 +128,7 @@ public class AddRoom extends VerticalLayout {
     }
 
     public boolean getAvailability(){
-        if(available.isEnabled()){
-            return true;
-        }
-        return false;
+        return available.isEnabled();
     }
     @PostMapping
     public void createRoom(Room room){

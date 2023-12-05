@@ -35,7 +35,6 @@ public class AccommodationSettings extends VerticalLayout {
     private final TextField phone;
     private final TextField postalCode;
     private final Accommodation accommodation;
-    private final Button modifyAccommodationDetails;
     private final AccommodationService accommodationService;
     private byte[] picture;
     public AccommodationSettings(AccommodationService accommodationService){
@@ -98,17 +97,7 @@ public class AccommodationSettings extends VerticalLayout {
         email.setPlaceholder("john@mail.com");
         email.setValue(accommodation.getEmail());
 
-        modifyAccommodationDetails = new Button("Update Profile", e -> {
-            updateAccommodation(
-                    name.getValue(),
-                    country.getValue(),
-                    city.getValue(),
-                    adress.getValue(),
-                    postalCode.getValue(),
-                    phone.getValue(),
-                    email.getValue()
-            );
-        });
+        Button modifyAccommodationDetails = new Button("Update Profile", e -> updateAccommodation());
         
         add(
                 navBar,
@@ -136,7 +125,7 @@ public class AccommodationSettings extends VerticalLayout {
         return formLayout;
     }
 
-    private void updateAccommodation(String name, String country, String city, String adress, String postalCode, String phone, String email){
+    private void updateAccommodation(){
         accommodation.setName(this.name.getValue());
         accommodation.setEmail(this.email.getValue());
         accommodation.setCountry(this.country.getValue());

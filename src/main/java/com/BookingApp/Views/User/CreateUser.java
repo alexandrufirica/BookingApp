@@ -4,7 +4,7 @@ import com.BookingApp.Data.Entity.Role;
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.RoleRepository;
-import com.BookingApp.Data.Repository.UserRepository;
+import com.BookingApp.Service.RoleService;
 import com.BookingApp.Service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -27,26 +27,26 @@ import java.util.Collections;
 @Route(value = "/newuser")
 @AnonymousAllowed
 public class CreateUser extends VerticalLayout {
-    private TextField givenName;
-    private TextField surName;
-    private EmailField email;
-    private TextField country;
-    private TextField city;
-    private TextField adress;
-    private TextField phone;
-    private TextField postalCode;
-    private PasswordField password;
-    private PasswordField reTypePassowrd;
-    private Button createButton;
+    private final TextField givenName;
+    private final TextField surName;
+    private final EmailField email;
+    private final TextField country;
+    private final TextField city;
+    private final TextField adress;
+    private final TextField phone;
+    private final TextField postalCode;
+    private final PasswordField password;
+    private final PasswordField reTypePassowrd;
+    private final Button createButton;
     private final UserService userService;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
     private final AccommodationRepository accommodationRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public CreateUser ( UserService userService, RoleRepository roleRepository, AccommodationRepository accommodationRepository){
+    public CreateUser ( UserService userService, RoleService roleService, AccommodationRepository accommodationRepository){
         this.userService = userService;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
         this.accommodationRepository = accommodationRepository;
 
 
@@ -86,21 +86,18 @@ public class CreateUser extends VerticalLayout {
         reTypePassowrd = new PasswordField("Re-type Password");
         reTypePassowrd.setRequiredIndicatorVisible(true);
         
-        createButton = new Button("Create Profile", e -> {
-            createUser(
-                    givenName.getValue(),
-                    surName.getValue(),
-                    country.getValue(),
-                    city.getValue(),
-                    adress.getValue(),
-                    postalCode.getValue(),
-                    phone.getValue(),
-                    email.getValue(),
-                    password.getValue(),
-                    reTypePassowrd.getValue()
-            );
-
-            }
+        createButton = new Button("Create Profile", e -> createUser(
+                givenName.getValue(),
+                surName.getValue(),
+                country.getValue(),
+                city.getValue(),
+                adress.getValue(),
+                postalCode.getValue(),
+                phone.getValue(),
+                email.getValue(),
+                password.getValue(),
+                reTypePassowrd.getValue()
+        )
         );
 
 
@@ -139,17 +136,17 @@ public class CreateUser extends VerticalLayout {
     public void registerUser(String givenName, String surName,String email, String country, String city, String adress, String postalCode, String phone, String password) {
 
         User user = new User();
-        user.setGivenName(this.givenName.getValue());
-        user.setSurName(this.surName.getValue());
-        user.setEmail(this.email.getValue());
-        user.setCountry(this.country.getValue());
-        user.setCity(this.city.getValue());
-        user.setAdress(this.adress.getValue());
-        user.setPostalCode(this.postalCode.getValue());
-        user.setPhoneNumber(this.phone.getValue());
-        user.setPassword(passwordEncoder.encode(this.password.getValue()));
+        user.setGivenName(givenName);
+        user.setSurName(surName);
+        user.setEmail(email);
+        user.setCountry(country);
+        user.setCity(city);
+        user.setAdress(adress);
+        user.setPostalCode(postalCode);
+        user.setPhoneNumber(phone);
+        user.setPassword(passwordEncoder.encode(password));
 
-        Role roles = roleRepository.findByName("ROLE_USER").get();
+        Role roles = roleService.getRoleByName("ROLE_USER");
         user.setRoles(Collections.singleton(roles));
         userService.saveUser(user);
 

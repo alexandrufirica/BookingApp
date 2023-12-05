@@ -36,9 +36,9 @@ public class AccommodationView extends VerticalLayout {
     Grid<Room> grid = new Grid<>(Room.class);
     UserNavBar userNavBar = new UserNavBar();
     private final AccommodationService accommodationService;
-    private RoomService roomService;
-    private Accommodation accommodation;
-    private ReservationService reservationService;
+    private final RoomService roomService;
+    private final Accommodation accommodation;
+    private final ReservationService reservationService;
     public static long roomId;
     public static LocalDate dateIn;
     public static LocalDate dateOut;
@@ -46,7 +46,7 @@ public class AccommodationView extends VerticalLayout {
     DatePicker checkoutPicker = new DatePicker("Check-out:");
 
 
-    public AccommodationView(AccommodationService accommodationService, RoomService roomService,ReservationService reservationService, Room room){
+    public AccommodationView(AccommodationService accommodationService, RoomService roomService,ReservationService reservationService){
         this.accommodationService = accommodationService;
         this.roomService = roomService;
         this.reservationService = reservationService;

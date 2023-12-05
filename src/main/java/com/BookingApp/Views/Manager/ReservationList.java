@@ -19,7 +19,7 @@ public class ReservationList extends VerticalLayout {
     Grid<Reservation> grid = new Grid<>(Reservation.class);
     ManagerNavBar navBar = new ManagerNavBar();
     private final ReservationService reservationService;
-    private Accommodation accommodation;
+    private final Accommodation accommodation;
 
     public ReservationList(ReservationService reservationService){
         this.reservationService = reservationService;

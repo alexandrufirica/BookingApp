@@ -1,12 +1,10 @@
 package com.BookingApp.Data.Repository;
 
-import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {

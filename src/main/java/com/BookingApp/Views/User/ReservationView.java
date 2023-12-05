@@ -38,7 +38,7 @@ public class ReservationView extends VerticalLayout {
     private final AccommodationService accommodationService;
     private final RoomService roomService;
     private final ReservationService reservationService;
-    private User user;
+    private final User user;
 
 
     public ReservationView (AccommodationService accommodationService,

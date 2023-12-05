@@ -1,7 +1,5 @@
 package com.BookingApp.Views.Login;
 
-import com.BookingApp.Data.Repository.AccommodationRepository;
-import com.BookingApp.Data.Repository.UserRepository;
 import com.BookingApp.Security.SecurityUtils;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.UserService;
