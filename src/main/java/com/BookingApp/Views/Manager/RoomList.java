@@ -34,15 +34,17 @@ public class RoomList extends VerticalLayout {
     private final RoomService roomService;
     private final AccommodationService accommodationService;
     private Accommodation accommodation;
+    private final CustomUserDetailsService customUserDetailsService;
 
     RoomForm form;
 
-    public RoomList(RoomService service, AccommodationService accommodationService) {
+    public RoomList(RoomService service, AccommodationService accommodationService, CustomUserDetailsService customUserDetailsService) {
         this.roomService = service;
         this.accommodationService = accommodationService;
-        this.accommodation = CustomUserDetailsService.accommodation;
+        this.customUserDetailsService =customUserDetailsService;
+        this.accommodation = customUserDetailsService.getAccommodation();
 
-        accommodation = accommodationService.getAccommodationById(CustomUserDetailsService.accommodation.getId());
+        accommodation = accommodationService.getAccommodationById(accommodation.getId());
         addClassName("roomList-view");
 
         configureGrid();

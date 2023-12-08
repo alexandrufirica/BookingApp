@@ -6,6 +6,7 @@ import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
 @PWA(
@@ -15,7 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		offlineResources = {"./images/offline.png"}
 )
 @Theme("my-theme")
-public class BookingAppApplication implements AppShellConfigurator {
+public class BookingAppApplication extends SpringBootServletInitializer implements AppShellConfigurator {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookingAppApplication.class, args);

@@ -38,20 +38,24 @@ public class AddRoom extends VerticalLayout {
     private final Room room;
     private final Status status = new Status();
     private final Accommodation accommodation;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public AddRoom(RoomService roomService, StatusService statusService, Accommodation accommodation){
+
+    public AddRoom(RoomService roomService, StatusService statusService, Accommodation accommodation, CustomUserDetailsService customUserDetailsService){
         this.roomService = roomService;
         this.statusService = statusService;
+        this.customUserDetailsService = customUserDetailsService;
+
         this.room= new Room();
         this.accommodation = accommodation;
 
-        accommodation.setId(CustomUserDetailsService.accommodation.getId());
+        accommodation = customUserDetailsService.getAccommodation();
 
         room.setAccommodation(accommodation);
 
         ManagerNavBar navBar = new ManagerNavBar();
 
-        H1 name = new H1(" Welcome " + CustomUserDetailsService.accommodation.getName());
+        H1 name = new H1(" Welcome " + accommodation.getName());
 
         roomType = new TextField("Room Type");
         roomType.setRequiredIndicatorVisible(true);

@@ -1,6 +1,7 @@
 package com.BookingApp.Views.User;
 
 import com.BookingApp.Security.SecurityUtils;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -27,7 +28,7 @@ public class UserNavBar extends AppLayout {
         Tabs toggleTabs = getToggleTabs();
 
         Button logout = new Button("Log out");
-        logout.addClickListener( e -> SecurityUtils.logout());
+        logout.addClickListener( e -> SecurityUtils.logout(UI.getCurrent()));
 
         setDrawerOpened(false);
 

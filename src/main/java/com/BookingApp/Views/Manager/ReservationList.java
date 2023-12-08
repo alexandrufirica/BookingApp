@@ -20,12 +20,14 @@ public class ReservationList extends VerticalLayout {
     ManagerNavBar navBar = new ManagerNavBar();
     private final ReservationService reservationService;
     private final Accommodation accommodation;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public ReservationList(ReservationService reservationService){
+    public ReservationList(ReservationService reservationService, CustomUserDetailsService customUserDetailsService){
         this.reservationService = reservationService;
-        this.accommodation = CustomUserDetailsService.accommodation;
+        this.customUserDetailsService = customUserDetailsService;
+        this.accommodation = customUserDetailsService.getAccommodation();
 
-        accommodation.setId(CustomUserDetailsService.accommodation.getId());
+        accommodation.setId(customUserDetailsService.getAccommodation().getId());
 
         addClassName("reservationList-view");
 

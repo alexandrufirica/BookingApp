@@ -14,6 +14,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 
@@ -22,8 +23,8 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @AnonymousAllowed
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
-    public static final String LOGIN_ACCOMMODATION_URL ="/roomlist";
-    public static final String LOGIN_USER_URL ="/home";
+    public final String LOGIN_ACCOMMODATION_URL ="/roomlist";
+    public final String LOGIN_USER_URL ="/home";
     public final AccommodationService accommodationService;
     public final UserService userService;
 
@@ -47,15 +48,21 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
             try {
                 if(SecurityUtils.authenticate(email.getValue(),password.getValue())){
+                    System.out.println("Authentication successful!");
+
+                    VaadinSession.getCurrent().setAttribute("userEmail", email.getValue());
+
                     if(accommodationService.existsByEmail(email.getValue())){
                         UI.getCurrent().navigate(LOGIN_ACCOMMODATION_URL);
                     }else if( userService.existsByEmail(email.getValue())){
                         UI.getCurrent().navigate(LOGIN_USER_URL);
                     }
                 }else {
+                    System.out.println("Authentication failed!");
                     Notification.show("Wrong Credentials");
                 }
             } catch (Exception ex) {
+                System.out.println("Exception during authentication: " + ex.getMessage());
                 Notification.show("Wrong Credentials");
             }
         });

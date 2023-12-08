@@ -29,4 +29,7 @@ public class UserService implements IUserService{
         return  userRepository.existsByEmail(email);
     }
 
+    public User getUserbyEmail(String email){
+        return userRepository.getUserByEmail(email);
+    }
 }

@@ -12,6 +12,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle(value = "Account Settings")
@@ -31,14 +32,18 @@ public class UserSettings extends VerticalLayout {
     private final TextField postalCode;
     private final Button modifyUserDetails;
     private final UserService userService;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public UserSettings(UserService userService){
+    public UserSettings(UserService userService, CustomUserDetailsService customUserDetailsService){
         this.userService = userService;
+        this.customUserDetailsService = customUserDetailsService;
 
         addClassName("user-settings");
 
-        user = CustomUserDetailsService.user;
+        String userEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        user = userService.getUserbyEmail(userEmail);
         String username= user.getGivenName() + " " + user.getSurName();
+
 
         H1 label = new H1(username + " Account Settings");
 

@@ -4,8 +4,10 @@ import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Repository.UserRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,10 +21,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final AccommodationRepository accommodationRepository;
-
-    public static Accommodation accommodation;
-
-    public static User user;
+    private User user;
+    private Accommodation accommodation;
 
     public CustomUserDetailsService(UserRepository userRepository, AccommodationRepository accommodationRepository) {
         this.userRepository = userRepository;
@@ -44,7 +44,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         } else if (accommodationRepository.existsByEmail(email)) {
 
-             accommodation = accommodationRepository.findByEmail(email)
+            accommodation = accommodationRepository.findByEmail(email)
                     .orElseThrow( () -> new UsernameNotFoundException("Username not found with this email: " + email));
 
             Set<GrantedAuthority> authorities = accommodation
@@ -57,5 +57,14 @@ public class CustomUserDetailsService implements UserDetailsService {
             return null;
         }
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Accommodation getAccommodation() {
+        return accommodation;
+    }
+
 
 }

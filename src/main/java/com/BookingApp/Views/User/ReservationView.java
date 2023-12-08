@@ -39,17 +39,20 @@ public class ReservationView extends VerticalLayout {
     private final RoomService roomService;
     private final ReservationService reservationService;
     private final User user;
+    private final CustomUserDetailsService customUserDetailsService;
 
 
     public ReservationView (AccommodationService accommodationService,
                             RoomService roomService,
-                            ReservationService reservationService)
+                            ReservationService reservationService,
+                            CustomUserDetailsService customUserDetailsService)
     {
         this.accommodationService = accommodationService;
         this.roomService = roomService;
         this.reservationService = reservationService;
+        this.customUserDetailsService = customUserDetailsService;
 
-        user = CustomUserDetailsService.user;
+        user = customUserDetailsService.getUser();
         this.accommodation = accommodationService.getAccommodationById(HomeView.accommodationId);
         this.room = roomService.getRoomById(AccommodationView.roomId);
 
