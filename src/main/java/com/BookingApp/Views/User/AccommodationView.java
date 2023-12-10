@@ -12,16 +12,20 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.StreamResource;
 import jakarta.annotation.security.RolesAllowed;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
@@ -56,14 +60,11 @@ public class AccommodationView extends VerticalLayout {
 
         addClassName("accommodation-view");
 
-        H1 label = new H1(accommodation.getName());
-
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS);
 
         configureGrid();
         add(
                 userNavBar,
-                label,
                 getToolbar(),
                 getContent()
         );
@@ -88,6 +89,19 @@ public class AccommodationView extends VerticalLayout {
     }
 
     private Component getToolbar() {
+        H1 accommodationNameLabel = new H1(accommodation.getName());
+
+        byte[] picture = accommodation.getProfilePicture();
+        StreamResource resource = new StreamResource("profile-picture.jpg", () -> new ByteArrayInputStream(picture));
+        Image image = new Image(resource,"Profile picture");
+        image.setHeight("100px");
+        image.setWidth("100px");
+
+        HorizontalLayout label = new HorizontalLayout();
+        label.add(image,accommodationNameLabel);
+        label.setDefaultVerticalComponentAlignment(Alignment.CENTER);
+
+
         DatePicker.DatePickerI18n singleFormat = new DatePicker.DatePickerI18n();
         singleFormat.setDateFormat("dd-MM-yyyy");
 
@@ -119,12 +133,19 @@ public class AccommodationView extends VerticalLayout {
         });
 
 
-        HorizontalLayout pickersLayout = new HorizontalLayout();
-        pickersLayout.setDefaultVerticalComponentAlignment(Alignment.BASELINE);
-
+        FormLayout pickersLayout = new FormLayout();
         pickersLayout.add(checkinPicker, checkoutPicker, searchButton);
+        pickersLayout.setResponsiveSteps(
+                new FormLayout.ResponsiveStep("0", 1),
+                new FormLayout.ResponsiveStep("500px",2)
+        );
+        pickersLayout.setColspan(searchButton,2);
 
-        return pickersLayout;
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.add(label,pickersLayout);
+        verticalLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+
+        return verticalLayout;
     }
 
     private void updateList() {

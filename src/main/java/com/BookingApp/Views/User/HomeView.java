@@ -12,6 +12,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.notification.Notification;
@@ -62,7 +63,6 @@ public class HomeView extends VerticalLayout {
         );
 
         updateList();
-
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
     }
 
@@ -103,14 +103,13 @@ public class HomeView extends VerticalLayout {
             }
         });
 
-
-
-
-        HorizontalLayout pickersLayout = new HorizontalLayout();
-        pickersLayout.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.BASELINE);
-        pickersLayout.setBoxSizing(BoxSizing.UNDEFINED);
-
+        FormLayout pickersLayout = new FormLayout();
         pickersLayout.add(checkinPicker, checkoutPicker,locationField, searchButton);
+        pickersLayout.setResponsiveSteps(
+                new FormLayout.ResponsiveStep("0", 1),
+                new FormLayout.ResponsiveStep("500px",3)
+        );
+        pickersLayout.setColspan(searchButton,3);
 
         return pickersLayout;
     }

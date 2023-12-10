@@ -13,6 +13,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -112,12 +113,18 @@ public class ReservationView extends VerticalLayout {
         });
 
 
-        HorizontalLayout pickersLayout = new HorizontalLayout();
-        pickersLayout.add(checkinPicker, checkoutPicker);
-        pickersLayout.setDefaultVerticalComponentAlignment(Alignment.CENTER);
+        FormLayout pickersLayout = new FormLayout();
+        pickersLayout.add(checkinPicker, checkoutPicker,reservationName);
+        pickersLayout.setResponsiveSteps(
+                new FormLayout.ResponsiveStep("0", 1),
+                new FormLayout.ResponsiveStep("500px",2)
+        );
+        pickersLayout.setColspan(reservationName,2);
+
+
 
        VerticalLayout verticalLayout = new VerticalLayout();
-       verticalLayout.add(label,pickersLayout, reservationName, reserveButton);
+       verticalLayout.add(label,pickersLayout,reserveButton);
        verticalLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
        return verticalLayout;
