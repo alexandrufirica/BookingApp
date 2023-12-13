@@ -33,8 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         if (userRepository.existsByEmail(email)) {
 
-            user = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new UsernameNotFoundException("Username not found with this email: " + email));
+            user = userRepository.findByEmail(email);
 
             Set<GrantedAuthority> authorities = user
                     .getRoles()
@@ -44,8 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         } else if (accommodationRepository.existsByEmail(email)) {
 
-            accommodation = accommodationRepository.findByEmail(email)
-                    .orElseThrow( () -> new UsernameNotFoundException("Username not found with this email: " + email));
+            accommodation = accommodationRepository.findByEmail(email);
 
             Set<GrantedAuthority> authorities = accommodation
                     .getRoles()

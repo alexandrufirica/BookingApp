@@ -10,7 +10,7 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
 
     Accommodation getAccommodationById(long id);
 
-    Optional<Accommodation> findByEmail(String email);
+    Accommodation findByEmail(String email);
 
     Accommodation getAccommodationByActivationCode (String activationCode);
 

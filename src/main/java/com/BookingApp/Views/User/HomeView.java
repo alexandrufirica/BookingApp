@@ -13,6 +13,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.notification.Notification;
@@ -54,7 +55,7 @@ public class HomeView extends VerticalLayout {
         this.reservationService = reservationService;
         addClassName("home-view");
 
-        cardLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+        cardLayout.setDefaultHorizontalComponentAlignment(Alignment.START);
 
         add(
                 userNavBar,
@@ -127,9 +128,9 @@ public class HomeView extends VerticalLayout {
         H1 nameLabel = new H1(accommodation.getName());
         nameLabel.setHeight("18px");
         H1 countryLabel = new H1(accommodation.getCountry());
-        countryLabel.setHeight("18px");
+        countryLabel.setHeight("12px");
         H1 cityLabel = new H1(accommodation.getCity());
-        cityLabel.setHeight("18px");
+        cityLabel.setHeight("12px");
 
         HorizontalLayout horizontalLayout2 = new HorizontalLayout();
         horizontalLayout2.add(countryLabel , cityLabel);
@@ -140,14 +141,18 @@ public class HomeView extends VerticalLayout {
         HorizontalLayout horizontalLayout = new HorizontalLayout();
         horizontalLayout.add(image, verticalLayout );
 
+
+
         card.setIcon(horizontalLayout);
-        card.setWidthFull();
         card.setHeight("105px");
         card.addClickListener(event -> {
             accommodationId = accommodation.getId();
             navigate();
         });
         card.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+
+
+
         return card;
 
     }
