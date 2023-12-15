@@ -1,6 +1,7 @@
 package com.BookingApp.Security;
 
 import com.BookingApp.Views.Login.LoginView;
+import com.BookingApp.Views.Manager.RoomList;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,6 +43,7 @@ public class SecurityConfig extends VaadinWebSecurity {
                 .permitAll();
         super.configure(http);
         setLoginView(http, LoginView.class);
+
 
     }
 

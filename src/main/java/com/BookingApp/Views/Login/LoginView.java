@@ -5,7 +5,9 @@ import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.PasswordResetService;
 import com.BookingApp.Service.UserService;
 import com.BookingApp.Views.Manager.CreateAccomodation;
+import com.BookingApp.Views.Manager.RoomList;
 import com.BookingApp.Views.User.CreateUser;
+import com.BookingApp.Views.User.HomeView;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -19,10 +21,12 @@ import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 
 @PageTitle(value = "Booking Login")
 @Route (value = "/login")
+@RouteAlias(value = "")
 @AnonymousAllowed
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
@@ -126,7 +130,26 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
             Notification.show("Login error");
         }
+        if(userIsUser()){
+            beforeEnterEvent.forwardTo(HomeView.class);
+        } else if (userIsManager()) {
+            beforeEnterEvent.forwardTo(RoomList.class);
+        }
 
+
+    }
+    private boolean userIsUser() {
+        // Implement logic to check if the user is an admin
+        // Example: return true if the user has admin role
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_USER"));
+    }
+
+    private boolean userIsManager() {
+        // Implement logic to check if the user is an admin
+        // Example: return true if the user has admin role
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_MANAGER"));
     }
 
 }
