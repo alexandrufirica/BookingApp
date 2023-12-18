@@ -41,7 +41,7 @@ public class UserSettings extends VerticalLayout {
         addClassName("user-settings");
 
         String userEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
-        user = userService.getUserbyEmail(userEmail);
+        user = customUserDetailsService.getUser();
         String username= user.getGivenName() + " " + user.getSurName();
 
 

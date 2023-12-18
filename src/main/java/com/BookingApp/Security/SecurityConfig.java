@@ -1,17 +1,14 @@
 package com.BookingApp.Security;
 
 import com.BookingApp.Views.Login.LoginView;
-import com.BookingApp.Views.Manager.RoomList;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -19,10 +16,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends VaadinWebSecurity {
+    private static final String LOGOUT_SUCCESS_URL = "/";
 
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -42,9 +40,15 @@ public class SecurityConfig extends VaadinWebSecurity {
         http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/public/**"))
                 .permitAll();
         super.configure(http);
-        setLoginView(http, LoginView.class);
 
-
+        setLoginView(http, LoginView.class, LOGOUT_SUCCESS_URL);
+        String privateSecretKeyToChange = "JKJDSKLDJdJSisdjsdfjmkdjdfkljkJKLjlk";
+        http.rememberMe()
+                .key(privateSecretKeyToChange).tokenValiditySeconds(7200).userDetailsService(this.userDetailsService);
+        http.logout()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID", "remember-me")
+                .logoutSuccessUrl(LOGOUT_SUCCESS_URL);
     }
 
     @Override
@@ -52,6 +56,7 @@ public class SecurityConfig extends VaadinWebSecurity {
         //web.ignoring().requestMatchers("/images/**");
         super.configure(web);
     }
+
 
 
 //    For simplicity- in development mode can use this.
