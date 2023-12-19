@@ -22,6 +22,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PageTitle("Booking App")
@@ -41,6 +44,7 @@ public class AddRoom extends VerticalLayout {
     private final Status status = new Status();
     private final Accommodation accommodation;
     private final AccommodationService accommodationService;
+    private String accommodationEmail;
 
 
     public AddRoom(RoomService roomService, StatusService statusService, AccommodationService accommodationService){
@@ -48,7 +52,16 @@ public class AddRoom extends VerticalLayout {
         this.statusService = statusService;
         this.accommodationService = accommodationService;
 
-        String accommodationEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Retrieve user and accommodation details from userDetails
+            accommodationEmail = userDetails.getUsername();
+
+        }
+
         accommodation = accommodationService.getAccommodationbyEmail(accommodationEmail);
 
         this.room= new Room();

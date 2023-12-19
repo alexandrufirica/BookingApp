@@ -19,6 +19,9 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -36,12 +39,22 @@ public class RoomList extends VerticalLayout {
     private final AccommodationService accommodationService;
     private Accommodation accommodation;
     private RoomForm form;
+    private String accommodationEmail;
 
     public RoomList(RoomService service, AccommodationService accommodationService) {
         this.roomService = service;
         this.accommodationService = accommodationService;
 
-        String accommodationEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Retrieve user and accommodation details from userDetails
+            accommodationEmail = userDetails.getUsername();
+
+        }
+
         accommodation = accommodationService.getAccommodationbyEmail(accommodationEmail);
 
         addClassName("roomList-view");

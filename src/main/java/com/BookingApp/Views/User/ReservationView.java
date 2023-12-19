@@ -24,6 +24,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 
@@ -43,6 +46,7 @@ public class ReservationView extends VerticalLayout {
     private final ReservationService reservationService;
     private final User user;
     private final UserService userService;
+    private String userEmail;
 
 
     public ReservationView (AccommodationService accommodationService,
@@ -55,7 +59,15 @@ public class ReservationView extends VerticalLayout {
         this.reservationService = reservationService;
         this.userService = userService;
 
-        String userEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Retrieve user and accommodation details from userDetails
+            userEmail = userDetails.getUsername();
+
+        }
         user = userService.getUserbyEmail(userEmail);
         this.accommodation = accommodationService.getAccommodationById(HomeView.accommodationId);
         this.room = roomService.getRoomById(AccommodationView.roomId);

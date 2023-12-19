@@ -1,5 +1,6 @@
 package com.BookingApp.Views.User;
 
+import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.UserService;
@@ -14,6 +15,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 
 @PageTitle(value = "Account Settings")
 @Route(value = "/usersettings")
@@ -32,17 +39,25 @@ public class UserSettings extends VerticalLayout {
     private final TextField postalCode;
     private final Button modifyUserDetails;
     private final UserService userService;
+    private String userEmail;
 
     public UserSettings(UserService userService){
         this.userService = userService;
 
         addClassName("user-settings");
 
-        String userEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Retrieve user and accommodation details from userDetails
+             userEmail = userDetails.getUsername();
+
+        }
         user = userService.getUserbyEmail(userEmail);
+
         String username= user.getGivenName() + " " + user.getSurName();
-
-
         H1 label = new H1(username + " Account Settings");
 
         givenName = new TextField("Given Name");
