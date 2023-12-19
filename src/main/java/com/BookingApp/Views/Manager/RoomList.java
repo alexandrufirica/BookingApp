@@ -17,6 +17,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
 
 import java.io.ByteArrayInputStream;
@@ -28,23 +29,21 @@ import java.util.List;
 public class RoomList extends VerticalLayout {
 
     public static final Long STATUS_AVAILABLE = 1L;
-    Grid<Room> grid = new Grid<>(Room.class);
-    TextField filterText = new TextField();
-    ManagerNavBar navBar = new ManagerNavBar();
+    private Grid<Room> grid = new Grid<>(Room.class);
+    private TextField filterText = new TextField();
+    private  ManagerNavBar navBar = new ManagerNavBar();
     private final RoomService roomService;
     private final AccommodationService accommodationService;
     private Accommodation accommodation;
-    private final CustomUserDetailsService customUserDetailsService;
+    private RoomForm form;
 
-    RoomForm form;
-
-    public RoomList(RoomService service, AccommodationService accommodationService, CustomUserDetailsService customUserDetailsService) {
+    public RoomList(RoomService service, AccommodationService accommodationService) {
         this.roomService = service;
         this.accommodationService = accommodationService;
-        this.customUserDetailsService =customUserDetailsService;
-        this.accommodation = customUserDetailsService.getAccommodation();
 
-        accommodation = accommodationService.getAccommodationById(accommodation.getId());
+        String accommodationEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        accommodation = accommodationService.getAccommodationbyEmail(accommodationEmail);
+
         addClassName("roomList-view");
 
         configureGrid();

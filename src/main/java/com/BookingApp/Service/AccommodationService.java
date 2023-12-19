@@ -1,5 +1,6 @@
 package com.BookingApp.Service;
 
+import com.BookingApp.Data.Entity.User;
 import com.BookingApp.Data.Repository.AccommodationRepository;
 import com.BookingApp.Data.Entity.Accommodation;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,10 @@ public class AccommodationService implements  IAccommodationService{
     public boolean existsByName(String name){
         return  accommodationRepository.existsByName(name);
     }
+
+    public Accommodation getAccommodationbyEmail(String email){
+        return accommodationRepository.getAccommodationByEmail(email);
+    }
+
 
 }

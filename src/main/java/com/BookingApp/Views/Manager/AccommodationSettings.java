@@ -16,6 +16,7 @@ import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 
@@ -37,13 +38,13 @@ public class AccommodationSettings extends VerticalLayout {
     private final TextField postalCode;
     private final Accommodation accommodation;
     private final AccommodationService accommodationService;
-    private final CustomUserDetailsService customUserDetailsService;
-    private byte[] picture;
-    public AccommodationSettings(AccommodationService accommodationService, CustomUserDetailsService customUserDetailsService){
-        this.accommodationService = accommodationService;
-        this.customUserDetailsService = customUserDetailsService;
 
-        accommodation = customUserDetailsService.getAccommodation();
+    private byte[] picture;
+    public AccommodationSettings(AccommodationService accommodationService){
+        this.accommodationService = accommodationService;
+
+        String accommodationEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        accommodation = accommodationService.getAccommodationbyEmail(accommodationEmail);
 
         H1 label = new H1(accommodation.getName() + " Account Settings");
 

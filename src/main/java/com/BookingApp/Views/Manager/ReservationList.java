@@ -3,6 +3,7 @@ package com.BookingApp.Views.Manager;
 import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Reservation;
 import com.BookingApp.Security.CustomUserDetailsService;
+import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.ReservationService;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
@@ -10,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle(value = "Reservation List")
@@ -20,14 +22,14 @@ public class ReservationList extends VerticalLayout {
     ManagerNavBar navBar = new ManagerNavBar();
     private final ReservationService reservationService;
     private final Accommodation accommodation;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final AccommodationService accommodationService;
 
-    public ReservationList(ReservationService reservationService, CustomUserDetailsService customUserDetailsService){
+    public ReservationList(ReservationService reservationService, AccommodationService accommodationService){
         this.reservationService = reservationService;
-        this.customUserDetailsService = customUserDetailsService;
-        this.accommodation = customUserDetailsService.getAccommodation();
+        this.accommodationService = accommodationService;
 
-        accommodation.setId(customUserDetailsService.getAccommodation().getId());
+        String accommodationEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        accommodation = accommodationService.getAccommodationbyEmail(accommodationEmail);
 
         addClassName("reservationList-view");
 

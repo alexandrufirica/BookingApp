@@ -4,6 +4,7 @@ import com.BookingApp.Data.Entity.Accommodation;
 import com.BookingApp.Data.Entity.Room;
 import com.BookingApp.Data.Entity.Status;
 import com.BookingApp.Security.CustomUserDetailsService;
+import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.RoomService;
 import com.BookingApp.Service.StatusService;
 import com.vaadin.flow.component.Key;
@@ -19,6 +20,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -38,19 +40,18 @@ public class AddRoom extends VerticalLayout {
     private final Room room;
     private final Status status = new Status();
     private final Accommodation accommodation;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final AccommodationService accommodationService;
 
 
-    public AddRoom(RoomService roomService, StatusService statusService, Accommodation accommodation, CustomUserDetailsService customUserDetailsService){
+    public AddRoom(RoomService roomService, StatusService statusService, AccommodationService accommodationService){
         this.roomService = roomService;
         this.statusService = statusService;
-        this.customUserDetailsService = customUserDetailsService;
+        this.accommodationService = accommodationService;
+
+        String accommodationEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        accommodation = accommodationService.getAccommodationbyEmail(accommodationEmail);
 
         this.room= new Room();
-        this.accommodation = accommodation;
-
-        accommodation = customUserDetailsService.getAccommodation();
-
         room.setAccommodation(accommodation);
 
         ManagerNavBar navBar = new ManagerNavBar();

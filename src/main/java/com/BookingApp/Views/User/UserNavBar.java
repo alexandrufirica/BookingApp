@@ -28,7 +28,7 @@ public class UserNavBar extends AppLayout {
         Tabs toggleTabs = getToggleTabs();
 
         Button logout = new Button("Log out");
-        logout.addClickListener( e -> SecurityUtils.logout());
+        logout.addClickListener( e -> SecurityUtils.logout(UI.getCurrent()));
 
         setDrawerOpened(false);
 

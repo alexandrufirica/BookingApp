@@ -8,6 +8,7 @@ import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Service.AccommodationService;
 import com.BookingApp.Service.ReservationService;
 import com.BookingApp.Service.RoomService;
+import com.BookingApp.Service.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -21,6 +22,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import jakarta.annotation.security.RolesAllowed;
 
 import java.time.LocalDate;
@@ -40,20 +42,21 @@ public class ReservationView extends VerticalLayout {
     private final RoomService roomService;
     private final ReservationService reservationService;
     private final User user;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserService userService;
 
 
     public ReservationView (AccommodationService accommodationService,
                             RoomService roomService,
                             ReservationService reservationService,
-                            CustomUserDetailsService customUserDetailsService)
+                            UserService userService)
     {
         this.accommodationService = accommodationService;
         this.roomService = roomService;
         this.reservationService = reservationService;
-        this.customUserDetailsService = customUserDetailsService;
+        this.userService = userService;
 
-        user = customUserDetailsService.getUser();
+        String userEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
+        user = userService.getUserbyEmail(userEmail);
         this.accommodation = accommodationService.getAccommodationById(HomeView.accommodationId);
         this.room = roomService.getRoomById(AccommodationView.roomId);
 

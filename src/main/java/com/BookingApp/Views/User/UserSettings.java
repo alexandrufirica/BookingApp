@@ -32,16 +32,14 @@ public class UserSettings extends VerticalLayout {
     private final TextField postalCode;
     private final Button modifyUserDetails;
     private final UserService userService;
-    private final CustomUserDetailsService customUserDetailsService;
 
-    public UserSettings(UserService userService, CustomUserDetailsService customUserDetailsService){
+    public UserSettings(UserService userService){
         this.userService = userService;
-        this.customUserDetailsService = customUserDetailsService;
 
         addClassName("user-settings");
 
         String userEmail = (String) VaadinSession.getCurrent().getAttribute("userEmail");
-        user = customUserDetailsService.getUser();
+        user = userService.getUserbyEmail(userEmail);
         String username= user.getGivenName() + " " + user.getSurName();
 
 

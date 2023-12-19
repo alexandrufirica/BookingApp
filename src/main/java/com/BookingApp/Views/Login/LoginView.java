@@ -1,6 +1,9 @@
 package com.BookingApp.Views.Login;
 
 
+import com.BookingApp.Data.Entity.Accommodation;
+import com.BookingApp.Data.Entity.User;
+import com.BookingApp.Security.CustomUserDetailsService;
 import com.BookingApp.Views.Manager.CreateAccomodation;
 import com.BookingApp.Views.Manager.RoomList;
 import com.BookingApp.Views.User.CreateUser;
@@ -14,6 +17,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -24,7 +28,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @AnonymousAllowed
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
-    public LoginView(){
+    private final Accommodation accommodation;
+    private final User user;
+    private final CustomUserDetailsService customUserDetailsService;
+
+    public LoginView(CustomUserDetailsService customUserDetailsService){
+        this.customUserDetailsService = customUserDetailsService;
+
+        accommodation = customUserDetailsService.getAccommodation();
+        user =customUserDetailsService.getUser();
+
         addClassName("login");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
@@ -32,6 +45,23 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
         LoginForm loginForm = new LoginForm();
         loginForm.setAction("login");
+
+        loginForm.addLoginListener(event -> {
+                    if (customUserDetailsService.loadUserByUsername(event.getUsername()) != null) {
+                        // Login successful
+                        VaadinSession.getCurrent().setAttribute("userEmail", event.getUsername());
+
+                        // Redirect to the appropriate view based on user role
+                        if (userIsUser()) {
+                            getUI().ifPresent(ui -> ui.navigate(HomeView.class));
+                        } else if (userIsManager()) {
+                            getUI().ifPresent(ui -> ui.navigate(RoomList.class));
+                        }
+                    } else {
+                        // Handle login failure
+                        Notification.show("Login failed");
+                    }
+                });
 
         LoginI18n i18n = LoginI18n.createDefault();
         LoginI18n.Form i18nForm = i18n.getForm();
