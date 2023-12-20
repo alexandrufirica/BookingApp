@@ -143,6 +143,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>11.2.2.jre17</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>

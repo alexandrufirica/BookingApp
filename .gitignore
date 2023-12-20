@@ -34,4 +34,5 @@ build/
 .vscode/
 
 src/main/resources/application-prod.properties
+src/main/resources/application-prodmsql.properties
 src/main/resources/client_secret_304841708846-r3rrik9fs3ulctovepi9d0fbb6b62p6q.apps.googleusercontent.com.json
