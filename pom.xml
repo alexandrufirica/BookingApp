@@ -108,26 +108,26 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.google.api-client</groupId>
-			<artifactId>google-api-client</artifactId>
-			<version>1.32.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.oauth-client</groupId>
-			<artifactId>google-oauth-client</artifactId>
-			<version>1.33.3</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.oauth-client</groupId>
-			<artifactId>google-oauth-client-java6</artifactId>
-			<version>1.32.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.oauth-client</groupId>
-			<artifactId>google-oauth-client-jetty</artifactId>
-			<version>1.32.1</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.google.api-client</groupId>-->
+<!--			<artifactId>google-api-client</artifactId>-->
+<!--			<version>1.32.1</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.google.oauth-client</groupId>-->
+<!--			<artifactId>google-oauth-client</artifactId>-->
+<!--			<version>1.33.3</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.google.oauth-client</groupId>-->
+<!--			<artifactId>google-oauth-client-java6</artifactId>-->
+<!--			<version>1.32.1</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.google.oauth-client</groupId>-->
+<!--			<artifactId>google-oauth-client-jetty</artifactId>-->
+<!--			<version>1.32.1</version>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -143,11 +143,12 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<version>11.2.2.jre17</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.microsoft.sqlserver</groupId>-->
+<!--			<artifactId>mssql-jdbc</artifactId>-->
+<!--			<version>11.2.2.jre17</version>-->
+<!--		</dependency>-->
+
 
 	</dependencies>
 
