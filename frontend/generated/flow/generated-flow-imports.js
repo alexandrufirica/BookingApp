@@ -1,4 +1,3 @@
-import '@vaadin/common-frontend/ConnectionIndicator.js';
 import '@vaadin/polymer-legacy-adapter/style-modules.js';
 import '@vaadin/vaadin-lumo-styles/color-global.js';
 import '@vaadin/vaadin-lumo-styles/typography-global.js';
@@ -6,48 +5,97 @@ import '@vaadin/vaadin-lumo-styles/sizing.js';
 import '@vaadin/vaadin-lumo-styles/spacing.js';
 import '@vaadin/vaadin-lumo-styles/style.js';
 import '@vaadin/vaadin-lumo-styles/vaadin-iconset.js';
-
-const loadOnDemand = (key) => {
-  const pending = [];
-  if (key === 'e846a2f108b6c0e34c6b1ec0a19558a4f1f03f4928fe8a3df89c5c6e17ab3046') {
-    pending.push(import('./chunks/chunk-e846a2f108b6c0e34c6b1ec0a19558a4f1f03f4928fe8a3df89c5c6e17ab3046.js'));
-  }
-  if (key === '7e670ec4f7d5ab8531563dda529468c5d4746a0833e7453c4b56b48c3ebd55bf') {
-    pending.push(import('./chunks/chunk-7e670ec4f7d5ab8531563dda529468c5d4746a0833e7453c4b56b48c3ebd55bf.js'));
-  }
-  if (key === 'e3e656ecc8fbe2f80aace41e661e7be41f5cb93377826f3ec8f2c53be12addc8') {
-    pending.push(import('./chunks/chunk-e3e656ecc8fbe2f80aace41e661e7be41f5cb93377826f3ec8f2c53be12addc8.js'));
-  }
-  if (key === '540c54cc51da1b2f84dd693c67ff1986a0c15d55aa66a81f0b8fb450713b83d1') {
-    pending.push(import('./chunks/chunk-540c54cc51da1b2f84dd693c67ff1986a0c15d55aa66a81f0b8fb450713b83d1.js'));
-  }
-  if (key === '58735205e18c2b0ec908cbe4de26ec531544ed7f9008d7225c35ecc87d401026') {
-    pending.push(import('./chunks/chunk-58735205e18c2b0ec908cbe4de26ec531544ed7f9008d7225c35ecc87d401026.js'));
-  }
-  if (key === '001a21199f2f3c616d82ab1450179b861290bfa0f4058b3822fbfd86c86d5394') {
-    pending.push(import('./chunks/chunk-001a21199f2f3c616d82ab1450179b861290bfa0f4058b3822fbfd86c86d5394.js'));
-  }
-  if (key === '09f3f32cc53e2debb86a1e6bb11a58fc4fada540cd42d4ee770c8928a9b6d856') {
-    pending.push(import('./chunks/chunk-09f3f32cc53e2debb86a1e6bb11a58fc4fada540cd42d4ee770c8928a9b6d856.js'));
-  }
-  if (key === 'c4d091ecf8fc7f47d66f58382f456ca5950a4184444b9cb57656a294b0b47874') {
-    pending.push(import('./chunks/chunk-c4d091ecf8fc7f47d66f58382f456ca5950a4184444b9cb57656a294b0b47874.js'));
-  }
-  if (key === '82ce657f85a7da466c2985ac5506c1ac9887f62168702103077aeee1256e8ebe') {
-    pending.push(import('./chunks/chunk-82ce657f85a7da466c2985ac5506c1ac9887f62168702103077aeee1256e8ebe.js'));
-  }
-  if (key === 'f4f6b4ab5e7e6f9f532abd6251f98cb091f089728fa8e7d86b571284a24b4aca') {
-    pending.push(import('./chunks/chunk-f4f6b4ab5e7e6f9f532abd6251f98cb091f089728fa8e7d86b571284a24b4aca.js'));
-  }
-  if (key === '77728d3e7227484c7a6d1ba20c2e9c057e9d60f6d85e8db6ad7cef31d83f3622') {
-    pending.push(import('./chunks/chunk-77728d3e7227484c7a6d1ba20c2e9c057e9d60f6d85e8db6ad7cef31d83f3622.js'));
-  }
-  if (key === '664a603d9f57dc30d53add736a9151e496e14d8e9dcaaf2f0fe4e0b30c919b7d') {
-    pending.push(import('./chunks/chunk-664a603d9f57dc30d53add736a9151e496e14d8e9dcaaf2f0fe4e0b30c919b7d.js'));
-  }
-  return Promise.all(pending);
-}
-
+import '@vaadin/vertical-layout/theme/lumo/vaadin-vertical-layout.js';
+import '@vaadin/app-layout/theme/lumo/vaadin-app-layout.js';
+import '@vaadin/form-layout/theme/lumo/vaadin-form-layout.js';
+import '@vaadin/field-highlighter/theme/lumo/vaadin-field-highlighter.js';
+import '@vaadin/common-frontend/ConnectionIndicator.js';
+import '@vaadin/accordion/theme/lumo/vaadin-accordion.js';
+import '@vaadin/details/theme/lumo/vaadin-details.js';
+import '@vaadin/accordion/theme/lumo/vaadin-accordion-panel.js';
+import '@vaadin/button/theme/lumo/vaadin-button.js';
+import 'Frontend/generated/jar-resources/buttonFunctions.js';
+import '@vaadin/app-layout/theme/lumo/vaadin-drawer-toggle.js';
+import '@vaadin/avatar/theme/lumo/vaadin-avatar.js';
+import '@vaadin/avatar-group/theme/lumo/vaadin-avatar-group.js';
+import '@vaadin/board/theme/lumo/vaadin-board.js';
+import '@vaadin/board/theme/lumo/vaadin-board-row.js';
+import '@vaadin/charts/theme/lumo/vaadin-chart.js';
+import '@vaadin/checkbox/theme/lumo/vaadin-checkbox.js';
+import '@vaadin/checkbox-group/theme/lumo/vaadin-checkbox-group.js';
+import '@vaadin/combo-box/theme/lumo/vaadin-combo-box.js';
+import 'Frontend/generated/jar-resources/flow-component-renderer.js';
+import 'Frontend/generated/jar-resources/comboBoxConnector.js';
+import '@vaadin/multi-select-combo-box/theme/lumo/vaadin-multi-select-combo-box.js';
+import '@vaadin/confirm-dialog/theme/lumo/vaadin-confirm-dialog.js';
+import '@vaadin/context-menu/theme/lumo/vaadin-context-menu.js';
+import 'Frontend/generated/jar-resources/contextMenuConnector.js';
+import 'Frontend/generated/jar-resources/contextMenuTargetConnector.js';
+import '@vaadin/cookie-consent/theme/lumo/vaadin-cookie-consent.js';
+import 'Frontend/generated/jar-resources/cookieConsentConnector.js';
+import '@vaadin/crud/theme/lumo/vaadin-crud.js';
+import '@vaadin/crud/src/vaadin-crud-edit-column.js';
+import '@vaadin/grid/theme/lumo/vaadin-grid.js';
+import '@vaadin/grid/theme/lumo/vaadin-grid-column.js';
+import '@vaadin/grid/theme/lumo/vaadin-grid-sorter.js';
+import 'Frontend/generated/jar-resources/gridConnector.js';
+import '@vaadin/tooltip/theme/lumo/vaadin-tooltip.js';
+import '@vaadin/custom-field/theme/lumo/vaadin-custom-field.js';
+import '@vaadin/date-picker/theme/lumo/vaadin-date-picker.js';
+import 'Frontend/generated/jar-resources/datepickerConnector.js';
+import '@vaadin/date-time-picker/theme/lumo/vaadin-date-time-picker.js';
+import '@vaadin/time-picker/theme/lumo/vaadin-time-picker.js';
+import 'Frontend/generated/jar-resources/vaadin-time-picker/timepickerConnector.js';
+import '@vaadin/dialog/theme/lumo/vaadin-dialog.js';
+import 'Frontend/generated/jar-resources/dndConnector.js';
+import '@vaadin/form-layout/theme/lumo/vaadin-form-item.js';
+import '@vaadin/grid/theme/lumo/vaadin-grid-column-group.js';
+import 'Frontend/generated/jar-resources/vaadin-grid-flow-selection-column.js';
+import '@vaadin/grid-pro/theme/lumo/vaadin-grid-pro.js';
+import '@vaadin/grid-pro/theme/lumo/vaadin-grid-pro-edit-column.js';
+import 'Frontend/generated/jar-resources/gridProConnector.js';
+import '@vaadin/icons/vaadin-iconset.js';
+import '@vaadin/icon/theme/lumo/vaadin-icon.js';
+import '@vaadin/list-box/theme/lumo/vaadin-list-box.js';
+import '@vaadin/item/theme/lumo/vaadin-item.js';
+import '@vaadin/login/theme/lumo/vaadin-login-form.js';
+import '@vaadin/login/theme/lumo/vaadin-login-overlay.js';
+import '@vaadin/map/theme/lumo/vaadin-map.js';
+import 'Frontend/generated/jar-resources/vaadin-map/mapConnector.js';
+import 'Frontend/generated/jar-resources/menubarConnector.js';
+import '@vaadin/menu-bar/theme/lumo/vaadin-menu-bar.js';
+import '@vaadin/message-input/theme/lumo/vaadin-message-input.js';
+import 'Frontend/generated/jar-resources/messageListConnector.js';
+import '@vaadin/message-list/theme/lumo/vaadin-message-list.js';
+import '@vaadin/notification/theme/lumo/vaadin-notification.js';
+import '@vaadin/horizontal-layout/theme/lumo/vaadin-horizontal-layout.js';
+import '@vaadin/scroller/theme/lumo/vaadin-scroller.js';
+import '@vaadin/progress-bar/theme/lumo/vaadin-progress-bar.js';
+import '@vaadin/radio-group/theme/lumo/vaadin-radio-button.js';
+import '@vaadin/radio-group/theme/lumo/vaadin-radio-group.js';
+import '@vaadin/rich-text-editor/theme/lumo/vaadin-rich-text-editor.js';
+import '@vaadin/select/theme/lumo/vaadin-select.js';
+import 'Frontend/generated/jar-resources/selectConnector.js';
+import 'Frontend/generated/jar-resources/tooltip.ts';
+import '@vaadin/side-nav/theme/lumo/vaadin-side-nav.js';
+import '@vaadin/side-nav/theme/lumo/vaadin-side-nav-item.js';
+import '@vaadin/split-layout/theme/lumo/vaadin-split-layout.js';
+import '@vaadin/tabs/theme/lumo/vaadin-tab.js';
+import '@vaadin/tabsheet/theme/lumo/vaadin-tabsheet.js';
+import '@vaadin/tabs/theme/lumo/vaadin-tabs.js';
+import 'Frontend/generated/jar-resources/vaadin-big-decimal-field.js';
+import '@vaadin/email-field/theme/lumo/vaadin-email-field.js';
+import '@vaadin/integer-field/theme/lumo/vaadin-integer-field.js';
+import '@vaadin/number-field/theme/lumo/vaadin-number-field.js';
+import '@vaadin/password-field/theme/lumo/vaadin-password-field.js';
+import '@vaadin/text-area/theme/lumo/vaadin-text-area.js';
+import '@vaadin/text-field/theme/lumo/vaadin-text-field.js';
+import 'Frontend/generated/jar-resources/lit-renderer.ts';
+import '@vaadin/grid/theme/lumo/vaadin-grid-tree-toggle.js';
+import '@vaadin/upload/theme/lumo/vaadin-upload.js';
+import '@vaadin/virtual-list/theme/lumo/vaadin-virtual-list.js';
+import 'Frontend/generated/jar-resources/virtualListConnector.js';
+const loadOnDemand = (key) => { return Promise.resolve(0); }
 window.Vaadin = window.Vaadin || {};
 window.Vaadin.Flow = window.Vaadin.Flow || {};
 window.Vaadin.Flow.loadOnDemand = loadOnDemand;

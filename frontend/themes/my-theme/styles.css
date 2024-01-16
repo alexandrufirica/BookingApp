@@ -2,3 +2,6 @@ vaadin-app-layout {
     --vaadin-app-layout-drawer-overlay: true;
 }
 
+/*:root {*/
+/*    --lumo-base-color: #1f1f1f; *//* Dark background color */
+/*}*/
