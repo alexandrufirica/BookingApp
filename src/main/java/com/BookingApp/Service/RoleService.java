@@ -16,4 +16,12 @@ public class RoleService implements IRoleService{
     public Role getRoleByName (String roleName){
         return  roleRepository.findByName(roleName).get();
     }
+
+    public boolean existsByName(String user) {
+        return roleRepository.existsByName(user);
+    }
+
+    public void saveRole(Role userRole) {
+        roleRepository.save(userRole);
+    }
 }
